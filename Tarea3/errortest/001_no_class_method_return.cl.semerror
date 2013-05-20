@@ -1,0 +1,5 @@
+1:4 Undefined class Clue
+program
+    class Main
+        method find : Clue
+            int 0 [Int]

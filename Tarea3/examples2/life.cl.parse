@@ -1,0 +1,838 @@
+program
+    class Board : IO
+        field Int rows
+        field Int columns
+        field Int board_size
+        method size_of_board : String initial -> Int
+            call length
+                callee
+                    id initial
+        method board_init : String start -> SELF_TYPE
+            let
+                vars
+                    Int size
+                        call size_of_board
+                            args
+                                id start
+                block
+                    if
+                        binary =
+                            id size
+                            int 15
+                    then
+                        block
+                            assign rows
+                                int 3
+                            assign columns
+                                int 5
+                            assign board_size
+                                id size
+                    else
+                        if
+                            binary =
+                                id size
+                                int 16
+                        then
+                            block
+                                assign rows
+                                    int 4
+                                assign columns
+                                    int 4
+                                assign board_size
+                                    id size
+                        else
+                            if
+                                binary =
+                                    id size
+                                    int 20
+                            then
+                                block
+                                    assign rows
+                                        int 4
+                                    assign columns
+                                        int 5
+                                    assign board_size
+                                        id size
+                            else
+                                if
+                                    binary =
+                                        id size
+                                        int 21
+                                then
+                                    block
+                                        assign rows
+                                            int 3
+                                        assign columns
+                                            int 7
+                                        assign board_size
+                                            id size
+                                else
+                                    if
+                                        binary =
+                                            id size
+                                            int 25
+                                    then
+                                        block
+                                            assign rows
+                                                int 5
+                                            assign columns
+                                                int 5
+                                            assign board_size
+                                                id size
+                                    else
+                                        if
+                                            binary =
+                                                id size
+                                                int 28
+                                        then
+                                            block
+                                                assign rows
+                                                    int 7
+                                                assign columns
+                                                    int 4
+                                                assign board_size
+                                                    id size
+                                        else
+                                            block
+                                                assign rows
+                                                    int 5
+                                                assign columns
+                                                    int 5
+                                                assign board_size
+                                                    id size
+                    id self
+    class CellularAutomaton : Board
+        field String population_map
+        method init : String map -> SELF_TYPE
+            block
+                assign population_map
+                    id map
+                call board_init
+                    args
+                        id map
+                id self
+        method print : SELF_TYPE
+            let
+                vars
+                    Int i
+                        int 0
+                let
+                    vars
+                        Int num
+                            id board_size
+                    block
+                        call out_string
+                            args
+                                str "\n"
+                        while
+                            binary <
+                                id i
+                                id num
+                        loop
+                            block
+                                call out_string
+                                    args
+                                        call substr
+                                            callee
+                                                id population_map
+                                            args
+                                                id i
+                                                id columns
+                                call out_string
+                                    args
+                                        str "\n"
+                                assign i
+                                    binary +
+                                        id i
+                                        id columns
+                        call out_string
+                            args
+                                str "\n"
+                        id self
+        method num_cells : Int
+            call length
+                callee
+                    id population_map
+        method cell : Int position -> String
+            if
+                binary <
+                    binary -
+                        id board_size
+                        int 1
+                    id position
+            then
+                str " "
+            else
+                call substr
+                    callee
+                        id population_map
+                    args
+                        id position
+                        int 1
+        method north : Int position -> String
+            if
+                binary <
+                    binary -
+                        id position
+                        id columns
+                    int 0
+            then
+                str " "
+            else
+                call cell
+                    args
+                        binary -
+                            id position
+                            id columns
+        method south : Int position -> String
+            if
+                binary <
+                    id board_size
+                    binary +
+                        id position
+                        id columns
+            then
+                str " "
+            else
+                call cell
+                    args
+                        binary +
+                            id position
+                            id columns
+        method east : Int position -> String
+            if
+                binary =
+                    binary *
+                        binary /
+                            binary +
+                                id position
+                                int 1
+                            id columns
+                        id columns
+                    binary +
+                        id position
+                        int 1
+            then
+                str " "
+            else
+                call cell
+                    args
+                        binary +
+                            id position
+                            int 1
+        method west : Int position -> String
+            if
+                binary =
+                    id position
+                    int 0
+            then
+                str " "
+            else
+                if
+                    binary =
+                        binary *
+                            binary /
+                                id position
+                                id columns
+                            id columns
+                        id position
+                then
+                    str " "
+                else
+                    call cell
+                        args
+                            binary -
+                                id position
+                                int 1
+        method northwest : Int position -> String
+            if
+                binary <
+                    binary -
+                        id position
+                        id columns
+                    int 0
+            then
+                str " "
+            else
+                if
+                    binary =
+                        binary *
+                            binary /
+                                id position
+                                id columns
+                            id columns
+                        id position
+                then
+                    str " "
+                else
+                    call north
+                        args
+                            binary -
+                                id position
+                                int 1
+        method northeast : Int position -> String
+            if
+                binary <
+                    binary -
+                        id position
+                        id columns
+                    int 0
+            then
+                str " "
+            else
+                if
+                    binary =
+                        binary *
+                            binary /
+                                binary +
+                                    id position
+                                    int 1
+                                id columns
+                            id columns
+                        binary +
+                            id position
+                            int 1
+                then
+                    str " "
+                else
+                    call north
+                        args
+                            binary +
+                                id position
+                                int 1
+        method southeast : Int position -> String
+            if
+                binary <
+                    id board_size
+                    binary +
+                        id position
+                        id columns
+            then
+                str " "
+            else
+                if
+                    binary =
+                        binary *
+                            binary /
+                                binary +
+                                    id position
+                                    int 1
+                                id columns
+                            id columns
+                        binary +
+                            id position
+                            int 1
+                then
+                    str " "
+                else
+                    call south
+                        args
+                            binary +
+                                id position
+                                int 1
+        method southwest : Int position -> String
+            if
+                binary <
+                    id board_size
+                    binary +
+                        id position
+                        id columns
+            then
+                str " "
+            else
+                if
+                    binary =
+                        binary *
+                            binary /
+                                id position
+                                id columns
+                            id columns
+                        id position
+                then
+                    str " "
+                else
+                    call south
+                        args
+                            binary -
+                                id position
+                                int 1
+        method neighbors : Int position -> Int
+            block
+                binary +
+                    binary +
+                        binary +
+                            binary +
+                                binary +
+                                    binary +
+                                        binary +
+                                            if
+                                                binary =
+                                                    call north
+                                                        args
+                                                            id position
+                                                    str "X"
+                                            then
+                                                int 1
+                                            else
+                                                int 0
+                                            if
+                                                binary =
+                                                    call south
+                                                        args
+                                                            id position
+                                                    str "X"
+                                            then
+                                                int 1
+                                            else
+                                                int 0
+                                        if
+                                            binary =
+                                                call east
+                                                    args
+                                                        id position
+                                                str "X"
+                                        then
+                                            int 1
+                                        else
+                                            int 0
+                                    if
+                                        binary =
+                                            call west
+                                                args
+                                                    id position
+                                            str "X"
+                                    then
+                                        int 1
+                                    else
+                                        int 0
+                                if
+                                    binary =
+                                        call northeast
+                                            args
+                                                id position
+                                        str "X"
+                                then
+                                    int 1
+                                else
+                                    int 0
+                            if
+                                binary =
+                                    call northwest
+                                        args
+                                            id position
+                                    str "X"
+                            then
+                                int 1
+                            else
+                                int 0
+                        if
+                            binary =
+                                call southeast
+                                    args
+                                        id position
+                                str "X"
+                        then
+                            int 1
+                        else
+                            int 0
+                    if
+                        binary =
+                            call southwest
+                                args
+                                    id position
+                            str "X"
+                    then
+                        int 1
+                    else
+                        int 0
+        method cell_at_next_evolution : Int position -> String
+            if
+                binary =
+                    call neighbors
+                        args
+                            id position
+                    int 3
+            then
+                str "X"
+            else
+                if
+                    binary =
+                        call neighbors
+                            args
+                                id position
+                        int 2
+                then
+                    if
+                        binary =
+                            call cell
+                                args
+                                    id position
+                            str "X"
+                    then
+                        str "X"
+                    else
+                        str "-"
+                else
+                    str "-"
+        method evolve : SELF_TYPE
+            let
+                vars
+                    Int position
+                        int 0
+                let
+                    vars
+                        Int num
+                            call num_cells
+                    let
+                        vars
+                            String temp
+                        block
+                            while
+                                binary <
+                                    id position
+                                    id num
+                            loop
+                                block
+                                    assign temp
+                                        call concat
+                                            callee
+                                                id temp
+                                            args
+                                                call cell_at_next_evolution
+                                                    args
+                                                        id position
+                                    assign position
+                                        binary +
+                                            id position
+                                            int 1
+                            assign population_map
+                                id temp
+                            id self
+        method option : String
+            block
+                let
+                    vars
+                        Int num
+                    block
+                        call out_string
+                            args
+                                str "\nPlease chose a number:\n"
+                        call out_string
+                            args
+                                str "\t1: A cross\n"
+                        call out_string
+                            args
+                                str "\t2: A slash from the upper left to lower right\n"
+                        call out_string
+                            args
+                                str "\t3: A slash from the upper right to lower left\n"
+                        call out_string
+                            args
+                                str "\t4: An X\n"
+                        call out_string
+                            args
+                                str "\t5: A greater than sign \n"
+                        call out_string
+                            args
+                                str "\t6: A less than sign\n"
+                        call out_string
+                            args
+                                str "\t7: Two greater than signs\n"
+                        call out_string
+                            args
+                                str "\t8: Two less than signs\n"
+                        call out_string
+                            args
+                                str "\t9: A 'V'\n"
+                        call out_string
+                            args
+                                str "\t10: An inverse 'V'\n"
+                        call out_string
+                            args
+                                str "\t11: Numbers 9 and 10 combined\n"
+                        call out_string
+                            args
+                                str "\t12: A full grid\n"
+                        call out_string
+                            args
+                                str "\t13: A 'T'\n"
+                        call out_string
+                            args
+                                str "\t14: A plus '+'\n"
+                        call out_string
+                            args
+                                str "\t15: A 'W'\n"
+                        call out_string
+                            args
+                                str "\t16: An 'M'\n"
+                        call out_string
+                            args
+                                str "\t17: An 'E'\n"
+                        call out_string
+                            args
+                                str "\t18: A '3'\n"
+                        call out_string
+                            args
+                                str "\t19: An 'O'\n"
+                        call out_string
+                            args
+                                str "\t20: An '8'\n"
+                        call out_string
+                            args
+                                str "\t21: An 'S'\n"
+                        call out_string
+                            args
+                                str "Your choice => "
+                        assign num
+                            call in_int
+                        call out_string
+                            args
+                                str "\n"
+                        if
+                            binary =
+                                id num
+                                int 1
+                        then
+                            str " XX  XXXX XXXX  XX  "
+                        else
+                            if
+                                binary =
+                                    id num
+                                    int 2
+                            then
+                                str "    X   X   X   X   X    "
+                            else
+                                if
+                                    binary =
+                                        id num
+                                        int 3
+                                then
+                                    str "X     X     X     X     X"
+                                else
+                                    if
+                                        binary =
+                                            id num
+                                            int 4
+                                    then
+                                        str "X   X X X   X   X X X   X"
+                                    else
+                                        if
+                                            binary =
+                                                id num
+                                                int 5
+                                        then
+                                            str "X     X     X   X   X    "
+                                        else
+                                            if
+                                                binary =
+                                                    id num
+                                                    int 6
+                                            then
+                                                str "    X   X   X     X     X"
+                                            else
+                                                if
+                                                    binary =
+                                                        id num
+                                                        int 7
+                                                then
+                                                    str "X  X  X  XX  X      "
+                                                else
+                                                    if
+                                                        binary =
+                                                            id num
+                                                            int 8
+                                                    then
+                                                        str " X  XX  X  X  X     "
+                                                    else
+                                                        if
+                                                            binary =
+                                                                id num
+                                                                int 9
+                                                        then
+                                                            str "X   X X X   X  "
+                                                        else
+                                                            if
+                                                                binary =
+                                                                    id num
+                                                                    int 10
+                                                            then
+                                                                str "  X   X X X   X"
+                                                            else
+                                                                if
+                                                                    binary =
+                                                                        id num
+                                                                        int 11
+                                                                then
+                                                                    str "X X X X X X X X"
+                                                                else
+                                                                    if
+                                                                        binary =
+                                                                            id num
+                                                                            int 12
+                                                                    then
+                                                                        str "XXXXXXXXXXXXXXXXXXXXXXXXX"
+                                                                    else
+                                                                        if
+                                                                            binary =
+                                                                                id num
+                                                                                int 13
+                                                                        then
+                                                                            str "XXXXX  X    X    X    X  "
+                                                                        else
+                                                                            if
+                                                                                binary =
+                                                                                    id num
+                                                                                    int 14
+                                                                            then
+                                                                                str "  X    X  XXXXX  X    X  "
+                                                                            else
+                                                                                if
+                                                                                    binary =
+                                                                                        id num
+                                                                                        int 15
+                                                                                then
+                                                                                    str "X     X X X X   X X  "
+                                                                                else
+                                                                                    if
+                                                                                        binary =
+                                                                                            id num
+                                                                                            int 16
+                                                                                    then
+                                                                                        str "  X X   X X X X     X"
+                                                                                    else
+                                                                                        if
+                                                                                            binary =
+                                                                                                id num
+                                                                                                int 17
+                                                                                        then
+                                                                                            str "XXXXX   X   XXXXX   X   XXXX"
+                                                                                        else
+                                                                                            if
+                                                                                                binary =
+                                                                                                    id num
+                                                                                                    int 18
+                                                                                            then
+                                                                                                str "XXX    X   X  X    X   XXXX "
+                                                                                            else
+                                                                                                if
+                                                                                                    binary =
+                                                                                                        id num
+                                                                                                        int 19
+                                                                                                then
+                                                                                                    str " XX X  XX  X XX "
+                                                                                                else
+                                                                                                    if
+                                                                                                        binary =
+                                                                                                            id num
+                                                                                                            int 20
+                                                                                                    then
+                                                                                                        str " XX X  XX  X XX X  XX  X XX "
+                                                                                                    else
+                                                                                                        if
+                                                                                                            binary =
+                                                                                                                id num
+                                                                                                                int 21
+                                                                                                        then
+                                                                                                            str " XXXX   X    XX    X   XXXX "
+                                                                                                        else
+                                                                                                            str "                         "
+        method prompt : Bool
+            block
+                let
+                    vars
+                        String ans
+                    block
+                        call out_string
+                            args
+                                str "Would you like to continue with the next generation? \n"
+                        call out_string
+                            args
+                                str "Please use lowercase y or n for your answer [y]: "
+                        assign ans
+                            call in_string
+                        call out_string
+                            args
+                                str "\n"
+                        if
+                            binary =
+                                id ans
+                                str "n"
+                        then
+                            bool false
+                        else
+                            bool true
+        method prompt2 : Bool
+            let
+                vars
+                    String ans
+                block
+                    call out_string
+                        args
+                            str "\n\n"
+                    call out_string
+                        args
+                            str "Would you like to choose a background pattern? \n"
+                    call out_string
+                        args
+                            str "Please use lowercase y or n for your answer [n]: "
+                    assign ans
+                        call in_string
+                    if
+                        binary =
+                            id ans
+                            str "y"
+                    then
+                        bool true
+                    else
+                        bool false
+    class Main : CellularAutomaton
+        field CellularAutomaton cells
+        method main : SELF_TYPE
+            block
+                let
+                    vars
+                        Bool continue
+                    let
+                        vars
+                            String choice
+                        block
+                            call out_string
+                                args
+                                    str "Welcome to the Game of Life.\n"
+                            call out_string
+                                args
+                                    str "There are many initial states to choose from. \n"
+                            while
+                                call prompt2
+                            loop
+                                block
+                                    assign continue
+                                        bool true
+                                    assign choice
+                                        call option
+                                    assign cells
+                                        call init
+                                            callee
+                                                new CellularAutomaton
+                                            args
+                                                id choice
+                                    call print
+                                        callee
+                                            id cells
+                                    while
+                                        id continue
+                                    loop
+                                        if
+                                            call prompt
+                                        then
+                                            block
+                                                call evolve
+                                                    callee
+                                                        id cells
+                                                call print
+                                                    callee
+                                                        id cells
+                                        else
+                                            assign continue
+                                                bool false
+                            id self

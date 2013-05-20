@@ -1,0 +1,12 @@
+coolc.parser.Position Undefined variable tengoElSecretoDeLaCangreburger
+coolc.parser.Position Undefined variable disfraz
+program
+    class Main
+        method main : SELF_TYPE
+            while ERROR
+                unary not ERROR
+                    id tengoElSecretoDeLaCangreburger ERROR
+            loop
+                binary = ERROR
+                    id disfraz ERROR
+                    bool true [Bool]

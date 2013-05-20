@@ -1,0 +1,164 @@
+program
+    class Book : IO
+        field String title
+        field String author
+        method initBook : String title_p -> String author_p -> Book
+            block [Book]
+                assign title [String]
+                    id title_p [String]
+                assign author [String]
+                    id author_p [String]
+                id self [Book]
+        method print : Book
+            block [Book]
+                call out_string [Book]
+                    callee
+                        call out_string [Book]
+                            callee
+                                call out_string [Book]
+                                    args
+                                        str "title:      " [String]
+                            args
+                                id title [String]
+                    args
+                        str "\n" [String]
+                call out_string [Book]
+                    callee
+                        call out_string [Book]
+                            callee
+                                call out_string [Book]
+                                    args
+                                        str "author:     " [String]
+                            args
+                                id author [String]
+                    args
+                        str "\n" [String]
+                id self [Book]
+    class Article : Book
+        field String per_title
+        method initArticle : String title_p -> String author_p -> String per_title_p -> Article
+            block [Article]
+                call initBook [Book]
+                    args
+                        id title_p [String]
+                        id author_p [String]
+                assign per_title [String]
+                    id per_title_p [String]
+                id self [Article]
+        method print : Book
+            block [Article]
+                call print as Book [Book]
+                    callee
+                        id self [Article]
+                call out_string [Article]
+                    callee
+                        call out_string [Article]
+                            callee
+                                call out_string [Article]
+                                    args
+                                        str "periodical:  " [String]
+                            args
+                                id per_title [String]
+                    args
+                        str "\n" [String]
+                id self [Article]
+    class BookList : IO
+        method isNil : Bool
+            block [Bool]
+                call abort [Object]
+                bool true [Bool]
+        method cons : Book hd -> Cons
+            let [Cons]
+                vars
+                    Cons new_cell
+                        new Cons [Cons]
+                call init [Cons]
+                    callee
+                        id new_cell [Cons]
+                    args
+                        id hd [Book]
+                        id self [BookList]
+        method car : Book
+            block [Book]
+                call abort [Object]
+                new Book [Book]
+        method cdr : BookList
+            block [BookList]
+                call abort [Object]
+                new BookList [BookList]
+        method print_list : Object
+            call abort [Object]
+    class Cons : BookList
+        field Book xcar
+        field BookList xcdr
+        method isNil : Bool
+            bool false [Bool]
+        method init : Book hd -> BookList tl -> Cons
+            block [Cons]
+                assign xcar [Book]
+                    id hd [Book]
+                assign xcdr [BookList]
+                    id tl [BookList]
+                id self [Cons]
+        method car : Book
+            id xcar [Book]
+        method cdr : BookList
+            id xcdr [BookList]
+        method print_list : Object
+            block [Object]
+                instanceof [Cons]
+                    call print [Book]
+                        callee
+                            id xcar [Book]
+                    case Book dummy
+                        call out_string [Cons]
+                            args
+                                str "- dynamic type was Book -\n" [String]
+                    case Article dummy
+                        call out_string [Cons]
+                            args
+                                str "- dynamic type was Article -\n" [String]
+                call print_list [Object]
+                    callee
+                        id xcdr [BookList]
+    class Nil : BookList
+        method isNil : Bool
+            bool true [Bool]
+        method print_list : Object
+            bool true [Bool]
+    class Main
+        field BookList books
+        method main : Object
+            let [Object]
+                vars
+                    Book a_book
+                        call initBook [Book]
+                            callee
+                                new Book [Book]
+                            args
+                                str "Compilers, Principles, Techniques, and Tools" [String]
+                                str "Aho, Sethi, and Ullman" [String]
+                let [Object]
+                    vars
+                        Article an_article
+                            call initArticle [Article]
+                                callee
+                                    new Article [Article]
+                                args
+                                    str "The Top 100 CD_ROMs" [String]
+                                    str "Ulanoff" [String]
+                                    str "PC Magazine" [String]
+                    block [Object]
+                        assign books [Cons]
+                            call cons [Cons]
+                                callee
+                                    call cons [Cons]
+                                        callee
+                                            new Nil [Nil]
+                                        args
+                                            id a_book [Book]
+                                args
+                                    id an_article [Article]
+                        call print_list [Object]
+                            callee
+                                id books [BookList]

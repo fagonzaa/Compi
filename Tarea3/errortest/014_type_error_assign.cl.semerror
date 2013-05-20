@@ -1,0 +1,11 @@
+7:12 Expected Int, received String
+program
+    class Main
+        field Int numero
+        field Object cosa
+        method main : SELF_TYPE
+            block ERROR
+                assign numero ERROR
+                    str "Trescientos cuarenta y siete" [String]
+                assign cosa [Int]
+                    id numero [Int]

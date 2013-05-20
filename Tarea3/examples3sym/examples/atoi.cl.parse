@@ -1,0 +1,304 @@
+program
+    class A2I
+        method c2i : String char -> Int
+            if
+                binary =
+                    id char
+                    str "0"
+            then
+                int 0
+            else
+                if
+                    binary =
+                        id char
+                        str "1"
+                then
+                    int 1
+                else
+                    if
+                        binary =
+                            id char
+                            str "2"
+                    then
+                        int 2
+                    else
+                        if
+                            binary =
+                                id char
+                                str "3"
+                        then
+                            int 3
+                        else
+                            if
+                                binary =
+                                    id char
+                                    str "4"
+                            then
+                                int 4
+                            else
+                                if
+                                    binary =
+                                        id char
+                                        str "5"
+                                then
+                                    int 5
+                                else
+                                    if
+                                        binary =
+                                            id char
+                                            str "6"
+                                    then
+                                        int 6
+                                    else
+                                        if
+                                            binary =
+                                                id char
+                                                str "7"
+                                        then
+                                            int 7
+                                        else
+                                            if
+                                                binary =
+                                                    id char
+                                                    str "8"
+                                            then
+                                                int 8
+                                            else
+                                                if
+                                                    binary =
+                                                        id char
+                                                        str "9"
+                                                then
+                                                    int 9
+                                                else
+                                                    block
+                                                        call abort
+                                                        int 0
+        method i2c : Int i -> String
+            if
+                binary =
+                    id i
+                    int 0
+            then
+                str "0"
+            else
+                if
+                    binary =
+                        id i
+                        int 1
+                then
+                    str "1"
+                else
+                    if
+                        binary =
+                            id i
+                            int 2
+                    then
+                        str "2"
+                    else
+                        if
+                            binary =
+                                id i
+                                int 3
+                        then
+                            str "3"
+                        else
+                            if
+                                binary =
+                                    id i
+                                    int 4
+                            then
+                                str "4"
+                            else
+                                if
+                                    binary =
+                                        id i
+                                        int 5
+                                then
+                                    str "5"
+                                else
+                                    if
+                                        binary =
+                                            id i
+                                            int 6
+                                    then
+                                        str "6"
+                                    else
+                                        if
+                                            binary =
+                                                id i
+                                                int 7
+                                        then
+                                            str "7"
+                                        else
+                                            if
+                                                binary =
+                                                    id i
+                                                    int 8
+                                            then
+                                                str "8"
+                                            else
+                                                if
+                                                    binary =
+                                                        id i
+                                                        int 9
+                                                then
+                                                    str "9"
+                                                else
+                                                    block
+                                                        call abort
+                                                        str ""
+        method a2i : String s -> Int
+            if
+                binary =
+                    call length
+                        callee
+                            id s
+                    int 0
+            then
+                int 0
+            else
+                if
+                    binary =
+                        call substr
+                            callee
+                                id s
+                            args
+                                int 0
+                                int 1
+                        str "-"
+                then
+                    unary ~
+                        call a2i_aux
+                            args
+                                call substr
+                                    callee
+                                        id s
+                                    args
+                                        int 1
+                                        binary -
+                                            call length
+                                                callee
+                                                    id s
+                                            int 1
+                else
+                    if
+                        binary =
+                            call substr
+                                callee
+                                    id s
+                                args
+                                    int 0
+                                    int 1
+                            str "+"
+                    then
+                        call a2i_aux
+                            args
+                                call substr
+                                    callee
+                                        id s
+                                    args
+                                        int 1
+                                        binary -
+                                            call length
+                                                callee
+                                                    id s
+                                            int 1
+                    else
+                        call a2i_aux
+                            args
+                                id s
+        method a2i_aux : String s -> Int
+            let
+                vars
+                    Int int
+                        int 0
+                block
+                    let
+                        vars
+                            Int j
+                                call length
+                                    callee
+                                        id s
+                        let
+                            vars
+                                Int i
+                                    int 0
+                            while
+                                binary <
+                                    id i
+                                    id j
+                            loop
+                                block
+                                    assign int
+                                        binary +
+                                            binary *
+                                                id int
+                                                int 10
+                                            call c2i
+                                                args
+                                                    call substr
+                                                        callee
+                                                            id s
+                                                        args
+                                                            id i
+                                                            int 1
+                                    assign i
+                                        binary +
+                                            id i
+                                            int 1
+                    id int
+        method i2a : Int i -> String
+            if
+                binary =
+                    id i
+                    int 0
+            then
+                str "0"
+            else
+                if
+                    binary <
+                        int 0
+                        id i
+                then
+                    call i2a_aux
+                        args
+                            id i
+                else
+                    call concat
+                        callee
+                            str "-"
+                        args
+                            call i2a_aux
+                                args
+                                    binary *
+                                        id i
+                                        unary ~
+                                            int 1
+        method i2a_aux : Int i -> String
+            if
+                binary =
+                    id i
+                    int 0
+            then
+                str ""
+            else
+                let
+                    vars
+                        Int next
+                            binary /
+                                id i
+                                int 10
+                    call concat
+                        callee
+                            call i2a_aux
+                                args
+                                    id next
+                        args
+                            call i2c
+                                args
+                                    binary -
+                                        id i
+                                        binary *
+                                            id next
+                                            int 10

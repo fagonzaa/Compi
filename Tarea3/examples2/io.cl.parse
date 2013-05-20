@@ -1,0 +1,45 @@
+program
+    class A
+        field IO io
+            new IO
+        method out_a : Object
+            call out_string
+                callee
+                    id io
+                args
+                    str "A: Hello world\n"
+    class B : A
+        method out_b : Object
+            call out_string
+                callee
+                    id io
+                args
+                    str "B: Hello world\n"
+    class C : IO
+        method out_c : Object
+            call out_string
+                args
+                    str "C: Hello world\n"
+    class D : C
+        method out_d : Object
+            call out_string
+                args
+                    str "D: Hello world\n"
+    class Main : IO
+        method main : Object
+            block
+                call out_a
+                    callee
+                        new A
+                call out_b
+                    callee
+                        new B
+                call out_c
+                    callee
+                        new C
+                call out_d
+                    callee
+                        new D
+                call out_string
+                    args
+                        str "Done.\n"

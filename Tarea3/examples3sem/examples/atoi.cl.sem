@@ -1,0 +1,304 @@
+program
+    class A2I
+        method c2i : String char -> Int
+            if [Int]
+                binary = [Bool]
+                    id char [String]
+                    str "0" [String]
+            then
+                int 0 [Int]
+            else
+                if [Int]
+                    binary = [Bool]
+                        id char [String]
+                        str "1" [String]
+                then
+                    int 1 [Int]
+                else
+                    if [Int]
+                        binary = [Bool]
+                            id char [String]
+                            str "2" [String]
+                    then
+                        int 2 [Int]
+                    else
+                        if [Int]
+                            binary = [Bool]
+                                id char [String]
+                                str "3" [String]
+                        then
+                            int 3 [Int]
+                        else
+                            if [Int]
+                                binary = [Bool]
+                                    id char [String]
+                                    str "4" [String]
+                            then
+                                int 4 [Int]
+                            else
+                                if [Int]
+                                    binary = [Bool]
+                                        id char [String]
+                                        str "5" [String]
+                                then
+                                    int 5 [Int]
+                                else
+                                    if [Int]
+                                        binary = [Bool]
+                                            id char [String]
+                                            str "6" [String]
+                                    then
+                                        int 6 [Int]
+                                    else
+                                        if [Int]
+                                            binary = [Bool]
+                                                id char [String]
+                                                str "7" [String]
+                                        then
+                                            int 7 [Int]
+                                        else
+                                            if [Int]
+                                                binary = [Bool]
+                                                    id char [String]
+                                                    str "8" [String]
+                                            then
+                                                int 8 [Int]
+                                            else
+                                                if [Int]
+                                                    binary = [Bool]
+                                                        id char [String]
+                                                        str "9" [String]
+                                                then
+                                                    int 9 [Int]
+                                                else
+                                                    block [Int]
+                                                        call abort [Object]
+                                                        int 0 [Int]
+        method i2c : Int i -> String
+            if [String]
+                binary = [Bool]
+                    id i [Int]
+                    int 0 [Int]
+            then
+                str "0" [String]
+            else
+                if [String]
+                    binary = [Bool]
+                        id i [Int]
+                        int 1 [Int]
+                then
+                    str "1" [String]
+                else
+                    if [String]
+                        binary = [Bool]
+                            id i [Int]
+                            int 2 [Int]
+                    then
+                        str "2" [String]
+                    else
+                        if [String]
+                            binary = [Bool]
+                                id i [Int]
+                                int 3 [Int]
+                        then
+                            str "3" [String]
+                        else
+                            if [String]
+                                binary = [Bool]
+                                    id i [Int]
+                                    int 4 [Int]
+                            then
+                                str "4" [String]
+                            else
+                                if [String]
+                                    binary = [Bool]
+                                        id i [Int]
+                                        int 5 [Int]
+                                then
+                                    str "5" [String]
+                                else
+                                    if [String]
+                                        binary = [Bool]
+                                            id i [Int]
+                                            int 6 [Int]
+                                    then
+                                        str "6" [String]
+                                    else
+                                        if [String]
+                                            binary = [Bool]
+                                                id i [Int]
+                                                int 7 [Int]
+                                        then
+                                            str "7" [String]
+                                        else
+                                            if [String]
+                                                binary = [Bool]
+                                                    id i [Int]
+                                                    int 8 [Int]
+                                            then
+                                                str "8" [String]
+                                            else
+                                                if [String]
+                                                    binary = [Bool]
+                                                        id i [Int]
+                                                        int 9 [Int]
+                                                then
+                                                    str "9" [String]
+                                                else
+                                                    block [String]
+                                                        call abort [Object]
+                                                        str "" [String]
+        method a2i : String s -> Int
+            if [Int]
+                binary = [Bool]
+                    call length [Int]
+                        callee
+                            id s [String]
+                    int 0 [Int]
+            then
+                int 0 [Int]
+            else
+                if [Int]
+                    binary = [Bool]
+                        call substr [String]
+                            callee
+                                id s [String]
+                            args
+                                int 0 [Int]
+                                int 1 [Int]
+                        str "-" [String]
+                then
+                    unary ~ [Int]
+                        call a2i_aux [Int]
+                            args
+                                call substr [String]
+                                    callee
+                                        id s [String]
+                                    args
+                                        int 1 [Int]
+                                        binary - [Int]
+                                            call length [Int]
+                                                callee
+                                                    id s [String]
+                                            int 1 [Int]
+                else
+                    if [Int]
+                        binary = [Bool]
+                            call substr [String]
+                                callee
+                                    id s [String]
+                                args
+                                    int 0 [Int]
+                                    int 1 [Int]
+                            str "+" [String]
+                    then
+                        call a2i_aux [Int]
+                            args
+                                call substr [String]
+                                    callee
+                                        id s [String]
+                                    args
+                                        int 1 [Int]
+                                        binary - [Int]
+                                            call length [Int]
+                                                callee
+                                                    id s [String]
+                                            int 1 [Int]
+                    else
+                        call a2i_aux [Int]
+                            args
+                                id s [String]
+        method a2i_aux : String s -> Int
+            let [Int]
+                vars
+                    Int int
+                        int 0 [Int]
+                block [Int]
+                    let [Object]
+                        vars
+                            Int j
+                                call length [Int]
+                                    callee
+                                        id s [String]
+                        let [Object]
+                            vars
+                                Int i
+                                    int 0 [Int]
+                            while [Object]
+                                binary < [Bool]
+                                    id i [Int]
+                                    id j [Int]
+                            loop
+                                block [Int]
+                                    assign int [Int]
+                                        binary + [Int]
+                                            binary * [Int]
+                                                id int [Int]
+                                                int 10 [Int]
+                                            call c2i [Int]
+                                                args
+                                                    call substr [String]
+                                                        callee
+                                                            id s [String]
+                                                        args
+                                                            id i [Int]
+                                                            int 1 [Int]
+                                    assign i [Int]
+                                        binary + [Int]
+                                            id i [Int]
+                                            int 1 [Int]
+                    id int [Int]
+        method i2a : Int i -> String
+            if [String]
+                binary = [Bool]
+                    id i [Int]
+                    int 0 [Int]
+            then
+                str "0" [String]
+            else
+                if [String]
+                    binary < [Bool]
+                        int 0 [Int]
+                        id i [Int]
+                then
+                    call i2a_aux [String]
+                        args
+                            id i [Int]
+                else
+                    call concat [String]
+                        callee
+                            str "-" [String]
+                        args
+                            call i2a_aux [String]
+                                args
+                                    binary * [Int]
+                                        id i [Int]
+                                        unary ~ [Int]
+                                            int 1 [Int]
+        method i2a_aux : Int i -> String
+            if [String]
+                binary = [Bool]
+                    id i [Int]
+                    int 0 [Int]
+            then
+                str "" [String]
+            else
+                let [String]
+                    vars
+                        Int next
+                            binary / [Int]
+                                id i [Int]
+                                int 10 [Int]
+                    call concat [String]
+                        callee
+                            call i2a_aux [String]
+                                args
+                                    id next [Int]
+                        args
+                            call i2c [String]
+                                args
+                                    binary - [Int]
+                                        id i [Int]
+                                        binary * [Int]
+                                            id next [Int]
+                                            int 10 [Int]

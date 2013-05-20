@@ -1,0 +1,107 @@
+class Board : IO
+    fields
+        Int rows
+        Int columns
+        Int board_size
+    methods
+        Int size_of_board
+            arguments
+                String initial
+            body
+        SELF_TYPE board_init
+            arguments
+                String start
+            body
+                scope
+                    Int size
+class CellularAutomaton : Board
+    fields
+        String population_map
+    methods
+        SELF_TYPE init
+            arguments
+                String map
+            body
+        SELF_TYPE print
+            body
+                scope
+                    Int i
+                    scope
+                        Int num
+        Int num_cells
+            body
+        String cell
+            arguments
+                Int position
+            body
+        String north
+            arguments
+                Int position
+            body
+        String south
+            arguments
+                Int position
+            body
+        String east
+            arguments
+                Int position
+            body
+        String west
+            arguments
+                Int position
+            body
+        String northwest
+            arguments
+                Int position
+            body
+        String northeast
+            arguments
+                Int position
+            body
+        String southeast
+            arguments
+                Int position
+            body
+        String southwest
+            arguments
+                Int position
+            body
+        Int neighbors
+            arguments
+                Int position
+            body
+        String cell_at_next_evolution
+            arguments
+                Int position
+            body
+        SELF_TYPE evolve
+            body
+                scope
+                    Int position
+                    scope
+                        Int num
+                        scope
+                            String temp
+        String option
+            body
+                scope
+                    Int num
+        Bool prompt
+            body
+                scope
+                    String ans
+        Bool prompt2
+            body
+                scope
+                    String ans
+class Main : CellularAutomaton
+    fields
+        CellularAutomaton cells
+    methods
+        SELF_TYPE main
+            body
+                scope
+                    Bool continue
+                    scope
+                        String choice
+

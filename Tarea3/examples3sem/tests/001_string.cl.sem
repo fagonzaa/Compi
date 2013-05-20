@@ -1,0 +1,4 @@
+program
+    class Main
+        method main : SELF_TYPE
+            str "soy un gran string\n        incluso tengo varias líneas\n        lo que me hace particularmente difícil de parsear\n\n        además, uso \ttodos los caracteres \fde escape.\b" [String]

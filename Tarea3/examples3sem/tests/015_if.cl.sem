@@ -1,0 +1,12 @@
+coolc.parser.Position Undefined variable flotaDestruida
+coolc.parser.Position Undefined variable perdiste
+coolc.parser.Position Undefined variable ganaste
+program
+    class Main
+        method main : SELF_TYPE
+            if ERROR
+                id flotaDestruida ERROR
+            then
+                id perdiste ERROR
+            else
+                id ganaste ERROR

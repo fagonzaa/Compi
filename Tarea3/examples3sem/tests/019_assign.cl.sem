@@ -1,0 +1,5 @@
+program
+    class Main
+        method main : SELF_TYPE
+            assign asado ERROR
+                str "Cordero" [String]

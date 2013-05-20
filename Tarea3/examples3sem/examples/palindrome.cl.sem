@@ -1,0 +1,75 @@
+program
+    class Main : IO
+        method pal : String s -> Bool
+            if [Bool]
+                binary = [Bool]
+                    call length [Int]
+                        callee
+                            id s [String]
+                    int 0 [Int]
+            then
+                bool true [Bool]
+            else
+                if [Bool]
+                    binary = [Bool]
+                        call length [Int]
+                            callee
+                                id s [String]
+                        int 1 [Int]
+                then
+                    bool true [Bool]
+                else
+                    if [Bool]
+                        binary = [Bool]
+                            call substr [String]
+                                callee
+                                    id s [String]
+                                args
+                                    int 0 [Int]
+                                    int 1 [Int]
+                            call substr [String]
+                                callee
+                                    id s [String]
+                                args
+                                    binary - [Int]
+                                        call length [Int]
+                                            callee
+                                                id s [String]
+                                        int 1 [Int]
+                                    int 1 [Int]
+                    then
+                        call pal [Bool]
+                            args
+                                call substr [String]
+                                    callee
+                                        id s [String]
+                                    args
+                                        int 1 [Int]
+                                        binary - [Int]
+                                            call length [Int]
+                                                callee
+                                                    id s [String]
+                                            int 2 [Int]
+                    else
+                        bool false [Bool]
+        field Int i
+        method main : SELF_TYPE
+            block [Main]
+                assign i [Int]
+                    unary ~ [Int]
+                        int 1 [Int]
+                call out_string [Main]
+                    args
+                        str "enter a string\n" [String]
+                if [Main]
+                    call pal [Bool]
+                        args
+                            call in_string [String]
+                then
+                    call out_string [Main]
+                        args
+                            str "that was a palindrome\n" [String]
+                else
+                    call out_string [Main]
+                        args
+                            str "that was not a palindrome\n" [String]

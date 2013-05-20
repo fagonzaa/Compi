@@ -1,0 +1,56 @@
+program
+    class Main : IO
+        method newline : Object
+            call out_string
+                args
+                    str "\n"
+        method prompt : String
+            block
+                call out_string
+                    args
+                        str "Enter a number>"
+                call in_string
+        method main : Object
+            let
+                vars
+                    A2I z
+                        new A2I
+                while
+                    bool true
+                loop
+                    let
+                        vars
+                            String s
+                                call prompt
+                        if
+                            binary =
+                                id s
+                                str "stop"
+                        then
+                            call abort
+                        else
+                            let
+                                vars
+                                    Int i
+                                        call a2i
+                                            callee
+                                                id z
+                                            args
+                                                id s
+                                let
+                                    vars
+                                        String news
+                                            call i2a
+                                                callee
+                                                    id z
+                                                args
+                                                    id i
+                                    block
+                                        call out_int
+                                            args
+                                                id i
+                                        call newline
+                                        call out_string
+                                            args
+                                                id news
+                                        call newline

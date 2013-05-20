@@ -1,0 +1,99 @@
+program
+    class List
+        method isNil : Bool
+            bool true [Bool]
+        method head : Int
+            block [Int]
+                call abort [Object]
+                int 0 [Int]
+        method tail : List
+            block [List]
+                call abort [Object]
+                id self [List]
+        method cons : Int i -> List
+            call init [List]
+                callee
+                    new Cons [Cons]
+                args
+                    id i [Int]
+                    id self [List]
+    class Cons : List
+        field Int car
+        field List cdr
+        method isNil : Bool
+            bool false [Bool]
+        method head : Int
+            id car [Int]
+        method tail : List
+            id cdr [List]
+        method init : Int i -> List rest -> List
+            block [Cons]
+                assign car [Int]
+                    id i [Int]
+                assign cdr [List]
+                    id rest [List]
+                id self [Cons]
+    class Main : IO
+        field List mylist
+        method print_list : List l -> Object
+            if [Object]
+                call isNil [Bool]
+                    callee
+                        id l [List]
+            then
+                call out_string [Main]
+                    args
+                        str "\n" [String]
+            else
+                block [Object]
+                    call out_int [Main]
+                        args
+                            call head [Int]
+                                callee
+                                    id l [List]
+                    call out_string [Main]
+                        args
+                            str " " [String]
+                    call print_list [Object]
+                        args
+                            call tail [List]
+                                callee
+                                    id l [List]
+        method main : Object
+            block [Object]
+                assign mylist [List]
+                    call cons [List]
+                        callee
+                            call cons [List]
+                                callee
+                                    call cons [List]
+                                        callee
+                                            call cons [List]
+                                                callee
+                                                    call cons [List]
+                                                        callee
+                                                            new List [List]
+                                                        args
+                                                            int 1 [Int]
+                                                args
+                                                    int 2 [Int]
+                                        args
+                                            int 3 [Int]
+                                args
+                                    int 4 [Int]
+                        args
+                            int 5 [Int]
+                while [Object]
+                    unary not [Bool]
+                        call isNil [Bool]
+                            callee
+                                id mylist [List]
+                loop
+                    block [List]
+                        call print_list [Object]
+                            args
+                                id mylist [List]
+                        assign mylist [List]
+                            call tail [List]
+                                callee
+                                    id mylist [List]

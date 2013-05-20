@@ -1,0 +1,170 @@
+program
+    class CellularAutomaton : IO
+        field String population_map
+        method init : String map -> SELF_TYPE
+            block
+                assign population_map
+                    id map
+                id self
+        method print : SELF_TYPE
+            block
+                call out_string
+                    args
+                        call concat
+                            callee
+                                id population_map
+                            args
+                                str "\n"
+                id self
+        method num_cells : Int
+            call length
+                callee
+                    id population_map
+        method cell : Int position -> String
+            call substr
+                callee
+                    id population_map
+                args
+                    id position
+                    int 1
+        method cell_left_neighbor : Int position -> String
+            if
+                binary =
+                    id position
+                    int 0
+            then
+                call cell
+                    args
+                        binary -
+                            call num_cells
+                            int 1
+            else
+                call cell
+                    args
+                        binary -
+                            id position
+                            int 1
+        method cell_right_neighbor : Int position -> String
+            if
+                binary =
+                    id position
+                    binary -
+                        call num_cells
+                        int 1
+            then
+                call cell
+                    args
+                        int 0
+            else
+                call cell
+                    args
+                        binary +
+                            id position
+                            int 1
+        method cell_at_next_evolution : Int position -> String
+            if
+                binary =
+                    binary +
+                        binary +
+                            if
+                                binary =
+                                    call cell
+                                        args
+                                            id position
+                                    str "X"
+                            then
+                                int 1
+                            else
+                                int 0
+                            if
+                                binary =
+                                    call cell_left_neighbor
+                                        args
+                                            id position
+                                    str "X"
+                            then
+                                int 1
+                            else
+                                int 0
+                        if
+                            binary =
+                                call cell_right_neighbor
+                                    args
+                                        id position
+                                str "X"
+                        then
+                            int 1
+                        else
+                            int 0
+                    int 1
+            then
+                str "X"
+            else
+                str "."
+        method evolve : SELF_TYPE
+            let
+                vars
+                    Int position
+                let
+                    vars
+                        Int num
+                            call num_cells
+                    let
+                        vars
+                            String temp
+                        block
+                            while
+                                binary <
+                                    id position
+                                    id num
+                            loop
+                                block
+                                    assign temp
+                                        call concat
+                                            callee
+                                                id temp
+                                            args
+                                                call cell_at_next_evolution
+                                                    args
+                                                        id position
+                                    assign position
+                                        binary +
+                                            id position
+                                            int 1
+                            assign population_map
+                                id temp
+                            id self
+    class Main
+        field CellularAutomaton cells
+        method main : SELF_TYPE
+            block
+                assign cells
+                    call init
+                        callee
+                            new CellularAutomaton
+                        args
+                            str "         X         "
+                call print
+                    callee
+                        id cells
+                let
+                    vars
+                        Int countdown
+                            int 20
+                    while
+                        binary <
+                            int 0
+                            id countdown
+                    loop
+                        block
+                            call evolve
+                                callee
+                                    id cells
+                            call print
+                                callee
+                                    id cells
+                            assign countdown
+                                binary -
+                                    id countdown
+                                    int 1
+                id self

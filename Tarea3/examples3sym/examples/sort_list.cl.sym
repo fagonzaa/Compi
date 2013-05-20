@@ -1,0 +1,91 @@
+class List : IO
+    fields
+    methods
+        Bool isNil
+            body
+        Cons cons
+            arguments
+                Int hd
+            body
+                scope
+                    Cons new_cell
+        Int car
+            body
+        List cdr
+            body
+        List rev
+            body
+        List sort
+            body
+        List insert
+            arguments
+                Int i
+            body
+        List rcons
+            arguments
+                Int i
+            body
+        Object print_list
+            body
+class Cons : List
+    fields
+        Int xcar
+        List xcdr
+    methods
+        Bool isNil
+            body
+        Cons init
+            arguments
+                Int hd
+                List tl
+            body
+        Int car
+            body
+        List cdr
+            body
+        List rev
+            body
+        List sort
+            body
+        List insert
+            arguments
+                Int i
+            body
+        List rcons
+            arguments
+                Int i
+            body
+        Object print_list
+            body
+class Nil : List
+    fields
+    methods
+        Bool isNil
+            body
+        List rev
+            body
+        List sort
+            body
+        List insert
+            arguments
+                Int i
+            body
+        List rcons
+            arguments
+                Int i
+            body
+        Object print_list
+            body
+class Main : IO
+    fields
+        List l
+    methods
+        List iota
+            arguments
+                Int i
+            body
+                scope
+                    Int j
+        Object main
+            body
+

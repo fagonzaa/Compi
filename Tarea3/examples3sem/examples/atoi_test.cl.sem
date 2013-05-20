@@ -1,0 +1,56 @@
+program
+    class Main : IO
+        method newline : Object
+            call out_string [Main]
+                args
+                    str "\n" [String]
+        method prompt : String
+            block [String]
+                call out_string [Main]
+                    args
+                        str "Enter a number>" [String]
+                call in_string [String]
+        method main : Object
+            let ERROR
+                vars
+                    A2I z
+                        new A2I ERROR
+                while ERROR
+                    bool true ERROR
+                loop
+                    let ERROR
+                        vars
+                            String s
+                                call prompt ERROR
+                        if ERROR
+                            binary = ERROR
+                                id s ERROR
+                                str "stop" ERROR
+                        then
+                            call abort ERROR
+                        else
+                            let ERROR
+                                vars
+                                    Int i
+                                        call a2i ERROR
+                                            callee
+                                                id z ERROR
+                                            args
+                                                id s ERROR
+                                let ERROR
+                                    vars
+                                        String news
+                                            call i2a ERROR
+                                                callee
+                                                    id z ERROR
+                                                args
+                                                    id i ERROR
+                                    block ERROR
+                                        call out_int ERROR
+                                            args
+                                                id i ERROR
+                                        call newline ERROR
+                                        call out_string ERROR
+                                            args
+                                                id news ERROR
+                                        call newline ERROR

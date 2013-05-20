@@ -1,0 +1,135 @@
+program
+    class Main : IO
+        method main : SELF_TYPE
+            let [Main]
+                vars
+                    Complex c
+                        call init [Complex]
+                            callee
+                                new Complex [Complex]
+                            args
+                                int 1 [Int]
+                                int 1 [Int]
+                block [Main]
+                    if [Main]
+                        binary = [Bool]
+                            call reflect_X [Complex]
+                                callee
+                                    id c [Complex]
+                            call reflect_0 [Complex]
+                                callee
+                                    id c [Complex]
+                    then
+                        call out_string [Main]
+                            args
+                                str "=)\n" [String]
+                    else
+                        call out_string [Main]
+                            args
+                                str "=(\n" [String]
+                    if [Main]
+                        call equal [Bool]
+                            callee
+                                call reflect_Y [Complex]
+                                    callee
+                                        call reflect_X [Complex]
+                                            callee
+                                                id c [Complex]
+                            args
+                                call reflect_0 [Complex]
+                                    callee
+                                        id c [Complex]
+                    then
+                        call out_string [Main]
+                            args
+                                str "=)\n" [String]
+                    else
+                        call out_string [Main]
+                            args
+                                str "=(\n" [String]
+    class Complex : IO
+        field Int x
+        field Int y
+        method init : Int a -> Int b -> Complex
+            block [Complex]
+                binary = [Bool]
+                    id x [Int]
+                    id a [Int]
+                binary = [Bool]
+                    id y [Int]
+                    id b [Int]
+                id self [Complex]
+        method print : Object
+            if [Complex]
+                binary = [Bool]
+                    id y [Int]
+                    int 0 [Int]
+            then
+                call out_int [Complex]
+                    args
+                        id x [Int]
+            else
+                call out_string [Complex]
+                    callee
+                        call out_int [Complex]
+                            callee
+                                call out_string [Complex]
+                                    callee
+                                        call out_int [Complex]
+                                            args
+                                                id x [Int]
+                                    args
+                                        str "+" [String]
+                            args
+                                id y [Int]
+                    args
+                        str "I" [String]
+        method reflect_0 : Complex
+            block [Complex]
+                binary = [Bool]
+                    id x [Int]
+                    unary ~ [Int]
+                        id x [Int]
+                binary = [Bool]
+                    id y [Int]
+                    unary ~ [Int]
+                        id y [Int]
+                id self [Complex]
+        method reflect_X : Complex
+            block [Complex]
+                binary = [Bool]
+                    id y [Int]
+                    unary ~ [Int]
+                        id y [Int]
+                id self [Complex]
+        method reflect_Y : Complex
+            block [Complex]
+                binary = [Bool]
+                    id x [Int]
+                    unary ~ [Int]
+                        id x [Int]
+                id self [Complex]
+        method equal : Complex d -> Bool
+            if [Bool]
+                binary = [Bool]
+                    id x [Int]
+                    call x_value [Int]
+                        callee
+                            id d [Complex]
+            then
+                if [Bool]
+                    binary = [Bool]
+                        id y [Int]
+                        call y_value [Int]
+                            callee
+                                id d [Complex]
+                then
+                    bool true [Bool]
+                else
+                    bool false [Bool]
+            else
+                bool false [Bool]
+        method x_value : Int
+            id x [Int]
+        method y_value : Int
+            id y [Int]

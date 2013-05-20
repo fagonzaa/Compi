@@ -1,0 +1,6 @@
+program
+    class Main : IO
+        method main : SELF_TYPE
+            call out_string
+                args
+                    str "Hello, World.\n"

@@ -1,0 +1,15 @@
+7:8 Cannot call method Main.parseInt String -> Int with arguments (Bool)
+9:8 Cannot call method Main.parseInt String -> Int with arguments (String,Int)
+program
+    class Main
+        method parseInt : String number -> Int
+            new Int [Int]
+        method main : SELF_TYPE
+            block ERROR
+                call parseInt ERROR
+                    args
+                        bool false [Bool]
+                call parseInt ERROR
+                    args
+                        str "14" [String]
+                        int 10 [Int]

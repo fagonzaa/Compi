@@ -1,0 +1,107 @@
+program
+    class Foo : Bazz
+        field Razz a
+            instanceof [Razz]
+                id self [Foo]
+                case Razz n
+                    new Bar [Bar]
+                case Foo n
+                    new Razz [Razz]
+                case Bar n
+                    id n [Bar]
+        field Int b
+            binary + [Int]
+                binary + [Int]
+                    binary + [Int]
+                        call doh [Int]
+                            callee
+                                id a [Razz]
+                        call doh [Int]
+                            callee
+                                id g [Foo]
+                    call doh [Int]
+                call printh [Int]
+        method doh : Int
+            let [Int]
+                vars
+                    Int i
+                        id h [Int]
+                block [Int]
+                    assign h [Int]
+                        binary + [Int]
+                            id h [Int]
+                            int 2 [Int]
+                    id i [Int]
+    class Bar : Razz
+        field Int c
+            call doh [Int]
+        field Object d
+            call printh [Int]
+    class Razz : Foo
+        field Bar e
+            instanceof [Bar]
+                id self [Razz]
+                case Razz n
+                    new Bar [Bar]
+                case Bar n
+                    id n [Bar]
+        field Int f
+            binary + [Int]
+                binary + [Int]
+                    binary + [Int]
+                        binary + [Int]
+                            call doh as Bazz [Int]
+                                callee
+                                    id a [Razz]
+                            call doh [Int]
+                                callee
+                                    id g [Foo]
+                        call doh [Int]
+                            callee
+                                id e [Bar]
+                    call doh [Int]
+                call printh [Int]
+    class Bazz : IO
+        field Int h
+            int 1 [Int]
+        field Foo g
+            instanceof [Foo]
+                id self [Bazz]
+                case Bazz n
+                    new Foo [Foo]
+                case Razz n
+                    new Bar [Bar]
+                case Foo n
+                    new Razz [Razz]
+                case Bar n
+                    id n [Bar]
+        field Object i
+            call printh [Int]
+        method printh : Int
+            block [Int]
+                call out_int [Bazz]
+                    args
+                        id h [Int]
+                int 0 [Int]
+        method doh : Int
+            let [Int]
+                vars
+                    Int i
+                        id h [Int]
+                block [Int]
+                    assign h [Int]
+                        binary + [Int]
+                            id h [Int]
+                            int 1 [Int]
+                    id i [Int]
+    class Main
+        field Bazz a
+            new Bazz [Bazz]
+        field Foo b
+            new Foo [Foo]
+        field Razz c
+            new Razz [Razz]
+        field Bar d
+            new Bar [Bar]
+        method main : String
+            str "do nothing" [String]

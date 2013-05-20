@@ -1,0 +1,75 @@
+program
+    class Main : IO
+        method pal : String s -> Bool
+            if
+                binary =
+                    call length
+                        callee
+                            id s
+                    int 0
+            then
+                bool true
+            else
+                if
+                    binary =
+                        call length
+                            callee
+                                id s
+                        int 1
+                then
+                    bool true
+                else
+                    if
+                        binary =
+                            call substr
+                                callee
+                                    id s
+                                args
+                                    int 0
+                                    int 1
+                            call substr
+                                callee
+                                    id s
+                                args
+                                    binary -
+                                        call length
+                                            callee
+                                                id s
+                                        int 1
+                                    int 1
+                    then
+                        call pal
+                            args
+                                call substr
+                                    callee
+                                        id s
+                                    args
+                                        int 1
+                                        binary -
+                                            call length
+                                                callee
+                                                    id s
+                                            int 2
+                    else
+                        bool false
+        field Int i
+        method main : SELF_TYPE
+            block
+                assign i
+                    unary ~
+                        int 1
+                call out_string
+                    args
+                        str "enter a string\n"
+                if
+                    call pal
+                        args
+                            call in_string
+                then
+                    call out_string
+                        args
+                            str "that was a palindrome\n"
+                else
+                    call out_string
+                        args
+                            str "that was not a palindrome\n"

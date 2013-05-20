@@ -1,0 +1,107 @@
+program
+    class Foo : Bazz
+        field Razz a
+            instanceof
+                id self
+                case Razz n
+                    new Bar
+                case Foo n
+                    new Razz
+                case Bar n
+                    id n
+        field Int b
+            binary +
+                binary +
+                    binary +
+                        call doh
+                            callee
+                                id a
+                        call doh
+                            callee
+                                id g
+                    call doh
+                call printh
+        method doh : Int
+            let
+                vars
+                    Int i
+                        id h
+                block
+                    assign h
+                        binary +
+                            id h
+                            int 2
+                    id i
+    class Bar : Razz
+        field Int c
+            call doh
+        field Object d
+            call printh
+    class Razz : Foo
+        field Bar e
+            instanceof
+                id self
+                case Razz n
+                    new Bar
+                case Bar n
+                    id n
+        field Int f
+            binary +
+                binary +
+                    binary +
+                        binary +
+                            call doh as Bazz
+                                callee
+                                    id a
+                            call doh
+                                callee
+                                    id g
+                        call doh
+                            callee
+                                id e
+                    call doh
+                call printh
+    class Bazz : IO
+        field Int h
+            int 1
+        field Foo g
+            instanceof
+                id self
+                case Bazz n
+                    new Foo
+                case Razz n
+                    new Bar
+                case Foo n
+                    new Razz
+                case Bar n
+                    id n
+        field Object i
+            call printh
+        method printh : Int
+            block
+                call out_int
+                    args
+                        id h
+                int 0
+        method doh : Int
+            let
+                vars
+                    Int i
+                        id h
+                block
+                    assign h
+                        binary +
+                            id h
+                            int 1
+                    id i
+    class Main
+        field Bazz a
+            new Bazz
+        field Foo b
+            new Foo
+        field Razz c
+            new Razz
+        field Bar d
+            new Bar
+        method main : String
+            str "do nothing"

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Coolc" default="compile">
+
+    <property name="targetdir" value="src/coolc/parser" />
+
+    <target name="clean">
+        <delete dir="classes" />
+        <delete file="${targetdir}/Parser.java" />
+        <delete file="${targetdir}/Lexer.java" />
+        <delete>
+            <fileset dir="examples" includes="*.out" />
+            <fileset dir="examples" includes="*.error" />
+        </delete>
+    </target>
+
+    <!-- utilizamos uptodate para no generar el lexer y parser cada vez que compilamos, sólo cuando es necesario -->
+    <target name="parser.check">
+        <uptodate property="parser.updated" srcfile="cool.y" targetfile="${targetdir}/Parser.java" />
+    </target>
+    
+    <target name="parser" depends="parser.check" unless="parser.updated">
+        <mkdir dir="${targetdir}" />
+        <exec executable="bison">
+            <arg line="cool.y" />
+            <arg line="-o${targetdir}/Parser.java" />
+        </exec>
+    </target>
+    
+    <target name="lexer.check">
+        <uptodate property="lexer.updated" srcfile="cool.l" targetfile="${targetdir}/Lexer.java" />
+    </target>
+    
+    <target name="lexer" depends="lexer.check" unless="lexer.updated">
+        <mkdir dir="${targetdir}" />
+        <exec executable="jflex">
+            <arg line="cool.l" />
+            <arg line="--nobak" />            
+            <arg line="-d" />
+            <arg line="${targetdir}" />
+        </exec>
+    </target>
+    
+    <!-- este target genera la aplicación -->
+    
+    <target name="compile" depends="lexer, parser">
+        <mkdir dir="classes" />
+        <javac includeantruntime="false" srcdir="src" destdir="classes" debug="true" />
+    </target>
+
+    <!-- podemos definir el archivo a escanear pasándole el argumento -Dcool.source=archivo.cl a ant -->
+
+    <target name="scan" depends="compile">
+
+        <echo message="${cool.source}" />
+
+
+        <java classpath="./classes" classname="coolc.Coolc" error="${cool.source}.error" output="${cool.source}.out">
+            <arg line="scan" />
+            <arg line="${cool.source}" />
+        </java>
+    </target>
+
+    <target name="parse" depends="compile">
+
+        <echo message="${cool.source}" />
+        <java classpath="./classes" classname="coolc.Coolc" 
+            error="${cool.source}.error" output="${cool.source}.parse">
+            <arg line="parse" />
+            <arg line="${cool.source}" />
+        </java>
+    </target>
+</project>
+

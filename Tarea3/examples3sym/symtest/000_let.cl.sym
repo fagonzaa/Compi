@@ -1,0 +1,10 @@
+class Main : Object
+    fields
+    methods
+        SELF_TYPE main
+            body
+                scope
+                    SeaOperationsCommander maxRay
+                    LandOperationsSpecialist jakeRockwell
+                    AirOperationsExpert aceMcCloud
+

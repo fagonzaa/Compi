@@ -1,0 +1,170 @@
+program
+    class CellularAutomaton : IO
+        field String population_map
+        method init : String map -> SELF_TYPE
+            block [CellularAutomaton]
+                assign population_map [String]
+                    id map [String]
+                id self [CellularAutomaton]
+        method print : SELF_TYPE
+            block [CellularAutomaton]
+                call out_string [CellularAutomaton]
+                    args
+                        call concat [String]
+                            callee
+                                id population_map [String]
+                            args
+                                str "\n" [String]
+                id self [CellularAutomaton]
+        method num_cells : Int
+            call length [Int]
+                callee
+                    id population_map [String]
+        method cell : Int position -> String
+            call substr [String]
+                callee
+                    id population_map [String]
+                args
+                    id position [Int]
+                    int 1 [Int]
+        method cell_left_neighbor : Int position -> String
+            if [String]
+                binary = [Bool]
+                    id position [Int]
+                    int 0 [Int]
+            then
+                call cell [String]
+                    args
+                        binary - [Int]
+                            call num_cells [Int]
+                            int 1 [Int]
+            else
+                call cell [String]
+                    args
+                        binary - [Int]
+                            id position [Int]
+                            int 1 [Int]
+        method cell_right_neighbor : Int position -> String
+            if [String]
+                binary = [Bool]
+                    id position [Int]
+                    binary - [Int]
+                        call num_cells [Int]
+                        int 1 [Int]
+            then
+                call cell [String]
+                    args
+                        int 0 [Int]
+            else
+                call cell [String]
+                    args
+                        binary + [Int]
+                            id position [Int]
+                            int 1 [Int]
+        method cell_at_next_evolution : Int position -> String
+            if [String]
+                binary = [Bool]
+                    binary + [Int]
+                        binary + [Int]
+                            if [Int]
+                                binary = [Bool]
+                                    call cell [String]
+                                        args
+                                            id position [Int]
+                                    str "X" [String]
+                            then
+                                int 1 [Int]
+                            else
+                                int 0 [Int]
+                            if [Int]
+                                binary = [Bool]
+                                    call cell_left_neighbor [String]
+                                        args
+                                            id position [Int]
+                                    str "X" [String]
+                            then
+                                int 1 [Int]
+                            else
+                                int 0 [Int]
+                        if [Int]
+                            binary = [Bool]
+                                call cell_right_neighbor [String]
+                                    args
+                                        id position [Int]
+                                str "X" [String]
+                        then
+                            int 1 [Int]
+                        else
+                            int 0 [Int]
+                    int 1 [Int]
+            then
+                str "X" [String]
+            else
+                str "." [String]
+        method evolve : SELF_TYPE
+            let [CellularAutomaton]
+                vars
+                    Int position
+                let [CellularAutomaton]
+                    vars
+                        Int num
+                            call num_cells [Int]
+                    let [CellularAutomaton]
+                        vars
+                            String temp
+                        block [CellularAutomaton]
+                            while [Object]
+                                binary < [Bool]
+                                    id position [Int]
+                                    id num [Int]
+                            loop
+                                block [Int]
+                                    assign temp [String]
+                                        call concat [String]
+                                            callee
+                                                id temp [String]
+                                            args
+                                                call cell_at_next_evolution [String]
+                                                    args
+                                                        id position [Int]
+                                    assign position [Int]
+                                        binary + [Int]
+                                            id position [Int]
+                                            int 1 [Int]
+                            assign population_map [String]
+                                id temp [String]
+                            id self [CellularAutomaton]
+    class Main
+        field CellularAutomaton cells
+        method main : SELF_TYPE
+            block [Main]
+                assign cells [CellularAutomaton]
+                    call init [CellularAutomaton]
+                        callee
+                            new CellularAutomaton [CellularAutomaton]
+                        args
+                            str "         X         " [String]
+                call print [CellularAutomaton]
+                    callee
+                        id cells [CellularAutomaton]
+                let [Object]
+                    vars
+                        Int countdown
+                            int 20 [Int]
+                    while [Object]
+                        binary < [Bool]
+                            int 0 [Int]
+                            id countdown [Int]
+                    loop
+                        block [Int]
+                            call evolve [CellularAutomaton]
+                                callee
+                                    id cells [CellularAutomaton]
+                            call print [CellularAutomaton]
+                                callee
+                                    id cells [CellularAutomaton]
+                            assign countdown [Int]
+                                binary - [Int]
+                                    id countdown [Int]
+                                    int 1 [Int]
+                id self [Main]

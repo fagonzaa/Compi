@@ -1,0 +1,7 @@
+class Main : Object
+    fields
+        Int jake
+            scope
+                Object inAnInitializer
+    methods
+

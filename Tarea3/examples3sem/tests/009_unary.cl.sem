@@ -1,0 +1,11 @@
+coolc.parser.Position Undefined variable sin
+program
+    class Main
+        method main : SELF_TYPE
+            block ERROR
+                unary isvoid ERROR
+                    id sin ERROR
+                unary not [Bool]
+                    bool true [Bool]
+                unary ~ [Int]
+                    int 18374 [Int]

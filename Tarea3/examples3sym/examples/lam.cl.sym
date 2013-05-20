@@ -1,0 +1,276 @@
+class VarList : IO
+    fields
+    methods
+        Bool isNil
+            body
+        Variable head
+            body
+        VarList tail
+            body
+        VarList add
+            arguments
+                Variable x
+            body
+        SELF_TYPE print
+            body
+class VarListNE : VarList
+    fields
+        Variable x
+        VarList rest
+    methods
+        Bool isNil
+            body
+        Variable head
+            body
+        VarList tail
+            body
+        VarListNE init
+            arguments
+                Variable y
+                VarList r
+            body
+        SELF_TYPE print
+            body
+class LambdaList : Object
+    fields
+    methods
+        Bool isNil
+            body
+        VarList headE
+            body
+        Lambda headC
+            body
+        Int headN
+            body
+        LambdaList tail
+            body
+        LambdaList add
+            arguments
+                VarList e
+                Lambda x
+                Int n
+            body
+class LambdaListNE : LambdaList
+    fields
+        Lambda lam
+        Int num
+        VarList env
+        LambdaList rest
+    methods
+        Bool isNil
+            body
+        VarList headE
+            body
+        Lambda headC
+            body
+        Int headN
+            body
+        LambdaList tail
+            body
+        LambdaListNE init
+            arguments
+                VarList e
+                Lambda l
+                Int n
+                LambdaList r
+            body
+class LambdaListRef : Object
+    fields
+        Int nextNum
+        LambdaList l
+    methods
+        Bool isNil
+            body
+        VarList headE
+            body
+        Lambda headC
+            body
+        Int headN
+            body
+        SELF_TYPE reset
+            body
+        Int add
+            arguments
+                VarList env
+                Lambda c
+            body
+        SELF_TYPE removeHead
+            body
+class Expr : IO
+    fields
+    methods
+        SELF_TYPE print_self
+            body
+        Expr beta
+            body
+        Expr substitute
+            arguments
+                Variable x
+                Expr e
+            body
+        SELF_TYPE gen_code
+            arguments
+                VarList env
+                LambdaListRef closures
+            body
+class Variable : Expr
+    fields
+        String name
+    methods
+        Variable init
+            arguments
+                String n
+            body
+        SELF_TYPE print_self
+            body
+        Expr beta
+            body
+        Expr substitute
+            arguments
+                Variable x
+                Expr e
+            body
+        SELF_TYPE gen_code
+            arguments
+                VarList env
+                LambdaListRef closures
+            body
+                scope
+                    VarList cur_env
+class Lambda : Expr
+    fields
+        Variable arg
+        Expr body
+    methods
+        Lambda init
+            arguments
+                Variable a
+                Expr b
+            body
+        SELF_TYPE print_self
+            body
+        Expr beta
+            body
+        Expr apply
+            arguments
+                Expr actual
+            body
+        Expr substitute
+            arguments
+                Variable x
+                Expr e
+            body
+                scope
+                    Expr new_body
+                    Lambda new_lam
+        SELF_TYPE gen_code
+            arguments
+                VarList env
+                LambdaListRef closures
+            body
+        SELF_TYPE gen_closure_code
+            arguments
+                Int n
+                VarList env
+                LambdaListRef closures
+            body
+class App : Expr
+    fields
+        Expr fun
+        Expr arg
+    methods
+        App init
+            arguments
+                Expr f
+                Expr a
+            body
+        SELF_TYPE print_self
+            body
+        Expr beta
+            body
+                scope
+                    Lambda l
+                scope
+                    Expr e
+                        scope
+                            Expr new_fun
+                            App new_app
+        Expr substitute
+            arguments
+                Variable x
+                Expr e
+            body
+                scope
+                    Expr new_fun
+                    Expr new_arg
+                    App new_app
+        SELF_TYPE gen_code
+            arguments
+                VarList env
+                LambdaListRef closures
+            body
+class Term : IO
+    fields
+    methods
+        Variable var
+            arguments
+                String x
+            body
+                scope
+                    Variable v
+        Lambda lam
+            arguments
+                Variable x
+                Expr e
+            body
+                scope
+                    Lambda l
+        App app
+            arguments
+                Expr e1
+                Expr e2
+            body
+                scope
+                    App a
+        Expr i
+            body
+                scope
+                    Variable x
+        Expr k
+            body
+                scope
+                    Variable x
+                    Variable y
+        Expr s
+            body
+                scope
+                    Variable x
+                    Variable y
+                    Variable z
+class Main : Term
+    fields
+    methods
+        Expr beta_reduce
+            arguments
+                Expr e
+            body
+                scope
+                    Bool done
+                    Expr new_expr
+        SELF_TYPE eval_class
+            body
+        SELF_TYPE closure_class
+            body
+        SELF_TYPE gen_code
+            arguments
+                Expr e
+            body
+                scope
+                    LambdaListRef cl
+                    scope
+                        VarList e
+                        Lambda c
+                        Int n
+        Int main
+            body
+

@@ -1,0 +1,838 @@
+program
+    class Board : IO
+        field Int rows
+        field Int columns
+        field Int board_size
+        method size_of_board : String initial -> Int
+            call length [Int]
+                callee
+                    id initial [String]
+        method board_init : String start -> SELF_TYPE
+            let [Board]
+                vars
+                    Int size
+                        call size_of_board [Int]
+                            args
+                                id start [String]
+                block [Board]
+                    if [Int]
+                        binary = [Bool]
+                            id size [Int]
+                            int 15 [Int]
+                    then
+                        block [Int]
+                            assign rows [Int]
+                                int 3 [Int]
+                            assign columns [Int]
+                                int 5 [Int]
+                            assign board_size [Int]
+                                id size [Int]
+                    else
+                        if [Int]
+                            binary = [Bool]
+                                id size [Int]
+                                int 16 [Int]
+                        then
+                            block [Int]
+                                assign rows [Int]
+                                    int 4 [Int]
+                                assign columns [Int]
+                                    int 4 [Int]
+                                assign board_size [Int]
+                                    id size [Int]
+                        else
+                            if [Int]
+                                binary = [Bool]
+                                    id size [Int]
+                                    int 20 [Int]
+                            then
+                                block [Int]
+                                    assign rows [Int]
+                                        int 4 [Int]
+                                    assign columns [Int]
+                                        int 5 [Int]
+                                    assign board_size [Int]
+                                        id size [Int]
+                            else
+                                if [Int]
+                                    binary = [Bool]
+                                        id size [Int]
+                                        int 21 [Int]
+                                then
+                                    block [Int]
+                                        assign rows [Int]
+                                            int 3 [Int]
+                                        assign columns [Int]
+                                            int 7 [Int]
+                                        assign board_size [Int]
+                                            id size [Int]
+                                else
+                                    if [Int]
+                                        binary = [Bool]
+                                            id size [Int]
+                                            int 25 [Int]
+                                    then
+                                        block [Int]
+                                            assign rows [Int]
+                                                int 5 [Int]
+                                            assign columns [Int]
+                                                int 5 [Int]
+                                            assign board_size [Int]
+                                                id size [Int]
+                                    else
+                                        if [Int]
+                                            binary = [Bool]
+                                                id size [Int]
+                                                int 28 [Int]
+                                        then
+                                            block [Int]
+                                                assign rows [Int]
+                                                    int 7 [Int]
+                                                assign columns [Int]
+                                                    int 4 [Int]
+                                                assign board_size [Int]
+                                                    id size [Int]
+                                        else
+                                            block [Int]
+                                                assign rows [Int]
+                                                    int 5 [Int]
+                                                assign columns [Int]
+                                                    int 5 [Int]
+                                                assign board_size [Int]
+                                                    id size [Int]
+                    id self [Board]
+    class CellularAutomaton : Board
+        field String population_map
+        method init : String map -> SELF_TYPE
+            block [CellularAutomaton]
+                assign population_map [String]
+                    id map [String]
+                call board_init [CellularAutomaton]
+                    args
+                        id map [String]
+                id self [CellularAutomaton]
+        method print : SELF_TYPE
+            let [CellularAutomaton]
+                vars
+                    Int i
+                        int 0 [Int]
+                let [CellularAutomaton]
+                    vars
+                        Int num
+                            id board_size [Int]
+                    block [CellularAutomaton]
+                        call out_string [CellularAutomaton]
+                            args
+                                str "\n" [String]
+                        while [Object]
+                            binary < [Bool]
+                                id i [Int]
+                                id num [Int]
+                        loop
+                            block [Int]
+                                call out_string [CellularAutomaton]
+                                    args
+                                        call substr [String]
+                                            callee
+                                                id population_map [String]
+                                            args
+                                                id i [Int]
+                                                id columns [Int]
+                                call out_string [CellularAutomaton]
+                                    args
+                                        str "\n" [String]
+                                assign i [Int]
+                                    binary + [Int]
+                                        id i [Int]
+                                        id columns [Int]
+                        call out_string [CellularAutomaton]
+                            args
+                                str "\n" [String]
+                        id self [CellularAutomaton]
+        method num_cells : Int
+            call length [Int]
+                callee
+                    id population_map [String]
+        method cell : Int position -> String
+            if [String]
+                binary < [Bool]
+                    binary - [Int]
+                        id board_size [Int]
+                        int 1 [Int]
+                    id position [Int]
+            then
+                str " " [String]
+            else
+                call substr [String]
+                    callee
+                        id population_map [String]
+                    args
+                        id position [Int]
+                        int 1 [Int]
+        method north : Int position -> String
+            if [String]
+                binary < [Bool]
+                    binary - [Int]
+                        id position [Int]
+                        id columns [Int]
+                    int 0 [Int]
+            then
+                str " " [String]
+            else
+                call cell [String]
+                    args
+                        binary - [Int]
+                            id position [Int]
+                            id columns [Int]
+        method south : Int position -> String
+            if [String]
+                binary < [Bool]
+                    id board_size [Int]
+                    binary + [Int]
+                        id position [Int]
+                        id columns [Int]
+            then
+                str " " [String]
+            else
+                call cell [String]
+                    args
+                        binary + [Int]
+                            id position [Int]
+                            id columns [Int]
+        method east : Int position -> String
+            if [String]
+                binary = [Bool]
+                    binary * [Int]
+                        binary / [Int]
+                            binary + [Int]
+                                id position [Int]
+                                int 1 [Int]
+                            id columns [Int]
+                        id columns [Int]
+                    binary + [Int]
+                        id position [Int]
+                        int 1 [Int]
+            then
+                str " " [String]
+            else
+                call cell [String]
+                    args
+                        binary + [Int]
+                            id position [Int]
+                            int 1 [Int]
+        method west : Int position -> String
+            if [String]
+                binary = [Bool]
+                    id position [Int]
+                    int 0 [Int]
+            then
+                str " " [String]
+            else
+                if [String]
+                    binary = [Bool]
+                        binary * [Int]
+                            binary / [Int]
+                                id position [Int]
+                                id columns [Int]
+                            id columns [Int]
+                        id position [Int]
+                then
+                    str " " [String]
+                else
+                    call cell [String]
+                        args
+                            binary - [Int]
+                                id position [Int]
+                                int 1 [Int]
+        method northwest : Int position -> String
+            if [String]
+                binary < [Bool]
+                    binary - [Int]
+                        id position [Int]
+                        id columns [Int]
+                    int 0 [Int]
+            then
+                str " " [String]
+            else
+                if [String]
+                    binary = [Bool]
+                        binary * [Int]
+                            binary / [Int]
+                                id position [Int]
+                                id columns [Int]
+                            id columns [Int]
+                        id position [Int]
+                then
+                    str " " [String]
+                else
+                    call north [String]
+                        args
+                            binary - [Int]
+                                id position [Int]
+                                int 1 [Int]
+        method northeast : Int position -> String
+            if [String]
+                binary < [Bool]
+                    binary - [Int]
+                        id position [Int]
+                        id columns [Int]
+                    int 0 [Int]
+            then
+                str " " [String]
+            else
+                if [String]
+                    binary = [Bool]
+                        binary * [Int]
+                            binary / [Int]
+                                binary + [Int]
+                                    id position [Int]
+                                    int 1 [Int]
+                                id columns [Int]
+                            id columns [Int]
+                        binary + [Int]
+                            id position [Int]
+                            int 1 [Int]
+                then
+                    str " " [String]
+                else
+                    call north [String]
+                        args
+                            binary + [Int]
+                                id position [Int]
+                                int 1 [Int]
+        method southeast : Int position -> String
+            if [String]
+                binary < [Bool]
+                    id board_size [Int]
+                    binary + [Int]
+                        id position [Int]
+                        id columns [Int]
+            then
+                str " " [String]
+            else
+                if [String]
+                    binary = [Bool]
+                        binary * [Int]
+                            binary / [Int]
+                                binary + [Int]
+                                    id position [Int]
+                                    int 1 [Int]
+                                id columns [Int]
+                            id columns [Int]
+                        binary + [Int]
+                            id position [Int]
+                            int 1 [Int]
+                then
+                    str " " [String]
+                else
+                    call south [String]
+                        args
+                            binary + [Int]
+                                id position [Int]
+                                int 1 [Int]
+        method southwest : Int position -> String
+            if [String]
+                binary < [Bool]
+                    id board_size [Int]
+                    binary + [Int]
+                        id position [Int]
+                        id columns [Int]
+            then
+                str " " [String]
+            else
+                if [String]
+                    binary = [Bool]
+                        binary * [Int]
+                            binary / [Int]
+                                id position [Int]
+                                id columns [Int]
+                            id columns [Int]
+                        id position [Int]
+                then
+                    str " " [String]
+                else
+                    call south [String]
+                        args
+                            binary - [Int]
+                                id position [Int]
+                                int 1 [Int]
+        method neighbors : Int position -> Int
+            block [Int]
+                binary + [Int]
+                    binary + [Int]
+                        binary + [Int]
+                            binary + [Int]
+                                binary + [Int]
+                                    binary + [Int]
+                                        binary + [Int]
+                                            if [Int]
+                                                binary = [Bool]
+                                                    call north [String]
+                                                        args
+                                                            id position [Int]
+                                                    str "X" [String]
+                                            then
+                                                int 1 [Int]
+                                            else
+                                                int 0 [Int]
+                                            if [Int]
+                                                binary = [Bool]
+                                                    call south [String]
+                                                        args
+                                                            id position [Int]
+                                                    str "X" [String]
+                                            then
+                                                int 1 [Int]
+                                            else
+                                                int 0 [Int]
+                                        if [Int]
+                                            binary = [Bool]
+                                                call east [String]
+                                                    args
+                                                        id position [Int]
+                                                str "X" [String]
+                                        then
+                                            int 1 [Int]
+                                        else
+                                            int 0 [Int]
+                                    if [Int]
+                                        binary = [Bool]
+                                            call west [String]
+                                                args
+                                                    id position [Int]
+                                            str "X" [String]
+                                    then
+                                        int 1 [Int]
+                                    else
+                                        int 0 [Int]
+                                if [Int]
+                                    binary = [Bool]
+                                        call northeast [String]
+                                            args
+                                                id position [Int]
+                                        str "X" [String]
+                                then
+                                    int 1 [Int]
+                                else
+                                    int 0 [Int]
+                            if [Int]
+                                binary = [Bool]
+                                    call northwest [String]
+                                        args
+                                            id position [Int]
+                                    str "X" [String]
+                            then
+                                int 1 [Int]
+                            else
+                                int 0 [Int]
+                        if [Int]
+                            binary = [Bool]
+                                call southeast [String]
+                                    args
+                                        id position [Int]
+                                str "X" [String]
+                        then
+                            int 1 [Int]
+                        else
+                            int 0 [Int]
+                    if [Int]
+                        binary = [Bool]
+                            call southwest [String]
+                                args
+                                    id position [Int]
+                            str "X" [String]
+                    then
+                        int 1 [Int]
+                    else
+                        int 0 [Int]
+        method cell_at_next_evolution : Int position -> String
+            if [String]
+                binary = [Bool]
+                    call neighbors [Int]
+                        args
+                            id position [Int]
+                    int 3 [Int]
+            then
+                str "X" [String]
+            else
+                if [String]
+                    binary = [Bool]
+                        call neighbors [Int]
+                            args
+                                id position [Int]
+                        int 2 [Int]
+                then
+                    if [String]
+                        binary = [Bool]
+                            call cell [String]
+                                args
+                                    id position [Int]
+                            str "X" [String]
+                    then
+                        str "X" [String]
+                    else
+                        str "-" [String]
+                else
+                    str "-" [String]
+        method evolve : SELF_TYPE
+            let [CellularAutomaton]
+                vars
+                    Int position
+                        int 0 [Int]
+                let [CellularAutomaton]
+                    vars
+                        Int num
+                            call num_cells [Int]
+                    let [CellularAutomaton]
+                        vars
+                            String temp
+                        block [CellularAutomaton]
+                            while [Object]
+                                binary < [Bool]
+                                    id position [Int]
+                                    id num [Int]
+                            loop
+                                block [Int]
+                                    assign temp [String]
+                                        call concat [String]
+                                            callee
+                                                id temp [String]
+                                            args
+                                                call cell_at_next_evolution [String]
+                                                    args
+                                                        id position [Int]
+                                    assign position [Int]
+                                        binary + [Int]
+                                            id position [Int]
+                                            int 1 [Int]
+                            assign population_map [String]
+                                id temp [String]
+                            id self [CellularAutomaton]
+        method option : String
+            block [String]
+                let [String]
+                    vars
+                        Int num
+                    block [String]
+                        call out_string [CellularAutomaton]
+                            args
+                                str "\nPlease chose a number:\n" [String]
+                        call out_string [CellularAutomaton]
+                            args
+                                str "\t1: A cross\n" [String]
+                        call out_string [CellularAutomaton]
+                            args
+                                str "\t2: A slash from the upper left to lower right\n" [String]
+                        call out_string [CellularAutomaton]
+                            args
+                                str "\t3: A slash from the upper right to lower left\n" [String]
+                        call out_string [CellularAutomaton]
+                            args
+                                str "\t4: An X\n" [String]
+                        call out_string [CellularAutomaton]
+                            args
+                                str "\t5: A greater than sign \n" [String]
+                        call out_string [CellularAutomaton]
+                            args
+                                str "\t6: A less than sign\n" [String]
+                        call out_string [CellularAutomaton]
+                            args
+                                str "\t7: Two greater than signs\n" [String]
+                        call out_string [CellularAutomaton]
+                            args
+                                str "\t8: Two less than signs\n" [String]
+                        call out_string [CellularAutomaton]
+                            args
+                                str "\t9: A 'V'\n" [String]
+                        call out_string [CellularAutomaton]
+                            args
+                                str "\t10: An inverse 'V'\n" [String]
+                        call out_string [CellularAutomaton]
+                            args
+                                str "\t11: Numbers 9 and 10 combined\n" [String]
+                        call out_string [CellularAutomaton]
+                            args
+                                str "\t12: A full grid\n" [String]
+                        call out_string [CellularAutomaton]
+                            args
+                                str "\t13: A 'T'\n" [String]
+                        call out_string [CellularAutomaton]
+                            args
+                                str "\t14: A plus '+'\n" [String]
+                        call out_string [CellularAutomaton]
+                            args
+                                str "\t15: A 'W'\n" [String]
+                        call out_string [CellularAutomaton]
+                            args
+                                str "\t16: An 'M'\n" [String]
+                        call out_string [CellularAutomaton]
+                            args
+                                str "\t17: An 'E'\n" [String]
+                        call out_string [CellularAutomaton]
+                            args
+                                str "\t18: A '3'\n" [String]
+                        call out_string [CellularAutomaton]
+                            args
+                                str "\t19: An 'O'\n" [String]
+                        call out_string [CellularAutomaton]
+                            args
+                                str "\t20: An '8'\n" [String]
+                        call out_string [CellularAutomaton]
+                            args
+                                str "\t21: An 'S'\n" [String]
+                        call out_string [CellularAutomaton]
+                            args
+                                str "Your choice => " [String]
+                        assign num [Int]
+                            call in_int [Int]
+                        call out_string [CellularAutomaton]
+                            args
+                                str "\n" [String]
+                        if [String]
+                            binary = [Bool]
+                                id num [Int]
+                                int 1 [Int]
+                        then
+                            str " XX  XXXX XXXX  XX  " [String]
+                        else
+                            if [String]
+                                binary = [Bool]
+                                    id num [Int]
+                                    int 2 [Int]
+                            then
+                                str "    X   X   X   X   X    " [String]
+                            else
+                                if [String]
+                                    binary = [Bool]
+                                        id num [Int]
+                                        int 3 [Int]
+                                then
+                                    str "X     X     X     X     X" [String]
+                                else
+                                    if [String]
+                                        binary = [Bool]
+                                            id num [Int]
+                                            int 4 [Int]
+                                    then
+                                        str "X   X X X   X   X X X   X" [String]
+                                    else
+                                        if [String]
+                                            binary = [Bool]
+                                                id num [Int]
+                                                int 5 [Int]
+                                        then
+                                            str "X     X     X   X   X    " [String]
+                                        else
+                                            if [String]
+                                                binary = [Bool]
+                                                    id num [Int]
+                                                    int 6 [Int]
+                                            then
+                                                str "    X   X   X     X     X" [String]
+                                            else
+                                                if [String]
+                                                    binary = [Bool]
+                                                        id num [Int]
+                                                        int 7 [Int]
+                                                then
+                                                    str "X  X  X  XX  X      " [String]
+                                                else
+                                                    if [String]
+                                                        binary = [Bool]
+                                                            id num [Int]
+                                                            int 8 [Int]
+                                                    then
+                                                        str " X  XX  X  X  X     " [String]
+                                                    else
+                                                        if [String]
+                                                            binary = [Bool]
+                                                                id num [Int]
+                                                                int 9 [Int]
+                                                        then
+                                                            str "X   X X X   X  " [String]
+                                                        else
+                                                            if [String]
+                                                                binary = [Bool]
+                                                                    id num [Int]
+                                                                    int 10 [Int]
+                                                            then
+                                                                str "  X   X X X   X" [String]
+                                                            else
+                                                                if [String]
+                                                                    binary = [Bool]
+                                                                        id num [Int]
+                                                                        int 11 [Int]
+                                                                then
+                                                                    str "X X X X X X X X" [String]
+                                                                else
+                                                                    if [String]
+                                                                        binary = [Bool]
+                                                                            id num [Int]
+                                                                            int 12 [Int]
+                                                                    then
+                                                                        str "XXXXXXXXXXXXXXXXXXXXXXXXX" [String]
+                                                                    else
+                                                                        if [String]
+                                                                            binary = [Bool]
+                                                                                id num [Int]
+                                                                                int 13 [Int]
+                                                                        then
+                                                                            str "XXXXX  X    X    X    X  " [String]
+                                                                        else
+                                                                            if [String]
+                                                                                binary = [Bool]
+                                                                                    id num [Int]
+                                                                                    int 14 [Int]
+                                                                            then
+                                                                                str "  X    X  XXXXX  X    X  " [String]
+                                                                            else
+                                                                                if [String]
+                                                                                    binary = [Bool]
+                                                                                        id num [Int]
+                                                                                        int 15 [Int]
+                                                                                then
+                                                                                    str "X     X X X X   X X  " [String]
+                                                                                else
+                                                                                    if [String]
+                                                                                        binary = [Bool]
+                                                                                            id num [Int]
+                                                                                            int 16 [Int]
+                                                                                    then
+                                                                                        str "  X X   X X X X     X" [String]
+                                                                                    else
+                                                                                        if [String]
+                                                                                            binary = [Bool]
+                                                                                                id num [Int]
+                                                                                                int 17 [Int]
+                                                                                        then
+                                                                                            str "XXXXX   X   XXXXX   X   XXXX" [String]
+                                                                                        else
+                                                                                            if [String]
+                                                                                                binary = [Bool]
+                                                                                                    id num [Int]
+                                                                                                    int 18 [Int]
+                                                                                            then
+                                                                                                str "XXX    X   X  X    X   XXXX " [String]
+                                                                                            else
+                                                                                                if [String]
+                                                                                                    binary = [Bool]
+                                                                                                        id num [Int]
+                                                                                                        int 19 [Int]
+                                                                                                then
+                                                                                                    str " XX X  XX  X XX " [String]
+                                                                                                else
+                                                                                                    if [String]
+                                                                                                        binary = [Bool]
+                                                                                                            id num [Int]
+                                                                                                            int 20 [Int]
+                                                                                                    then
+                                                                                                        str " XX X  XX  X XX X  XX  X XX " [String]
+                                                                                                    else
+                                                                                                        if [String]
+                                                                                                            binary = [Bool]
+                                                                                                                id num [Int]
+                                                                                                                int 21 [Int]
+                                                                                                        then
+                                                                                                            str " XXXX   X    XX    X   XXXX " [String]
+                                                                                                        else
+                                                                                                            str "                         " [String]
+        method prompt : Bool
+            block [Bool]
+                let [Bool]
+                    vars
+                        String ans
+                    block [Bool]
+                        call out_string [CellularAutomaton]
+                            args
+                                str "Would you like to continue with the next generation? \n" [String]
+                        call out_string [CellularAutomaton]
+                            args
+                                str "Please use lowercase y or n for your answer [y]: " [String]
+                        assign ans [String]
+                            call in_string [String]
+                        call out_string [CellularAutomaton]
+                            args
+                                str "\n" [String]
+                        if [Bool]
+                            binary = [Bool]
+                                id ans [String]
+                                str "n" [String]
+                        then
+                            bool false [Bool]
+                        else
+                            bool true [Bool]
+        method prompt2 : Bool
+            let [Bool]
+                vars
+                    String ans
+                block [Bool]
+                    call out_string [CellularAutomaton]
+                        args
+                            str "\n\n" [String]
+                    call out_string [CellularAutomaton]
+                        args
+                            str "Would you like to choose a background pattern? \n" [String]
+                    call out_string [CellularAutomaton]
+                        args
+                            str "Please use lowercase y or n for your answer [n]: " [String]
+                    assign ans [String]
+                        call in_string [String]
+                    if [Bool]
+                        binary = [Bool]
+                            id ans [String]
+                            str "y" [String]
+                    then
+                        bool true [Bool]
+                    else
+                        bool false [Bool]
+    class Main : CellularAutomaton
+        field CellularAutomaton cells
+        method main : SELF_TYPE
+            block [Main]
+                let [Main]
+                    vars
+                        Bool continue
+                    let [Main]
+                        vars
+                            String choice
+                        block [Main]
+                            call out_string [Main]
+                                args
+                                    str "Welcome to the Game of Life.\n" [String]
+                            call out_string [Main]
+                                args
+                                    str "There are many initial states to choose from. \n" [String]
+                            while [Object]
+                                call prompt2 [Bool]
+                            loop
+                                block [Object]
+                                    assign continue [Bool]
+                                        bool true [Bool]
+                                    assign choice [String]
+                                        call option [String]
+                                    assign cells [CellularAutomaton]
+                                        call init [CellularAutomaton]
+                                            callee
+                                                new CellularAutomaton [CellularAutomaton]
+                                            args
+                                                id choice [String]
+                                    call print [CellularAutomaton]
+                                        callee
+                                            id cells [CellularAutomaton]
+                                    while [Object]
+                                        id continue [Bool]
+                                    loop
+                                        if [Object]
+                                            call prompt [Bool]
+                                        then
+                                            block [CellularAutomaton]
+                                                call evolve [CellularAutomaton]
+                                                    callee
+                                                        id cells [CellularAutomaton]
+                                                call print [CellularAutomaton]
+                                                    callee
+                                                        id cells [CellularAutomaton]
+                                        else
+                                            assign continue [Bool]
+                                                bool false [Bool]
+                            id self [Main]

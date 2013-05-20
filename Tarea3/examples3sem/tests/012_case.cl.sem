@@ -1,0 +1,16 @@
+coolc.parser.Position Undefined variable person
+program
+    class Main
+        method main : SELF_TYPE
+            instanceof [String]
+                id person ERROR
+                case Human finn
+                    str "mathematical" [String]
+                case Dog jake
+                    str "woah, dude!" [String]
+                case Candy bubblegum
+                    str "my loyal candy people!" [String]
+                case CrazyOldMan iceking
+                    str "let's go, günther" [String]
+                case Elemental flamePrincess
+                    str "fwhoosh!" [String]

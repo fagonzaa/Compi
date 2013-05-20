@@ -1,0 +1,83 @@
+program
+    class Main : IO
+        method main : Int
+            int 0 [Int]
+        field Int out
+            block [Int]
+                call out_string [Main]
+                    args
+                        str "2 is trivially prime.\n" [String]
+                int 2 [Int]
+        field Int testee
+            id out [Int]
+        field Int divisor
+        field Int stop
+            int 500 [Int]
+        field Object m
+            while [Object]
+                bool true [Bool]
+            loop
+                block [Object]
+                    assign testee [Int]
+                        binary + [Int]
+                            id testee [Int]
+                            int 1 [Int]
+                    assign divisor [Int]
+                        int 2 [Int]
+                    while [Object]
+                        if [Bool]
+                            binary < [Bool]
+                                id testee [Int]
+                                binary * [Int]
+                                    id divisor [Int]
+                                    id divisor [Int]
+                        then
+                            bool false [Bool]
+                        else
+                            if [Bool]
+                                binary = [Bool]
+                                    binary - [Int]
+                                        id testee [Int]
+                                        binary * [Int]
+                                            id divisor [Int]
+                                            binary / [Int]
+                                                id testee [Int]
+                                                id divisor [Int]
+                                    int 0 [Int]
+                            then
+                                bool false [Bool]
+                            else
+                                bool true [Bool]
+                    loop
+                        assign divisor [Int]
+                            binary + [Int]
+                                id divisor [Int]
+                                int 1 [Int]
+                    if [Object]
+                        binary < [Bool]
+                            id testee [Int]
+                            binary * [Int]
+                                id divisor [Int]
+                                id divisor [Int]
+                    then
+                        block [Main]
+                            assign out [Int]
+                                id testee [Int]
+                            call out_int [Main]
+                                args
+                                    id out [Int]
+                            call out_string [Main]
+                                args
+                                    str " is prime.\n" [String]
+                    else
+                        int 0 [Int]
+                    if [Object]
+                        binary <= [Bool]
+                            id stop [Int]
+                            id testee [Int]
+                    then
+                        call abort [Object]
+                            callee
+                                str "halt" [String]
+                    else
+                        str "continue" [String]

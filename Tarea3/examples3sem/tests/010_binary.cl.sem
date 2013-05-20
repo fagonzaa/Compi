@@ -1,0 +1,31 @@
+coolc.parser.Position Undefined variable todo
+coolc.parser.Position Undefined variable algo
+coolc.parser.Position Undefined variable todo
+coolc.parser.Position Undefined variable pollo
+coolc.parser.Position Undefined variable n
+coolc.parser.Position Undefined variable pio
+program
+    class Main
+        method main : SELF_TYPE
+            block ERROR
+                binary = ERROR
+                    id todo ERROR
+                    int 42 [Int]
+                binary < ERROR
+                    id algo ERROR
+                    id todo ERROR
+                binary <= ERROR
+                    id pollo ERROR
+                    int 3 [Int]
+                binary / ERROR
+                    int 39 [Int]
+                    id n ERROR
+                binary * [Int]
+                    int 6 [Int]
+                    int 9 [Int]
+                binary - ERROR
+                    int 1 [Int]
+                    id pio ERROR
+                binary - [Int]
+                    int 56 [Int]
+                    int 93 [Int]

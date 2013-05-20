@@ -1,0 +1,5 @@
+coolc.parser.Position Undefined variable el_capitan_telescopio
+program
+    class Main
+        method main : SELF_TYPE
+            id el_capitan_telescopio ERROR

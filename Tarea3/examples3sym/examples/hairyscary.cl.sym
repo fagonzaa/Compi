@@ -1,0 +1,59 @@
+class Foo : Bazz
+    fields
+        Razz a
+            scope
+                Razz n
+            scope
+                Foo n
+            scope
+                Bar n
+        Int b
+    methods
+        Int doh
+            body
+                scope
+                    Int i
+class Bar : Razz
+    fields
+        Int c
+        Object d
+    methods
+class Razz : Foo
+    fields
+        Bar e
+            scope
+                Razz n
+            scope
+                Bar n
+        Int f
+    methods
+class Bazz : IO
+    fields
+        Int h
+        Foo g
+            scope
+                Bazz n
+            scope
+                Razz n
+            scope
+                Foo n
+            scope
+                Bar n
+        Object i
+    methods
+        Int printh
+            body
+        Int doh
+            body
+                scope
+                    Int i
+class Main : Object
+    fields
+        Bazz a
+        Foo b
+        Razz c
+        Bar d
+    methods
+        String main
+            body
+

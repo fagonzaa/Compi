@@ -1,0 +1,5 @@
+2:4 Undefined class Plot
+program
+    class Main
+        field Object immovable
+        field Plot evil

@@ -1,0 +1,45 @@
+class Main : Object
+    fields
+    methods
+        SELF_TYPE main
+            body
+                scope
+                    Human finn
+                scope
+                    Dog jake
+                scope
+                    Candy bubblegum
+                scope
+                    CrazyOldMan iceking
+                scope
+                    Elemental flamePrincess
+                scope
+                    Object o
+                        scope
+                            Human finn
+                                scope
+                                    A a
+                                scope
+                                    B b
+                                scope
+                                    Q q
+                                scope
+                                    W w
+                                    R r
+                                    scope
+                                        P p
+                                    scope
+                                        L l
+                                    scope
+                                        K k
+                                scope
+                                    V v
+                        scope
+                            Dog jake
+                        scope
+                            Candy bubblegum
+                        scope
+                            CrazyOldMan iceking
+                        scope
+                            Elemental flamePrincess
+

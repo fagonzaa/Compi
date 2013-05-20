@@ -1,0 +1,554 @@
+program
+    class Graph
+        field VList vertices
+            new VList [VList]
+        field EList edges
+            new EList [EList]
+        method add_vertice : Vertice v -> Object
+            block [VList]
+                assign edges [EList]
+                    call append [EList]
+                        callee
+                            call outgoing [EList]
+                                callee
+                                    id v [Vertice]
+                        args
+                            id edges [EList]
+                assign vertices [VList]
+                    call cons [VList]
+                        callee
+                            id vertices [VList]
+                        args
+                            id v [Vertice]
+        method print_E : Object
+            call print [Object]
+                callee
+                    id edges [EList]
+        method print_V : Object
+            call print [Object]
+                callee
+                    id vertices [VList]
+    class Vertice : IO
+        field Int num
+        field EList out
+            new EList [EList]
+        method outgoing : EList
+            id out [EList]
+        method number : Int
+            id num [Int]
+        method init : Int n -> SELF_TYPE
+            block [Vertice]
+                assign num [Int]
+                    id n [Int]
+                id self [Vertice]
+        method add_out : Edge s -> SELF_TYPE
+            block [Vertice]
+                assign out [EList]
+                    call cons [EList]
+                        callee
+                            id out [EList]
+                        args
+                            id s [Edge]
+                id self [Vertice]
+        method print : Object
+            block [Object]
+                call out_int [Vertice]
+                    args
+                        id num [Int]
+                call print [Object]
+                    callee
+                        id out [EList]
+    class Edge : IO
+        field Int from
+        field Int to
+        field Int weight
+        method init : Int f -> Int t -> Int w -> SELF_TYPE
+            block [Edge]
+                assign from [Int]
+                    id f [Int]
+                assign to [Int]
+                    id t [Int]
+                assign weight [Int]
+                    id w [Int]
+                id self [Edge]
+        method print : Object
+            block [Edge]
+                call out_string [Edge]
+                    args
+                        str " (" [String]
+                call out_int [Edge]
+                    args
+                        id from [Int]
+                call out_string [Edge]
+                    args
+                        str "," [String]
+                call out_int [Edge]
+                    args
+                        id to [Int]
+                call out_string [Edge]
+                    args
+                        str ")" [String]
+                call out_int [Edge]
+                    args
+                        id weight [Int]
+    class EList : IO
+        field Edge car
+        method isNil : Bool
+            bool true [Bool]
+        method head : Edge
+            block [Edge]
+                call abort [Object]
+                id car [Edge]
+        method tail : EList
+            block [EList]
+                call abort [Object]
+                id self [EList]
+        method cons : Edge e -> EList
+            call init [EList]
+                callee
+                    new ECons [ECons]
+                args
+                    id e [Edge]
+                    id self [EList]
+        method append : EList l -> EList
+            if [EList]
+                call isNil [Bool]
+                    callee
+                        id self [EList]
+            then
+                id l [EList]
+            else
+                call cons [EList]
+                    callee
+                        call append [EList]
+                            callee
+                                call tail [EList]
+                            args
+                                id l [EList]
+                    args
+                        call head [Edge]
+        method print : Object
+            call out_string [EList]
+                args
+                    str "\n" [String]
+    class ECons : EList
+        field EList cdr
+        method isNil : Bool
+            bool false [Bool]
+        method head : Edge
+            id car [Edge]
+        method tail : EList
+            id cdr [EList]
+        method init : Edge e -> EList rest -> EList
+            block [ECons]
+                assign car [Edge]
+                    id e [Edge]
+                assign cdr [EList]
+                    id rest [EList]
+                id self [ECons]
+        method print : Object
+            block [Object]
+                call print [Object]
+                    callee
+                        id car [Edge]
+                call print [Object]
+                    callee
+                        id cdr [EList]
+    class VList : IO
+        field Vertice car
+        method isNil : Bool
+            bool true [Bool]
+        method head : Vertice
+            block [Vertice]
+                call abort [Object]
+                id car [Vertice]
+        method tail : VList
+            block [VList]
+                call abort [Object]
+                id self [VList]
+        method cons : Vertice v -> VList
+            call init [VList]
+                callee
+                    new VCons [VCons]
+                args
+                    id v [Vertice]
+                    id self [VList]
+        method print : Object
+            call out_string [VList]
+                args
+                    str "\n" [String]
+    class VCons : VList
+        field VList cdr
+        method isNil : Bool
+            bool false [Bool]
+        method head : Vertice
+            id car [Vertice]
+        method tail : VList
+            id cdr [VList]
+        method init : Vertice v -> VList rest -> VList
+            block [VCons]
+                assign car [Vertice]
+                    id v [Vertice]
+                assign cdr [VList]
+                    id rest [VList]
+                id self [VCons]
+        method print : Object
+            block [Object]
+                call print [Object]
+                    callee
+                        id car [Vertice]
+                call print [Object]
+                    callee
+                        id cdr [VList]
+    class Parse : IO
+        field BoolOp boolop
+            new BoolOp [BoolOp]
+        method read_input : Graph
+            let [Graph]
+                vars
+                    Graph g
+                        new Graph [Graph]
+                block [Graph]
+                    let [Object]
+                        vars
+                            String line
+                                call in_string [String]
+                        while [Object]
+                            call and [Bool]
+                                callee
+                                    id boolop [BoolOp]
+                                args
+                                    unary not [Bool]
+                                        binary = [Bool]
+                                            id line [String]
+                                            str "\n" [String]
+                                    unary not [Bool]
+                                        binary = [Bool]
+                                            id line [String]
+                                            str "" [String]
+                        loop
+                            block [String]
+                                call add_vertice [Object]
+                                    callee
+                                        id g [Graph]
+                                    args
+                                        call parse_line [Vertice]
+                                            args
+                                                id line [String]
+                                assign line [String]
+                                    call in_string [String]
+                    id g [Graph]
+        method parse_line : String s -> Vertice
+            let [Vertice]
+                vars
+                    Vertice v
+                        call init [Vertice]
+                            callee
+                                new Vertice [Vertice]
+                            args
+                                call a2i [Int]
+                                    args
+                                        id s [String]
+                block [Vertice]
+                    while [Object]
+                        unary not [Bool]
+                            binary = [Bool]
+                                call length [Int]
+                                    callee
+                                        id rest [String]
+                                int 0 [Int]
+                    loop
+                        block [Vertice]
+                            let [Vertice]
+                                vars
+                                    Int succ
+                                        call a2i [Int]
+                                            args
+                                                id rest [String]
+                                let [Vertice]
+                                    vars
+                                        Int weight
+                                            call a2i [Int]
+                                                args
+                                                    id rest [String]
+                                    call add_out [Vertice]
+                                        callee
+                                            id v [Vertice]
+                                        args
+                                            call init [Edge]
+                                                callee
+                                                    new Edge [Edge]
+                                                args
+                                                    call number [Int]
+                                                        callee
+                                                            id v [Vertice]
+                                                    id succ [Int]
+                                                    id weight [Int]
+                    id v [Vertice]
+        method c2i : String char -> Int
+            if [Int]
+                binary = [Bool]
+                    id char [String]
+                    str "0" [String]
+            then
+                int 0 [Int]
+            else
+                if [Int]
+                    binary = [Bool]
+                        id char [String]
+                        str "1" [String]
+                then
+                    int 1 [Int]
+                else
+                    if [Int]
+                        binary = [Bool]
+                            id char [String]
+                            str "2" [String]
+                    then
+                        int 2 [Int]
+                    else
+                        if [Int]
+                            binary = [Bool]
+                                id char [String]
+                                str "3" [String]
+                        then
+                            int 3 [Int]
+                        else
+                            if [Int]
+                                binary = [Bool]
+                                    id char [String]
+                                    str "4" [String]
+                            then
+                                int 4 [Int]
+                            else
+                                if [Int]
+                                    binary = [Bool]
+                                        id char [String]
+                                        str "5" [String]
+                                then
+                                    int 5 [Int]
+                                else
+                                    if [Int]
+                                        binary = [Bool]
+                                            id char [String]
+                                            str "6" [String]
+                                    then
+                                        int 6 [Int]
+                                    else
+                                        if [Int]
+                                            binary = [Bool]
+                                                id char [String]
+                                                str "7" [String]
+                                        then
+                                            int 7 [Int]
+                                        else
+                                            if [Int]
+                                                binary = [Bool]
+                                                    id char [String]
+                                                    str "8" [String]
+                                            then
+                                                int 8 [Int]
+                                            else
+                                                if [Int]
+                                                    binary = [Bool]
+                                                        id char [String]
+                                                        str "9" [String]
+                                                then
+                                                    int 9 [Int]
+                                                else
+                                                    block [Int]
+                                                        call abort [Object]
+                                                        int 0 [Int]
+        field String rest
+        method a2i : String s -> Int
+            if [Int]
+                binary = [Bool]
+                    call length [Int]
+                        callee
+                            id s [String]
+                    int 0 [Int]
+            then
+                int 0 [Int]
+            else
+                if [Int]
+                    binary = [Bool]
+                        call substr [String]
+                            callee
+                                id s [String]
+                            args
+                                int 0 [Int]
+                                int 1 [Int]
+                        str "-" [String]
+                then
+                    unary ~ [Int]
+                        call a2i_aux [Int]
+                            args
+                                call substr [String]
+                                    callee
+                                        id s [String]
+                                    args
+                                        int 1 [Int]
+                                        binary - [Int]
+                                            call length [Int]
+                                                callee
+                                                    id s [String]
+                                            int 1 [Int]
+                else
+                    if [Int]
+                        binary = [Bool]
+                            call substr [String]
+                                callee
+                                    id s [String]
+                                args
+                                    int 0 [Int]
+                                    int 1 [Int]
+                            str " " [String]
+                    then
+                        call a2i [Int]
+                            args
+                                call substr [String]
+                                    callee
+                                        id s [String]
+                                    args
+                                        int 1 [Int]
+                                        binary - [Int]
+                                            call length [Int]
+                                                callee
+                                                    id s [String]
+                                            int 1 [Int]
+                    else
+                        call a2i_aux [Int]
+                            args
+                                id s [String]
+        method a2i_aux : String s -> Int
+            let [Int]
+                vars
+                    Int int
+                        int 0 [Int]
+                block [Int]
+                    let [Object]
+                        vars
+                            Int j
+                                call length [Int]
+                                    callee
+                                        id s [String]
+                        let [Object]
+                            vars
+                                Int i
+                                    int 0 [Int]
+                            while [Object]
+                                binary < [Bool]
+                                    id i [Int]
+                                    id j [Int]
+                            loop
+                                let [Object]
+                                    vars
+                                        String c
+                                            call substr [String]
+                                                callee
+                                                    id s [String]
+                                                args
+                                                    id i [Int]
+                                                    int 1 [Int]
+                                    if [Object]
+                                        binary = [Bool]
+                                            id c [String]
+                                            str " " [String]
+                                    then
+                                        block [Int]
+                                            assign rest [String]
+                                                call substr [String]
+                                                    callee
+                                                        id s [String]
+                                                    args
+                                                        binary + [Int]
+                                                            id i [Int]
+                                                            int 1 [Int]
+                                                        binary - [Int]
+                                                            binary - [Int]
+                                                                call length [Int]
+                                                                    callee
+                                                                        id s [String]
+                                                                id i [Int]
+                                                            int 1 [Int]
+                                            assign i [Int]
+                                                id j [Int]
+                                    else
+                                        if [Object]
+                                            binary = [Bool]
+                                                id c [String]
+                                                str "," [String]
+                                        then
+                                            block [Int]
+                                                assign rest [String]
+                                                    call substr [String]
+                                                        callee
+                                                            id s [String]
+                                                        args
+                                                            binary + [Int]
+                                                                id i [Int]
+                                                                int 1 [Int]
+                                                            binary - [Int]
+                                                                binary - [Int]
+                                                                    call length [Int]
+                                                                        callee
+                                                                            id s [String]
+                                                                    id i [Int]
+                                                                int 1 [Int]
+                                                assign i [Int]
+                                                    id j [Int]
+                                        else
+                                            block [String]
+                                                assign int [Int]
+                                                    binary + [Int]
+                                                        binary * [Int]
+                                                            id int [Int]
+                                                            int 10 [Int]
+                                                        call c2i [Int]
+                                                            args
+                                                                call substr [String]
+                                                                    callee
+                                                                        id s [String]
+                                                                    args
+                                                                        id i [Int]
+                                                                        int 1 [Int]
+                                                assign i [Int]
+                                                    binary + [Int]
+                                                        id i [Int]
+                                                        int 1 [Int]
+                                                if [String]
+                                                    binary = [Bool]
+                                                        id i [Int]
+                                                        id j [Int]
+                                                then
+                                                    assign rest [String]
+                                                        str "" [String]
+                                                else
+                                                    str "" [String]
+                    id int [Int]
+    class Main : Parse
+        field Graph g
+            call read_input [Graph]
+        method main : Object
+            block [Object]
+                call print_V [Object]
+                    callee
+                        id g [Graph]
+                call print_E [Object]
+                    callee
+                        id g [Graph]
+    class BoolOp
+        method and : Bool b1 -> Bool b2 -> Bool
+            if [Bool]
+                id b1 [Bool]
+            then
+                id b2 [Bool]
+            else
+                bool false [Bool]
+        method or : Bool b1 -> Bool b2 -> Bool
+            if [Bool]
+                id b1 [Bool]
+            then
+                bool true [Bool]
+            else
+                id b2 [Bool]

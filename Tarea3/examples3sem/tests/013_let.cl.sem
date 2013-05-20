@@ -1,0 +1,16 @@
+coolc.parser.Position Undefined variable whoosh
+program
+    class Main
+        method main : SELF_TYPE
+            let ERROR
+                vars
+                    SeaOperationsCommander maxRay
+                    LandOperationsSpecialist jakeRockwell
+                        str "kaboom!" [String]
+                    AirOperationsExpert aceMcCloud
+                        binary = ERROR
+                            id whoosh ERROR
+                            bool true [Bool]
+                call shout ERROR
+                    args
+                        str "Power X-treme" ERROR

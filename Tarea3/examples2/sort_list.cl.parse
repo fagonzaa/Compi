@@ -1,0 +1,174 @@
+program
+    class List : IO
+        method isNil : Bool
+            block
+                call abort
+                bool true
+        method cons : Int hd -> Cons
+            let
+                vars
+                    Cons new_cell
+                        new Cons
+                call init
+                    callee
+                        id new_cell
+                    args
+                        id hd
+                        id self
+        method car : Int
+            block
+                call abort
+                new Int
+        method cdr : List
+            block
+                call abort
+                new List
+        method rev : List
+            call cdr
+        method sort : List
+            call cdr
+        method insert : Int i -> List
+            call cdr
+        method rcons : Int i -> List
+            call cdr
+        method print_list : Object
+            call abort
+    class Cons : List
+        field Int xcar
+        field List xcdr
+        method isNil : Bool
+            bool false
+        method init : Int hd -> List tl -> Cons
+            block
+                assign xcar
+                    id hd
+                assign xcdr
+                    id tl
+                id self
+        method car : Int
+            id xcar
+        method cdr : List
+            id xcdr
+        method rev : List
+            call rcons
+                callee
+                    call rev
+                        callee
+                            id xcdr
+                args
+                    id xcar
+        method sort : List
+            call insert
+                callee
+                    call sort
+                        callee
+                            id xcdr
+                args
+                    id xcar
+        method insert : Int i -> List
+            if
+                binary <
+                    id i
+                    id xcar
+            then
+                call init
+                    callee
+                        new Cons
+                    args
+                        id i
+                        id self
+            else
+                call init
+                    callee
+                        new Cons
+                    args
+                        id xcar
+                        call insert
+                            callee
+                                id xcdr
+                            args
+                                id i
+        method rcons : Int i -> List
+            call init
+                callee
+                    new Cons
+                args
+                    id xcar
+                    call rcons
+                        callee
+                            id xcdr
+                        args
+                            id i
+        method print_list : Object
+            block
+                call out_int
+                    args
+                        id xcar
+                call out_string
+                    args
+                        str "\n"
+                call print_list
+                    callee
+                        id xcdr
+    class Nil : List
+        method isNil : Bool
+            bool true
+        method rev : List
+            id self
+        method sort : List
+            id self
+        method insert : Int i -> List
+            call rcons
+                args
+                    id i
+        method rcons : Int i -> List
+            call init
+                callee
+                    new Cons
+                args
+                    id i
+                    id self
+        method print_list : Object
+            bool true
+    class Main : IO
+        field List l
+        method iota : Int i -> List
+            block
+                assign l
+                    new Nil
+                let
+                    vars
+                        Int j
+                            int 0
+                    while
+                        binary <
+                            id j
+                            id i
+                    loop
+                        block
+                            assign l
+                                call init
+                                    callee
+                                        new Cons
+                                    args
+                                        id j
+                                        id l
+                            assign j
+                                binary +
+                                    id j
+                                    int 1
+                id l
+        method main : Object
+            block
+                call out_string
+                    args
+                        str "How many numbers to sort?"
+                call print_list
+                    callee
+                        call sort
+                            callee
+                                call rev
+                                    callee
+                                        call iota
+                                            args
+                                                call in_int

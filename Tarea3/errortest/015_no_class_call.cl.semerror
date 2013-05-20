@@ -1,0 +1,7 @@
+2:8 Undefined class SubMain
+program
+    class Main
+        method main : SELF_TYPE
+            call main as SubMain ERROR
+                callee
+                    id self [Main]

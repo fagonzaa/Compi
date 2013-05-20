@@ -1,0 +1,976 @@
+program
+    class A
+        field Int var
+            int 0 [Int]
+        method value : Int
+            id var [Int]
+        method set_var : Int num -> SELF_TYPE
+            block [A]
+                assign var [Int]
+                    id num [Int]
+                id self [A]
+        method method1 : Int num -> SELF_TYPE
+            id self [A]
+        method method2 : Int num1 -> Int num2 -> B
+            let [B]
+                vars
+                    Int x
+                block [B]
+                    assign x [Int]
+                        binary + [Int]
+                            id num1 [Int]
+                            id num2 [Int]
+                    call set_var [B]
+                        callee
+                            new B [B]
+                        args
+                            id x [Int]
+        method method3 : Int num -> C
+            let [C]
+                vars
+                    Int x
+                block [C]
+                    assign x [Int]
+                        unary ~ [Int]
+                            id num [Int]
+                    call set_var [C]
+                        callee
+                            new C [C]
+                        args
+                            id x [Int]
+        method method4 : Int num1 -> Int num2 -> D
+            if [D]
+                binary < [Bool]
+                    id num2 [Int]
+                    id num1 [Int]
+            then
+                let [D]
+                    vars
+                        Int x
+                    block [D]
+                        assign x [Int]
+                            binary - [Int]
+                                id num1 [Int]
+                                id num2 [Int]
+                        call set_var [D]
+                            callee
+                                new D [D]
+                            args
+                                id x [Int]
+            else
+                let [D]
+                    vars
+                        Int x
+                    block [D]
+                        assign x [Int]
+                            binary - [Int]
+                                id num2 [Int]
+                                id num1 [Int]
+                        call set_var [D]
+                            callee
+                                new D [D]
+                            args
+                                id x [Int]
+        method method5 : Int num -> E
+            let [E]
+                vars
+                    Int x
+                        int 1 [Int]
+                block [E]
+                    let [Object]
+                        vars
+                            Int y
+                                int 1 [Int]
+                        while [Object]
+                            binary <= [Bool]
+                                id y [Int]
+                                id num [Int]
+                        loop
+                            block [Int]
+                                assign x [Int]
+                                    binary * [Int]
+                                        id x [Int]
+                                        id y [Int]
+                                assign y [Int]
+                                    binary + [Int]
+                                        id y [Int]
+                                        int 1 [Int]
+                    call set_var [E]
+                        callee
+                            new E [E]
+                        args
+                            id x [Int]
+    class B : A
+        method method5 : Int num -> E
+            let [E]
+                vars
+                    Int x
+                block [E]
+                    assign x [Int]
+                        binary * [Int]
+                            id num [Int]
+                            id num [Int]
+                    call set_var [E]
+                        callee
+                            new E [E]
+                        args
+                            id x [Int]
+    class C : B
+        method method6 : Int num -> A
+            let [A]
+                vars
+                    Int x
+                block [A]
+                    assign x [Int]
+                        unary ~ [Int]
+                            id num [Int]
+                    call set_var [A]
+                        callee
+                            new A [A]
+                        args
+                            id x [Int]
+        method method5 : Int num -> E
+            let [E]
+                vars
+                    Int x
+                block [E]
+                    assign x [Int]
+                        binary * [Int]
+                            binary * [Int]
+                                id num [Int]
+                                id num [Int]
+                            id num [Int]
+                    call set_var [E]
+                        callee
+                            new E [E]
+                        args
+                            id x [Int]
+    class D : B
+        method method7 : Int num -> Bool
+            let [Bool]
+                vars
+                    Int x
+                        id num [Int]
+                if [Bool]
+                    binary < [Bool]
+                        id x [Int]
+                        int 0 [Int]
+                then
+                    call method7 [Bool]
+                        args
+                            unary ~ [Int]
+                                id x [Int]
+                else
+                    if [Bool]
+                        binary = [Bool]
+                            int 0 [Int]
+                            id x [Int]
+                    then
+                        bool true [Bool]
+                    else
+                        if [Bool]
+                            binary = [Bool]
+                                int 1 [Int]
+                                id x [Int]
+                        then
+                            bool false [Bool]
+                        else
+                            if [Bool]
+                                binary = [Bool]
+                                    int 2 [Int]
+                                    id x [Int]
+                            then
+                                bool false [Bool]
+                            else
+                                call method7 [Bool]
+                                    args
+                                        binary - [Int]
+                                            id x [Int]
+                                            int 3 [Int]
+    class E : D
+        method method6 : Int num -> A
+            let [A]
+                vars
+                    Int x
+                block [A]
+                    assign x [Int]
+                        binary / [Int]
+                            id num [Int]
+                            int 8 [Int]
+                    call set_var [A]
+                        callee
+                            new A [A]
+                        args
+                            id x [Int]
+    class A2I
+        method c2i : String char -> Int
+            if [Int]
+                binary = [Bool]
+                    id char [String]
+                    str "0" [String]
+            then
+                int 0 [Int]
+            else
+                if [Int]
+                    binary = [Bool]
+                        id char [String]
+                        str "1" [String]
+                then
+                    int 1 [Int]
+                else
+                    if [Int]
+                        binary = [Bool]
+                            id char [String]
+                            str "2" [String]
+                    then
+                        int 2 [Int]
+                    else
+                        if [Int]
+                            binary = [Bool]
+                                id char [String]
+                                str "3" [String]
+                        then
+                            int 3 [Int]
+                        else
+                            if [Int]
+                                binary = [Bool]
+                                    id char [String]
+                                    str "4" [String]
+                            then
+                                int 4 [Int]
+                            else
+                                if [Int]
+                                    binary = [Bool]
+                                        id char [String]
+                                        str "5" [String]
+                                then
+                                    int 5 [Int]
+                                else
+                                    if [Int]
+                                        binary = [Bool]
+                                            id char [String]
+                                            str "6" [String]
+                                    then
+                                        int 6 [Int]
+                                    else
+                                        if [Int]
+                                            binary = [Bool]
+                                                id char [String]
+                                                str "7" [String]
+                                        then
+                                            int 7 [Int]
+                                        else
+                                            if [Int]
+                                                binary = [Bool]
+                                                    id char [String]
+                                                    str "8" [String]
+                                            then
+                                                int 8 [Int]
+                                            else
+                                                if [Int]
+                                                    binary = [Bool]
+                                                        id char [String]
+                                                        str "9" [String]
+                                                then
+                                                    int 9 [Int]
+                                                else
+                                                    block [Int]
+                                                        call abort [Object]
+                                                        int 0 [Int]
+        method i2c : Int i -> String
+            if [String]
+                binary = [Bool]
+                    id i [Int]
+                    int 0 [Int]
+            then
+                str "0" [String]
+            else
+                if [String]
+                    binary = [Bool]
+                        id i [Int]
+                        int 1 [Int]
+                then
+                    str "1" [String]
+                else
+                    if [String]
+                        binary = [Bool]
+                            id i [Int]
+                            int 2 [Int]
+                    then
+                        str "2" [String]
+                    else
+                        if [String]
+                            binary = [Bool]
+                                id i [Int]
+                                int 3 [Int]
+                        then
+                            str "3" [String]
+                        else
+                            if [String]
+                                binary = [Bool]
+                                    id i [Int]
+                                    int 4 [Int]
+                            then
+                                str "4" [String]
+                            else
+                                if [String]
+                                    binary = [Bool]
+                                        id i [Int]
+                                        int 5 [Int]
+                                then
+                                    str "5" [String]
+                                else
+                                    if [String]
+                                        binary = [Bool]
+                                            id i [Int]
+                                            int 6 [Int]
+                                    then
+                                        str "6" [String]
+                                    else
+                                        if [String]
+                                            binary = [Bool]
+                                                id i [Int]
+                                                int 7 [Int]
+                                        then
+                                            str "7" [String]
+                                        else
+                                            if [String]
+                                                binary = [Bool]
+                                                    id i [Int]
+                                                    int 8 [Int]
+                                            then
+                                                str "8" [String]
+                                            else
+                                                if [String]
+                                                    binary = [Bool]
+                                                        id i [Int]
+                                                        int 9 [Int]
+                                                then
+                                                    str "9" [String]
+                                                else
+                                                    block [String]
+                                                        call abort [Object]
+                                                        str "" [String]
+        method a2i : String s -> Int
+            if [Int]
+                binary = [Bool]
+                    call length [Int]
+                        callee
+                            id s [String]
+                    int 0 [Int]
+            then
+                int 0 [Int]
+            else
+                if [Int]
+                    binary = [Bool]
+                        call substr [String]
+                            callee
+                                id s [String]
+                            args
+                                int 0 [Int]
+                                int 1 [Int]
+                        str "-" [String]
+                then
+                    unary ~ [Int]
+                        call a2i_aux [Int]
+                            args
+                                call substr [String]
+                                    callee
+                                        id s [String]
+                                    args
+                                        int 1 [Int]
+                                        binary - [Int]
+                                            call length [Int]
+                                                callee
+                                                    id s [String]
+                                            int 1 [Int]
+                else
+                    if [Int]
+                        binary = [Bool]
+                            call substr [String]
+                                callee
+                                    id s [String]
+                                args
+                                    int 0 [Int]
+                                    int 1 [Int]
+                            str "+" [String]
+                    then
+                        call a2i_aux [Int]
+                            args
+                                call substr [String]
+                                    callee
+                                        id s [String]
+                                    args
+                                        int 1 [Int]
+                                        binary - [Int]
+                                            call length [Int]
+                                                callee
+                                                    id s [String]
+                                            int 1 [Int]
+                    else
+                        call a2i_aux [Int]
+                            args
+                                id s [String]
+        method a2i_aux : String s -> Int
+            let [Int]
+                vars
+                    Int int
+                        int 0 [Int]
+                block [Int]
+                    let [Object]
+                        vars
+                            Int j
+                                call length [Int]
+                                    callee
+                                        id s [String]
+                        let [Object]
+                            vars
+                                Int i
+                                    int 0 [Int]
+                            while [Object]
+                                binary < [Bool]
+                                    id i [Int]
+                                    id j [Int]
+                            loop
+                                block [Int]
+                                    assign int [Int]
+                                        binary + [Int]
+                                            binary * [Int]
+                                                id int [Int]
+                                                int 10 [Int]
+                                            call c2i [Int]
+                                                args
+                                                    call substr [String]
+                                                        callee
+                                                            id s [String]
+                                                        args
+                                                            id i [Int]
+                                                            int 1 [Int]
+                                    assign i [Int]
+                                        binary + [Int]
+                                            id i [Int]
+                                            int 1 [Int]
+                    id int [Int]
+        method i2a : Int i -> String
+            if [String]
+                binary = [Bool]
+                    id i [Int]
+                    int 0 [Int]
+            then
+                str "0" [String]
+            else
+                if [String]
+                    binary < [Bool]
+                        int 0 [Int]
+                        id i [Int]
+                then
+                    call i2a_aux [String]
+                        args
+                            id i [Int]
+                else
+                    call concat [String]
+                        callee
+                            str "-" [String]
+                        args
+                            call i2a_aux [String]
+                                args
+                                    binary * [Int]
+                                        id i [Int]
+                                        unary ~ [Int]
+                                            int 1 [Int]
+        method i2a_aux : Int i -> String
+            if [String]
+                binary = [Bool]
+                    id i [Int]
+                    int 0 [Int]
+            then
+                str "" [String]
+            else
+                let [String]
+                    vars
+                        Int next
+                            binary / [Int]
+                                id i [Int]
+                                int 10 [Int]
+                    call concat [String]
+                        callee
+                            call i2a_aux [String]
+                                args
+                                    id next [Int]
+                        args
+                            call i2c [String]
+                                args
+                                    binary - [Int]
+                                        id i [Int]
+                                        binary * [Int]
+                                            id next [Int]
+                                            int 10 [Int]
+    class Main : IO
+        field String char
+        field A avar
+        field A a_var
+        field Bool flag
+            bool true [Bool]
+        method menu : String
+            block [String]
+                call out_string [Main]
+                    args
+                        str "\n\tTo add a number to " [String]
+                call print [Main]
+                    args
+                        id avar [A]
+                call out_string [Main]
+                    args
+                        str "...enter a:\n" [String]
+                call out_string [Main]
+                    args
+                        str "\tTo negate " [String]
+                call print [Main]
+                    args
+                        id avar [A]
+                call out_string [Main]
+                    args
+                        str "...enter b:\n" [String]
+                call out_string [Main]
+                    args
+                        str "\tTo find the difference between " [String]
+                call print [Main]
+                    args
+                        id avar [A]
+                call out_string [Main]
+                    args
+                        str "and another number...enter c:\n" [String]
+                call out_string [Main]
+                    args
+                        str "\tTo find the factorial of " [String]
+                call print [Main]
+                    args
+                        id avar [A]
+                call out_string [Main]
+                    args
+                        str "...enter d:\n" [String]
+                call out_string [Main]
+                    args
+                        str "\tTo square " [String]
+                call print [Main]
+                    args
+                        id avar [A]
+                call out_string [Main]
+                    args
+                        str "...enter e:\n" [String]
+                call out_string [Main]
+                    args
+                        str "\tTo cube " [String]
+                call print [Main]
+                    args
+                        id avar [A]
+                call out_string [Main]
+                    args
+                        str "...enter f:\n" [String]
+                call out_string [Main]
+                    args
+                        str "\tTo find out if " [String]
+                call print [Main]
+                    args
+                        id avar [A]
+                call out_string [Main]
+                    args
+                        str "is a multiple of 3...enter g:\n" [String]
+                call out_string [Main]
+                    args
+                        str "\tTo divide " [String]
+                call print [Main]
+                    args
+                        id avar [A]
+                call out_string [Main]
+                    args
+                        str "by 8...enter h:\n" [String]
+                call out_string [Main]
+                    args
+                        str "\tTo get a new number...enter j:\n" [String]
+                call out_string [Main]
+                    args
+                        str "\tTo quit...enter q:\n\n" [String]
+                call in_string [String]
+        method prompt : String
+            block [String]
+                call out_string [Main]
+                    args
+                        str "\n" [String]
+                call out_string [Main]
+                    args
+                        str "Please enter a number...  " [String]
+                call in_string [String]
+        method get_int : Int
+            block [Int]
+                let [Int]
+                    vars
+                        A2I z
+                            new A2I [A2I]
+                    let [Int]
+                        vars
+                            String s
+                                call prompt [String]
+                        call a2i [Int]
+                            callee
+                                id z [A2I]
+                            args
+                                id s [String]
+        method is_even : Int num -> Bool
+            let [Bool]
+                vars
+                    Int x
+                        id num [Int]
+                if [Bool]
+                    binary < [Bool]
+                        id x [Int]
+                        int 0 [Int]
+                then
+                    call is_even [Bool]
+                        args
+                            unary ~ [Int]
+                                id x [Int]
+                else
+                    if [Bool]
+                        binary = [Bool]
+                            int 0 [Int]
+                            id x [Int]
+                    then
+                        bool true [Bool]
+                    else
+                        if [Bool]
+                            binary = [Bool]
+                                int 1 [Int]
+                                id x [Int]
+                        then
+                            bool false [Bool]
+                        else
+                            call is_even [Bool]
+                                args
+                                    binary - [Int]
+                                        id x [Int]
+                                        int 2 [Int]
+        method class_type : A var -> SELF_TYPE
+            instanceof [Main]
+                id var [A]
+                case A a
+                    call out_string [Main]
+                        args
+                            str "Class type is now A\n" [String]
+                case B b
+                    call out_string [Main]
+                        args
+                            str "Class type is now B\n" [String]
+                case C c
+                    call out_string [Main]
+                        args
+                            str "Class type is now C\n" [String]
+                case D d
+                    call out_string [Main]
+                        args
+                            str "Class type is now D\n" [String]
+                case E e
+                    call out_string [Main]
+                        args
+                            str "Class type is now E\n" [String]
+                case Object o
+                    call out_string [Main]
+                        args
+                            str "Oooops\n" [String]
+        method print : A var -> SELF_TYPE
+            let [Main]
+                vars
+                    A2I z
+                        new A2I [A2I]
+                block [Main]
+                    call out_string [Main]
+                        args
+                            call i2a [String]
+                                callee
+                                    id z [A2I]
+                                args
+                                    call value [Int]
+                                        callee
+                                            id var [A]
+                    call out_string [Main]
+                        args
+                            str " " [String]
+        method main : Object
+            block [Object]
+                assign avar [A]
+                    new A [A]
+                while [Object]
+                    id flag [Bool]
+                loop
+                    block [Object]
+                        call out_string [Main]
+                            args
+                                str "number " [String]
+                        call print [Main]
+                            args
+                                id avar [A]
+                        if [Main]
+                            call is_even [Bool]
+                                args
+                                    call value [Int]
+                                        callee
+                                            id avar [A]
+                        then
+                            call out_string [Main]
+                                args
+                                    str "is even!\n" [String]
+                        else
+                            call out_string [Main]
+                                args
+                                    str "is odd!\n" [String]
+                        call class_type [Main]
+                            args
+                                id avar [A]
+                        assign char [String]
+                            call menu [String]
+                        if [Object]
+                            binary = [Bool]
+                                id char [String]
+                                str "a" [String]
+                        then
+                            block [B]
+                                assign a_var [A]
+                                    call set_var [A]
+                                        callee
+                                            new A [A]
+                                        args
+                                            call get_int [Int]
+                                assign avar [B]
+                                    call method2 [B]
+                                        callee
+                                            new B [B]
+                                        args
+                                            call value [Int]
+                                                callee
+                                                    id avar [A]
+                                            call value [Int]
+                                                callee
+                                                    id a_var [A]
+                        else
+                            if [Object]
+                                binary = [Bool]
+                                    id char [String]
+                                    str "b" [String]
+                            then
+                                instanceof [Object]
+                                    id avar [A]
+                                    case C c
+                                        assign avar [A]
+                                            call method6 [A]
+                                                callee
+                                                    id c [C]
+                                                args
+                                                    call value [Int]
+                                                        callee
+                                                            id c [C]
+                                    case A a
+                                        assign avar [C]
+                                            call method3 [C]
+                                                callee
+                                                    id a [A]
+                                                args
+                                                    call value [Int]
+                                                        callee
+                                                            id a [A]
+                                    case Object o
+                                        block [Int]
+                                            call out_string [Main]
+                                                args
+                                                    str "Oooops\n" [String]
+                                            call abort [Object]
+                                            int 0 [Int]
+                            else
+                                if [Object]
+                                    binary = [Bool]
+                                        id char [String]
+                                        str "c" [String]
+                                then
+                                    block [D]
+                                        assign a_var [A]
+                                            call set_var [A]
+                                                callee
+                                                    new A [A]
+                                                args
+                                                    call get_int [Int]
+                                        assign avar [D]
+                                            call method4 [D]
+                                                callee
+                                                    new D [D]
+                                                args
+                                                    call value [Int]
+                                                        callee
+                                                            id avar [A]
+                                                    call value [Int]
+                                                        callee
+                                                            id a_var [A]
+                                else
+                                    if [Object]
+                                        binary = [Bool]
+                                            id char [String]
+                                            str "d" [String]
+                                    then
+                                        assign avar [E]
+                                            call method5 as A [E]
+                                                callee
+                                                    new C [C]
+                                                args
+                                                    call value [Int]
+                                                        callee
+                                                            id avar [A]
+                                    else
+                                        if [Object]
+                                            binary = [Bool]
+                                                id char [String]
+                                                str "e" [String]
+                                        then
+                                            assign avar [E]
+                                                call method5 as B [E]
+                                                    callee
+                                                        new C [C]
+                                                    args
+                                                        call value [Int]
+                                                            callee
+                                                                id avar [A]
+                                        else
+                                            if [Object]
+                                                binary = [Bool]
+                                                    id char [String]
+                                                    str "f" [String]
+                                            then
+                                                assign avar [E]
+                                                    call method5 as C [E]
+                                                        callee
+                                                            new C [C]
+                                                        args
+                                                            call value [Int]
+                                                                callee
+                                                                    id avar [A]
+                                            else
+                                                if [Object]
+                                                    binary = [Bool]
+                                                        id char [String]
+                                                        str "g" [String]
+                                                then
+                                                    if [Main]
+                                                        call method7 [Bool]
+                                                            callee
+                                                                new D [D]
+                                                            args
+                                                                call value [Int]
+                                                                    callee
+                                                                        id avar [A]
+                                                    then
+                                                        block [Main]
+                                                            call out_string [Main]
+                                                                args
+                                                                    str "number " [String]
+                                                            call print [Main]
+                                                                args
+                                                                    id avar [A]
+                                                            call out_string [Main]
+                                                                args
+                                                                    str "is divisible by 3.\n" [String]
+                                                    else
+                                                        block [Main]
+                                                            call out_string [Main]
+                                                                args
+                                                                    str "number " [String]
+                                                            call print [Main]
+                                                                args
+                                                                    id avar [A]
+                                                            call out_string [Main]
+                                                                args
+                                                                    str "is not divisible by 3.\n" [String]
+                                                else
+                                                    if [Object]
+                                                        binary = [Bool]
+                                                            id char [String]
+                                                            str "h" [String]
+                                                    then
+                                                        let [A]
+                                                            vars
+                                                                A x
+                                                            block [A]
+                                                                assign x [A]
+                                                                    call method6 [A]
+                                                                        callee
+                                                                            new E [E]
+                                                                        args
+                                                                            call value [Int]
+                                                                                callee
+                                                                                    id avar [A]
+                                                                let [Main]
+                                                                    vars
+                                                                        Int r
+                                                                            binary - [Int]
+                                                                                call value [Int]
+                                                                                    callee
+                                                                                        id avar [A]
+                                                                                binary * [Int]
+                                                                                    call value [Int]
+                                                                                        callee
+                                                                                            id x [A]
+                                                                                    int 8 [Int]
+                                                                    block [Main]
+                                                                        call out_string [Main]
+                                                                            args
+                                                                                str "number " [String]
+                                                                        call print [Main]
+                                                                            args
+                                                                                id avar [A]
+                                                                        call out_string [Main]
+                                                                            args
+                                                                                str "is equal to " [String]
+                                                                        call print [Main]
+                                                                            args
+                                                                                id x [A]
+                                                                        call out_string [Main]
+                                                                            args
+                                                                                str "times 8 with a remainder of " [String]
+                                                                        let [Main]
+                                                                            vars
+                                                                                A2I a
+                                                                                    new A2I [A2I]
+                                                                            block [Main]
+                                                                                call out_string [Main]
+                                                                                    args
+                                                                                        call i2a [String]
+                                                                                            callee
+                                                                                                id a [A2I]
+                                                                                            args
+                                                                                                id r [Int]
+                                                                                call out_string [Main]
+                                                                                    args
+                                                                                        str "\n" [String]
+                                                                assign avar [A]
+                                                                    id x [A]
+                                                    else
+                                                        if [Object]
+                                                            binary = [Bool]
+                                                                id char [String]
+                                                                str "j" [String]
+                                                        then
+                                                            assign avar [A]
+                                                                new A [A]
+                                                        else
+                                                            if [Object]
+                                                                binary = [Bool]
+                                                                    id char [String]
+                                                                    str "q" [String]
+                                                            then
+                                                                assign flag [Bool]
+                                                                    bool false [Bool]
+                                                            else
+                                                                assign avar [A]
+                                                                    call method1 [A]
+                                                                        callee
+                                                                            new A [A]
+                                                                        args
+                                                                            call value [Int]
+                                                                                callee
+                                                                                    id avar [A]
