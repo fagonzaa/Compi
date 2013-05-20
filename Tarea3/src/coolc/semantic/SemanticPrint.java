@@ -183,6 +183,7 @@ public class SemanticPrint {
         }  
     }
 
+    boolean error2 = false;
     @SuppressWarnings("unchecked")
     private void print(Expr e, int indent, Scope scope) {
 
@@ -194,6 +195,10 @@ public class SemanticPrint {
         	 
             for(Expr child: ((Block)e).getStatements()) {
                 print2(child, indent+1, scope);
+            }
+            if(error2){
+            	error2 = false;
+            	typeReturn = "ERROR";
             }
             
             System.out.println("block " + typeReturn);
@@ -227,19 +232,40 @@ public class SemanticPrint {
             typeReturn = "";
         }
         else if(e instanceof AssignExpr) {
-            System.out.printf("assign %s\n", ((AssignExpr)e).getId());
-            print(((AssignExpr)e).getValue(), indent+1, scope);
             
+            print2(((AssignExpr)e).getValue(), indent+1, scope);
+
             Symbol symbol = symtable.getSymbol(scope, ((AssignExpr)e).getId());
             
+            boolean error = false;
             if(symbol != null){
             	String typeReturn1 = symbol.type;
             	
+
             	if(typeReturn1.compareTo("Object") != 0 && typeReturn1.compareTo(typeReturn) != 0){
             		//System.out.println(filename + "" + e.getPosition().line + ":" + e.getPosition().column + " Expected " + typeReturn1 + ", received " + typeReturn);
+            		error = true;
+                	typeReturn = "ERROR";
             	}
-            	typeReturn = typeReturn1;
+            	else{
+            		if(typeReturn1.compareTo("Object") != 0){
+                    	typeReturn = typeReturn1;
+            		}
+            	}
+            		
             }
+            
+            System.out.printf("assign %s ", ((AssignExpr)e).getId());
+            
+            if(error){
+            	System.out.println("ERROR");
+            }
+            else{
+            	System.out.println("[" + typeReturn + "]");
+            }
+            
+            print(((AssignExpr)e).getValue(), indent+1, scope);
+            
         }        
         else if(e instanceof DispatchExpr) {
             DispatchExpr call = (DispatchExpr)e;
@@ -249,20 +275,31 @@ public class SemanticPrint {
             String callname = call.getName();
             String calltype = call.getType();
             
+            boolean error = false;
             if(call.getType() == null){
             	
             	if(callname.compareTo("type_name") != 0 && callname.compareTo("abort") != 0 && callname.compareTo("copy") != 0){
             		if(!symtable.isMethodDefine(classScope, callname)){
             			//System.out.println(filename + "" + call.getPosition().line + ":" + call.getPosition().column + " Undefined method " + call.getName());
-                	}
+                        System.out.printf(" ERROR");
+                        typeReturn = "ERROR";
+                        error = true;
+            		}
+            	}
+            	else{
+            		System.out.printf(" [Object]");
             	}
             }
             else {
+                System.out.printf(" as %s", call.getType());
+
             	Symbol symbol = symtable.getSymbol(scope, call.getType());
             	if(symbol == null && symtable.getClassScope(call.getType()) == null){
             		//System.out.println(filename + "" + e.getPosition().line + ":" + e.getPosition().column + " Undefined class " + call.getType());
+                    System.out.printf(" ERROR");
+                    typeReturn = "ERROR";
+                    error = true;
             	}
-                System.out.printf(" as %s", call.getType());
             }
             System.out.println();
             if( call.getExpr() != null ) {
@@ -273,6 +310,8 @@ public class SemanticPrint {
             	if(call.getType() != null && call.getType().compareTo("") != 0 && typeReturn.compareTo("") != 0){
 	            	if(typeReturn.compareTo(call.getType()) != 0){
 	            		//System.out.println(filename + "" + e.getPosition().line + ":" + e.getPosition().column + " Expected " + call.getType() + ", received " + typeReturn );
+	            		typeReturn = "ERROR";
+	            		error = true;
 	            	}
             	}
             }
@@ -307,7 +346,13 @@ public class SemanticPrint {
                 	String methodType = symtable.getSymbol(scope, callname).type;
                 	
             		//System.out.println(filename + "" + e.getPosition().line + ":" + e.getPosition().column + " Cannot call method " + calltype + "." + callname + " " + getRealParams + " -> " + methodType + ", with arguments (" + argtext + ")");
+                	typeReturn = "ERROR";
+                	error = true;
                 }
+            }
+            if(error){
+            	typeReturn = "ERROR";
+            	error2 = true;
             }
         }
         else if(e instanceof IfExpr) {
@@ -344,16 +389,24 @@ public class SemanticPrint {
         	
         	typeReturn = newExpr.getType();
         	
-        	System.out.printf("new %s [%s]",((NewExpr)e).getType(), ((NewExpr)e).getType());
+        	System.out.printf("new %s ",((NewExpr)e).getType());
         	
+        	boolean error = false;
         	if(!isTypeBasic(newExpr.getType())){
             	if(!isClassDefine(newExpr.getType())){
             		//System.out.println(filename + "" + newExpr.getPosition().line + ":" + newExpr.getPosition().column + " Undefined class " + newExpr.getType());
-            		System.out.printf(" ERROR");
+            		
+            		error = true;
             		typeReturn = "ERROR";
             	}
             }
             
+        	if(error){
+        		System.out.printf("ERROR");
+        	}
+        	else{
+            	System.out.printf("[%s]", ((NewExpr)e).getType());
+        	}
         	System.out.println();
         }
         else if(e instanceof UnaryExpr) {
@@ -489,7 +542,36 @@ public class SemanticPrint {
         }
         else if (e instanceof LetExpr) {
             LetExpr let = (LetExpr)e;
-            System.out.println("let");
+            System.out.print("let ");
+            
+            boolean error = false;
+            
+            for(Variable var : let.getDecl()) {
+                if(var.getValue() != null) {
+                    print2(var.getValue(), indent+3, scope);
+                
+                    if(typeReturn.compareTo("ERROR") == 0){
+                    	error = true;
+                    }
+                }
+                
+                if(!isTypeBasic(var.getType())){
+                	if(!isClassDefine(var.getType())){
+                		//System.out.println(filename + "" + var.getPosition().line + ":" + var.getPosition().column + " Undefined class " + var.getType());
+                		error = true;
+                	}
+                }
+            }
+            
+            if(error){
+                System.out.println("ERROR");
+            }
+            else{
+                System.out.println(typeReturn);
+            }
+            
+            
+            
             printIndent(indent+1);
             System.out.println("vars");
             for(Variable var : let.getDecl()) {
@@ -505,6 +587,8 @@ public class SemanticPrint {
                 	}
                 }
             }
+            
+            
 
             print(let.getValue(), indent+1, scope);
             
@@ -528,13 +612,8 @@ public class SemanticPrint {
             	else{
             		typeReturn = "ERROR";
             		System.out.println("ERROR");
-            	}
-            	
-            	
+            	}	
             }
-            
-            
-        	
         }
         else if(e instanceof ValueExpr) {
             Object value = ((ValueExpr)e).getValue();
@@ -727,6 +806,8 @@ public class SemanticPrint {
             	if(callname.compareTo("type_name") != 0 && callname.compareTo("abort") != 0 && callname.compareTo("copy") != 0){
             		if(!symtable.isMethodDefine(classScope, callname)){
             			//System.out.println(filename + "" + call.getPosition().line + ":" + call.getPosition().column + " Undefined method " + call.getName());
+            			typeReturn = "ERROR";
+            			error2 = true;
             		}
             	}
             }
@@ -734,6 +815,8 @@ public class SemanticPrint {
             	Symbol symbol = symtable.getSymbol(scope, call.getType());
             	if(symbol == null && symtable.getClassScope(call.getType()) == null){
             		//System.out.println(filename + "" + e.getPosition().line + ":" + e.getPosition().column + " Undefined class " + call.getType());
+            		typeReturn = "ERROR";
+        			error2 = true;
             	}
             }
             if( call.getExpr() != null ) {
@@ -742,7 +825,8 @@ public class SemanticPrint {
             	if(call.getType() != null && call.getType().compareTo("") != 0 && typeReturn.compareTo("") != 0){
 	            	if(typeReturn.compareTo(call.getType()) != 0){
 	            		//System.out.println(filename + "" + e.getPosition().line + ":" + e.getPosition().column + " Expected " + call.getType() + ", received " + typeReturn );
-	            		
+	            		typeReturn = "ERROR";
+            			error2 = true;
 	            	}
             	}
             }
@@ -773,7 +857,8 @@ public class SemanticPrint {
                 	
                 	String getRealParams = getStringParams(callname, scope);
                 	String methodType = symtable.getSymbol(scope, callname).type;
-                	
+                	typeReturn = "ERROR";
+        			error2 = true;
             		//System.out.println(filename + "" + e.getPosition().line + ":" + e.getPosition().column + " Cannot call method " + calltype + "." + callname + " " + getRealParams + " -> " + methodType + ", with arguments (" + argtext + ")");
                 }
             }
