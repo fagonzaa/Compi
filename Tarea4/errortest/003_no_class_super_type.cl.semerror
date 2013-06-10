@@ -1,0 +1,6 @@
+4:0 Undefined class Mainer
+program
+    class Nothing
+        field Object uselesser
+    class Main : Mainer
+        field Object useless

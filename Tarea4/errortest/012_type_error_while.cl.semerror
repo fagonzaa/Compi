@@ -1,0 +1,8 @@
+2:8 Expected Bool, received Int
+program
+    class Main
+        method main : SELF_TYPE
+            while ERROR
+                new Int [Int]
+            loop
+                new Object [Object]

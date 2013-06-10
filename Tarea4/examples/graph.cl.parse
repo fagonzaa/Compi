@@ -1,0 +1,554 @@
+program
+    class Graph
+        field VList vertices
+            new VList
+        field EList edges
+            new EList
+        method add_vertice : Vertice v -> Object
+            block
+                assign edges
+                    call append
+                        callee
+                            call outgoing
+                                callee
+                                    id v
+                        args
+                            id edges
+                assign vertices
+                    call cons
+                        callee
+                            id vertices
+                        args
+                            id v
+        method print_E : Object
+            call print
+                callee
+                    id edges
+        method print_V : Object
+            call print
+                callee
+                    id vertices
+    class Vertice : IO
+        field Int num
+        field EList out
+            new EList
+        method outgoing : EList
+            id out
+        method number : Int
+            id num
+        method init : Int n -> SELF_TYPE
+            block
+                assign num
+                    id n
+                id self
+        method add_out : Edge s -> SELF_TYPE
+            block
+                assign out
+                    call cons
+                        callee
+                            id out
+                        args
+                            id s
+                id self
+        method print : Object
+            block
+                call out_int
+                    args
+                        id num
+                call print
+                    callee
+                        id out
+    class Edge : IO
+        field Int from
+        field Int to
+        field Int weight
+        method init : Int f -> Int t -> Int w -> SELF_TYPE
+            block
+                assign from
+                    id f
+                assign to
+                    id t
+                assign weight
+                    id w
+                id self
+        method print : Object
+            block
+                call out_string
+                    args
+                        str " ("
+                call out_int
+                    args
+                        id from
+                call out_string
+                    args
+                        str ","
+                call out_int
+                    args
+                        id to
+                call out_string
+                    args
+                        str ")"
+                call out_int
+                    args
+                        id weight
+    class EList : IO
+        field Edge car
+        method isNil : Bool
+            bool true
+        method head : Edge
+            block
+                call abort
+                id car
+        method tail : EList
+            block
+                call abort
+                id self
+        method cons : Edge e -> EList
+            call init
+                callee
+                    new ECons
+                args
+                    id e
+                    id self
+        method append : EList l -> EList
+            if
+                call isNil
+                    callee
+                        id self
+            then
+                id l
+            else
+                call cons
+                    callee
+                        call append
+                            callee
+                                call tail
+                            args
+                                id l
+                    args
+                        call head
+        method print : Object
+            call out_string
+                args
+                    str "\n"
+    class ECons : EList
+        field EList cdr
+        method isNil : Bool
+            bool false
+        method head : Edge
+            id car
+        method tail : EList
+            id cdr
+        method init : Edge e -> EList rest -> EList
+            block
+                assign car
+                    id e
+                assign cdr
+                    id rest
+                id self
+        method print : Object
+            block
+                call print
+                    callee
+                        id car
+                call print
+                    callee
+                        id cdr
+    class VList : IO
+        field Vertice car
+        method isNil : Bool
+            bool true
+        method head : Vertice
+            block
+                call abort
+                id car
+        method tail : VList
+            block
+                call abort
+                id self
+        method cons : Vertice v -> VList
+            call init
+                callee
+                    new VCons
+                args
+                    id v
+                    id self
+        method print : Object
+            call out_string
+                args
+                    str "\n"
+    class VCons : VList
+        field VList cdr
+        method isNil : Bool
+            bool false
+        method head : Vertice
+            id car
+        method tail : VList
+            id cdr
+        method init : Vertice v -> VList rest -> VList
+            block
+                assign car
+                    id v
+                assign cdr
+                    id rest
+                id self
+        method print : Object
+            block
+                call print
+                    callee
+                        id car
+                call print
+                    callee
+                        id cdr
+    class Parse : IO
+        field BoolOp boolop
+            new BoolOp
+        method read_input : Graph
+            let
+                vars
+                    Graph g
+                        new Graph
+                block
+                    let
+                        vars
+                            String line
+                                call in_string
+                        while
+                            call and
+                                callee
+                                    id boolop
+                                args
+                                    unary not
+                                        binary =
+                                            id line
+                                            str "\n"
+                                    unary not
+                                        binary =
+                                            id line
+                                            str ""
+                        loop
+                            block
+                                call add_vertice
+                                    callee
+                                        id g
+                                    args
+                                        call parse_line
+                                            args
+                                                id line
+                                assign line
+                                    call in_string
+                    id g
+        method parse_line : String s -> Vertice
+            let
+                vars
+                    Vertice v
+                        call init
+                            callee
+                                new Vertice
+                            args
+                                call a2i
+                                    args
+                                        id s
+                block
+                    while
+                        unary not
+                            binary =
+                                call length
+                                    callee
+                                        id rest
+                                int 0
+                    loop
+                        block
+                            let
+                                vars
+                                    Int succ
+                                        call a2i
+                                            args
+                                                id rest
+                                let
+                                    vars
+                                        Int weight
+                                            call a2i
+                                                args
+                                                    id rest
+                                    call add_out
+                                        callee
+                                            id v
+                                        args
+                                            call init
+                                                callee
+                                                    new Edge
+                                                args
+                                                    call number
+                                                        callee
+                                                            id v
+                                                    id succ
+                                                    id weight
+                    id v
+        method c2i : String char -> Int
+            if
+                binary =
+                    id char
+                    str "0"
+            then
+                int 0
+            else
+                if
+                    binary =
+                        id char
+                        str "1"
+                then
+                    int 1
+                else
+                    if
+                        binary =
+                            id char
+                            str "2"
+                    then
+                        int 2
+                    else
+                        if
+                            binary =
+                                id char
+                                str "3"
+                        then
+                            int 3
+                        else
+                            if
+                                binary =
+                                    id char
+                                    str "4"
+                            then
+                                int 4
+                            else
+                                if
+                                    binary =
+                                        id char
+                                        str "5"
+                                then
+                                    int 5
+                                else
+                                    if
+                                        binary =
+                                            id char
+                                            str "6"
+                                    then
+                                        int 6
+                                    else
+                                        if
+                                            binary =
+                                                id char
+                                                str "7"
+                                        then
+                                            int 7
+                                        else
+                                            if
+                                                binary =
+                                                    id char
+                                                    str "8"
+                                            then
+                                                int 8
+                                            else
+                                                if
+                                                    binary =
+                                                        id char
+                                                        str "9"
+                                                then
+                                                    int 9
+                                                else
+                                                    block
+                                                        call abort
+                                                        int 0
+        field String rest
+        method a2i : String s -> Int
+            if
+                binary =
+                    call length
+                        callee
+                            id s
+                    int 0
+            then
+                int 0
+            else
+                if
+                    binary =
+                        call substr
+                            callee
+                                id s
+                            args
+                                int 0
+                                int 1
+                        str "-"
+                then
+                    unary ~
+                        call a2i_aux
+                            args
+                                call substr
+                                    callee
+                                        id s
+                                    args
+                                        int 1
+                                        binary -
+                                            call length
+                                                callee
+                                                    id s
+                                            int 1
+                else
+                    if
+                        binary =
+                            call substr
+                                callee
+                                    id s
+                                args
+                                    int 0
+                                    int 1
+                            str " "
+                    then
+                        call a2i
+                            args
+                                call substr
+                                    callee
+                                        id s
+                                    args
+                                        int 1
+                                        binary -
+                                            call length
+                                                callee
+                                                    id s
+                                            int 1
+                    else
+                        call a2i_aux
+                            args
+                                id s
+        method a2i_aux : String s -> Int
+            let
+                vars
+                    Int int
+                        int 0
+                block
+                    let
+                        vars
+                            Int j
+                                call length
+                                    callee
+                                        id s
+                        let
+                            vars
+                                Int i
+                                    int 0
+                            while
+                                binary <
+                                    id i
+                                    id j
+                            loop
+                                let
+                                    vars
+                                        String c
+                                            call substr
+                                                callee
+                                                    id s
+                                                args
+                                                    id i
+                                                    int 1
+                                    if
+                                        binary =
+                                            id c
+                                            str " "
+                                    then
+                                        block
+                                            assign rest
+                                                call substr
+                                                    callee
+                                                        id s
+                                                    args
+                                                        binary +
+                                                            id i
+                                                            int 1
+                                                        binary -
+                                                            binary -
+                                                                call length
+                                                                    callee
+                                                                        id s
+                                                                id i
+                                                            int 1
+                                            assign i
+                                                id j
+                                    else
+                                        if
+                                            binary =
+                                                id c
+                                                str ","
+                                        then
+                                            block
+                                                assign rest
+                                                    call substr
+                                                        callee
+                                                            id s
+                                                        args
+                                                            binary +
+                                                                id i
+                                                                int 1
+                                                            binary -
+                                                                binary -
+                                                                    call length
+                                                                        callee
+                                                                            id s
+                                                                    id i
+                                                                int 1
+                                                assign i
+                                                    id j
+                                        else
+                                            block
+                                                assign int
+                                                    binary +
+                                                        binary *
+                                                            id int
+                                                            int 10
+                                                        call c2i
+                                                            args
+                                                                call substr
+                                                                    callee
+                                                                        id s
+                                                                    args
+                                                                        id i
+                                                                        int 1
+                                                assign i
+                                                    binary +
+                                                        id i
+                                                        int 1
+                                                if
+                                                    binary =
+                                                        id i
+                                                        id j
+                                                then
+                                                    assign rest
+                                                        str ""
+                                                else
+                                                    str ""
+                    id int
+    class Main : Parse
+        field Graph g
+            call read_input
+        method main : Object
+            block
+                call print_V
+                    callee
+                        id g
+                call print_E
+                    callee
+                        id g
+    class BoolOp
+        method and : Bool b1 -> Bool b2 -> Bool
+            if
+                id b1
+            then
+                id b2
+            else
+                bool false
+        method or : Bool b1 -> Bool b2 -> Bool
+            if
+                id b1
+            then
+                bool true
+            else
+                id b2

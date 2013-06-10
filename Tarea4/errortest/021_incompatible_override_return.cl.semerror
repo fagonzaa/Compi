@@ -1,0 +1,14 @@
+3:4 Cannot override method Decimal.parse String -> Int with Number.parse String -> String
+program
+    class Number : Decimal
+        method parse : String number -> String
+            new String [String]
+    class Decimal
+        method parse : String number -> Int
+            new Int [Int]
+        method main : SELF_TYPE
+            block [Decimal]
+                call parse [Int]
+                    args
+                        str "17" [String]
+                id self [Decimal]

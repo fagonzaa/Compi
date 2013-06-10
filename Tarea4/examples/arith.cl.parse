@@ -1,0 +1,976 @@
+program
+    class A
+        field Int var
+            int 0
+        method value : Int
+            id var
+        method set_var : Int num -> SELF_TYPE
+            block
+                assign var
+                    id num
+                id self
+        method method1 : Int num -> SELF_TYPE
+            id self
+        method method2 : Int num1 -> Int num2 -> B
+            let
+                vars
+                    Int x
+                block
+                    assign x
+                        binary +
+                            id num1
+                            id num2
+                    call set_var
+                        callee
+                            new B
+                        args
+                            id x
+        method method3 : Int num -> C
+            let
+                vars
+                    Int x
+                block
+                    assign x
+                        unary ~
+                            id num
+                    call set_var
+                        callee
+                            new C
+                        args
+                            id x
+        method method4 : Int num1 -> Int num2 -> D
+            if
+                binary <
+                    id num2
+                    id num1
+            then
+                let
+                    vars
+                        Int x
+                    block
+                        assign x
+                            binary -
+                                id num1
+                                id num2
+                        call set_var
+                            callee
+                                new D
+                            args
+                                id x
+            else
+                let
+                    vars
+                        Int x
+                    block
+                        assign x
+                            binary -
+                                id num2
+                                id num1
+                        call set_var
+                            callee
+                                new D
+                            args
+                                id x
+        method method5 : Int num -> E
+            let
+                vars
+                    Int x
+                        int 1
+                block
+                    let
+                        vars
+                            Int y
+                                int 1
+                        while
+                            binary <=
+                                id y
+                                id num
+                        loop
+                            block
+                                assign x
+                                    binary *
+                                        id x
+                                        id y
+                                assign y
+                                    binary +
+                                        id y
+                                        int 1
+                    call set_var
+                        callee
+                            new E
+                        args
+                            id x
+    class B : A
+        method method5 : Int num -> E
+            let
+                vars
+                    Int x
+                block
+                    assign x
+                        binary *
+                            id num
+                            id num
+                    call set_var
+                        callee
+                            new E
+                        args
+                            id x
+    class C : B
+        method method6 : Int num -> A
+            let
+                vars
+                    Int x
+                block
+                    assign x
+                        unary ~
+                            id num
+                    call set_var
+                        callee
+                            new A
+                        args
+                            id x
+        method method5 : Int num -> E
+            let
+                vars
+                    Int x
+                block
+                    assign x
+                        binary *
+                            binary *
+                                id num
+                                id num
+                            id num
+                    call set_var
+                        callee
+                            new E
+                        args
+                            id x
+    class D : B
+        method method7 : Int num -> Bool
+            let
+                vars
+                    Int x
+                        id num
+                if
+                    binary <
+                        id x
+                        int 0
+                then
+                    call method7
+                        args
+                            unary ~
+                                id x
+                else
+                    if
+                        binary =
+                            int 0
+                            id x
+                    then
+                        bool true
+                    else
+                        if
+                            binary =
+                                int 1
+                                id x
+                        then
+                            bool false
+                        else
+                            if
+                                binary =
+                                    int 2
+                                    id x
+                            then
+                                bool false
+                            else
+                                call method7
+                                    args
+                                        binary -
+                                            id x
+                                            int 3
+    class E : D
+        method method6 : Int num -> A
+            let
+                vars
+                    Int x
+                block
+                    assign x
+                        binary /
+                            id num
+                            int 8
+                    call set_var
+                        callee
+                            new A
+                        args
+                            id x
+    class A2I
+        method c2i : String char -> Int
+            if
+                binary =
+                    id char
+                    str "0"
+            then
+                int 0
+            else
+                if
+                    binary =
+                        id char
+                        str "1"
+                then
+                    int 1
+                else
+                    if
+                        binary =
+                            id char
+                            str "2"
+                    then
+                        int 2
+                    else
+                        if
+                            binary =
+                                id char
+                                str "3"
+                        then
+                            int 3
+                        else
+                            if
+                                binary =
+                                    id char
+                                    str "4"
+                            then
+                                int 4
+                            else
+                                if
+                                    binary =
+                                        id char
+                                        str "5"
+                                then
+                                    int 5
+                                else
+                                    if
+                                        binary =
+                                            id char
+                                            str "6"
+                                    then
+                                        int 6
+                                    else
+                                        if
+                                            binary =
+                                                id char
+                                                str "7"
+                                        then
+                                            int 7
+                                        else
+                                            if
+                                                binary =
+                                                    id char
+                                                    str "8"
+                                            then
+                                                int 8
+                                            else
+                                                if
+                                                    binary =
+                                                        id char
+                                                        str "9"
+                                                then
+                                                    int 9
+                                                else
+                                                    block
+                                                        call abort
+                                                        int 0
+        method i2c : Int i -> String
+            if
+                binary =
+                    id i
+                    int 0
+            then
+                str "0"
+            else
+                if
+                    binary =
+                        id i
+                        int 1
+                then
+                    str "1"
+                else
+                    if
+                        binary =
+                            id i
+                            int 2
+                    then
+                        str "2"
+                    else
+                        if
+                            binary =
+                                id i
+                                int 3
+                        then
+                            str "3"
+                        else
+                            if
+                                binary =
+                                    id i
+                                    int 4
+                            then
+                                str "4"
+                            else
+                                if
+                                    binary =
+                                        id i
+                                        int 5
+                                then
+                                    str "5"
+                                else
+                                    if
+                                        binary =
+                                            id i
+                                            int 6
+                                    then
+                                        str "6"
+                                    else
+                                        if
+                                            binary =
+                                                id i
+                                                int 7
+                                        then
+                                            str "7"
+                                        else
+                                            if
+                                                binary =
+                                                    id i
+                                                    int 8
+                                            then
+                                                str "8"
+                                            else
+                                                if
+                                                    binary =
+                                                        id i
+                                                        int 9
+                                                then
+                                                    str "9"
+                                                else
+                                                    block
+                                                        call abort
+                                                        str ""
+        method a2i : String s -> Int
+            if
+                binary =
+                    call length
+                        callee
+                            id s
+                    int 0
+            then
+                int 0
+            else
+                if
+                    binary =
+                        call substr
+                            callee
+                                id s
+                            args
+                                int 0
+                                int 1
+                        str "-"
+                then
+                    unary ~
+                        call a2i_aux
+                            args
+                                call substr
+                                    callee
+                                        id s
+                                    args
+                                        int 1
+                                        binary -
+                                            call length
+                                                callee
+                                                    id s
+                                            int 1
+                else
+                    if
+                        binary =
+                            call substr
+                                callee
+                                    id s
+                                args
+                                    int 0
+                                    int 1
+                            str "+"
+                    then
+                        call a2i_aux
+                            args
+                                call substr
+                                    callee
+                                        id s
+                                    args
+                                        int 1
+                                        binary -
+                                            call length
+                                                callee
+                                                    id s
+                                            int 1
+                    else
+                        call a2i_aux
+                            args
+                                id s
+        method a2i_aux : String s -> Int
+            let
+                vars
+                    Int int
+                        int 0
+                block
+                    let
+                        vars
+                            Int j
+                                call length
+                                    callee
+                                        id s
+                        let
+                            vars
+                                Int i
+                                    int 0
+                            while
+                                binary <
+                                    id i
+                                    id j
+                            loop
+                                block
+                                    assign int
+                                        binary +
+                                            binary *
+                                                id int
+                                                int 10
+                                            call c2i
+                                                args
+                                                    call substr
+                                                        callee
+                                                            id s
+                                                        args
+                                                            id i
+                                                            int 1
+                                    assign i
+                                        binary +
+                                            id i
+                                            int 1
+                    id int
+        method i2a : Int i -> String
+            if
+                binary =
+                    id i
+                    int 0
+            then
+                str "0"
+            else
+                if
+                    binary <
+                        int 0
+                        id i
+                then
+                    call i2a_aux
+                        args
+                            id i
+                else
+                    call concat
+                        callee
+                            str "-"
+                        args
+                            call i2a_aux
+                                args
+                                    binary *
+                                        id i
+                                        unary ~
+                                            int 1
+        method i2a_aux : Int i -> String
+            if
+                binary =
+                    id i
+                    int 0
+            then
+                str ""
+            else
+                let
+                    vars
+                        Int next
+                            binary /
+                                id i
+                                int 10
+                    call concat
+                        callee
+                            call i2a_aux
+                                args
+                                    id next
+                        args
+                            call i2c
+                                args
+                                    binary -
+                                        id i
+                                        binary *
+                                            id next
+                                            int 10
+    class Main : IO
+        field String char
+        field A avar
+        field A a_var
+        field Bool flag
+            bool true
+        method menu : String
+            block
+                call out_string
+                    args
+                        str "\n\tTo add a number to "
+                call print
+                    args
+                        id avar
+                call out_string
+                    args
+                        str "...enter a:\n"
+                call out_string
+                    args
+                        str "\tTo negate "
+                call print
+                    args
+                        id avar
+                call out_string
+                    args
+                        str "...enter b:\n"
+                call out_string
+                    args
+                        str "\tTo find the difference between "
+                call print
+                    args
+                        id avar
+                call out_string
+                    args
+                        str "and another number...enter c:\n"
+                call out_string
+                    args
+                        str "\tTo find the factorial of "
+                call print
+                    args
+                        id avar
+                call out_string
+                    args
+                        str "...enter d:\n"
+                call out_string
+                    args
+                        str "\tTo square "
+                call print
+                    args
+                        id avar
+                call out_string
+                    args
+                        str "...enter e:\n"
+                call out_string
+                    args
+                        str "\tTo cube "
+                call print
+                    args
+                        id avar
+                call out_string
+                    args
+                        str "...enter f:\n"
+                call out_string
+                    args
+                        str "\tTo find out if "
+                call print
+                    args
+                        id avar
+                call out_string
+                    args
+                        str "is a multiple of 3...enter g:\n"
+                call out_string
+                    args
+                        str "\tTo divide "
+                call print
+                    args
+                        id avar
+                call out_string
+                    args
+                        str "by 8...enter h:\n"
+                call out_string
+                    args
+                        str "\tTo get a new number...enter j:\n"
+                call out_string
+                    args
+                        str "\tTo quit...enter q:\n\n"
+                call in_string
+        method prompt : String
+            block
+                call out_string
+                    args
+                        str "\n"
+                call out_string
+                    args
+                        str "Please enter a number...  "
+                call in_string
+        method get_int : Int
+            block
+                let
+                    vars
+                        A2I z
+                            new A2I
+                    let
+                        vars
+                            String s
+                                call prompt
+                        call a2i
+                            callee
+                                id z
+                            args
+                                id s
+        method is_even : Int num -> Bool
+            let
+                vars
+                    Int x
+                        id num
+                if
+                    binary <
+                        id x
+                        int 0
+                then
+                    call is_even
+                        args
+                            unary ~
+                                id x
+                else
+                    if
+                        binary =
+                            int 0
+                            id x
+                    then
+                        bool true
+                    else
+                        if
+                            binary =
+                                int 1
+                                id x
+                        then
+                            bool false
+                        else
+                            call is_even
+                                args
+                                    binary -
+                                        id x
+                                        int 2
+        method class_type : A var -> SELF_TYPE
+            instanceof
+                id var
+                case A a
+                    call out_string
+                        args
+                            str "Class type is now A\n"
+                case B b
+                    call out_string
+                        args
+                            str "Class type is now B\n"
+                case C c
+                    call out_string
+                        args
+                            str "Class type is now C\n"
+                case D d
+                    call out_string
+                        args
+                            str "Class type is now D\n"
+                case E e
+                    call out_string
+                        args
+                            str "Class type is now E\n"
+                case Object o
+                    call out_string
+                        args
+                            str "Oooops\n"
+        method print : A var -> SELF_TYPE
+            let
+                vars
+                    A2I z
+                        new A2I
+                block
+                    call out_string
+                        args
+                            call i2a
+                                callee
+                                    id z
+                                args
+                                    call value
+                                        callee
+                                            id var
+                    call out_string
+                        args
+                            str " "
+        method main : Object
+            block
+                assign avar
+                    new A
+                while
+                    id flag
+                loop
+                    block
+                        call out_string
+                            args
+                                str "number "
+                        call print
+                            args
+                                id avar
+                        if
+                            call is_even
+                                args
+                                    call value
+                                        callee
+                                            id avar
+                        then
+                            call out_string
+                                args
+                                    str "is even!\n"
+                        else
+                            call out_string
+                                args
+                                    str "is odd!\n"
+                        call class_type
+                            args
+                                id avar
+                        assign char
+                            call menu
+                        if
+                            binary =
+                                id char
+                                str "a"
+                        then
+                            block
+                                assign a_var
+                                    call set_var
+                                        callee
+                                            new A
+                                        args
+                                            call get_int
+                                assign avar
+                                    call method2
+                                        callee
+                                            new B
+                                        args
+                                            call value
+                                                callee
+                                                    id avar
+                                            call value
+                                                callee
+                                                    id a_var
+                        else
+                            if
+                                binary =
+                                    id char
+                                    str "b"
+                            then
+                                instanceof
+                                    id avar
+                                    case C c
+                                        assign avar
+                                            call method6
+                                                callee
+                                                    id c
+                                                args
+                                                    call value
+                                                        callee
+                                                            id c
+                                    case A a
+                                        assign avar
+                                            call method3
+                                                callee
+                                                    id a
+                                                args
+                                                    call value
+                                                        callee
+                                                            id a
+                                    case Object o
+                                        block
+                                            call out_string
+                                                args
+                                                    str "Oooops\n"
+                                            call abort
+                                            int 0
+                            else
+                                if
+                                    binary =
+                                        id char
+                                        str "c"
+                                then
+                                    block
+                                        assign a_var
+                                            call set_var
+                                                callee
+                                                    new A
+                                                args
+                                                    call get_int
+                                        assign avar
+                                            call method4
+                                                callee
+                                                    new D
+                                                args
+                                                    call value
+                                                        callee
+                                                            id avar
+                                                    call value
+                                                        callee
+                                                            id a_var
+                                else
+                                    if
+                                        binary =
+                                            id char
+                                            str "d"
+                                    then
+                                        assign avar
+                                            call method5 as A
+                                                callee
+                                                    new C
+                                                args
+                                                    call value
+                                                        callee
+                                                            id avar
+                                    else
+                                        if
+                                            binary =
+                                                id char
+                                                str "e"
+                                        then
+                                            assign avar
+                                                call method5 as B
+                                                    callee
+                                                        new C
+                                                    args
+                                                        call value
+                                                            callee
+                                                                id avar
+                                        else
+                                            if
+                                                binary =
+                                                    id char
+                                                    str "f"
+                                            then
+                                                assign avar
+                                                    call method5 as C
+                                                        callee
+                                                            new C
+                                                        args
+                                                            call value
+                                                                callee
+                                                                    id avar
+                                            else
+                                                if
+                                                    binary =
+                                                        id char
+                                                        str "g"
+                                                then
+                                                    if
+                                                        call method7
+                                                            callee
+                                                                new D
+                                                            args
+                                                                call value
+                                                                    callee
+                                                                        id avar
+                                                    then
+                                                        block
+                                                            call out_string
+                                                                args
+                                                                    str "number "
+                                                            call print
+                                                                args
+                                                                    id avar
+                                                            call out_string
+                                                                args
+                                                                    str "is divisible by 3.\n"
+                                                    else
+                                                        block
+                                                            call out_string
+                                                                args
+                                                                    str "number "
+                                                            call print
+                                                                args
+                                                                    id avar
+                                                            call out_string
+                                                                args
+                                                                    str "is not divisible by 3.\n"
+                                                else
+                                                    if
+                                                        binary =
+                                                            id char
+                                                            str "h"
+                                                    then
+                                                        let
+                                                            vars
+                                                                A x
+                                                            block
+                                                                assign x
+                                                                    call method6
+                                                                        callee
+                                                                            new E
+                                                                        args
+                                                                            call value
+                                                                                callee
+                                                                                    id avar
+                                                                let
+                                                                    vars
+                                                                        Int r
+                                                                            binary -
+                                                                                call value
+                                                                                    callee
+                                                                                        id avar
+                                                                                binary *
+                                                                                    call value
+                                                                                        callee
+                                                                                            id x
+                                                                                    int 8
+                                                                    block
+                                                                        call out_string
+                                                                            args
+                                                                                str "number "
+                                                                        call print
+                                                                            args
+                                                                                id avar
+                                                                        call out_string
+                                                                            args
+                                                                                str "is equal to "
+                                                                        call print
+                                                                            args
+                                                                                id x
+                                                                        call out_string
+                                                                            args
+                                                                                str "times 8 with a remainder of "
+                                                                        let
+                                                                            vars
+                                                                                A2I a
+                                                                                    new A2I
+                                                                            block
+                                                                                call out_string
+                                                                                    args
+                                                                                        call i2a
+                                                                                            callee
+                                                                                                id a
+                                                                                            args
+                                                                                                id r
+                                                                                call out_string
+                                                                                    args
+                                                                                        str "\n"
+                                                                assign avar
+                                                                    id x
+                                                    else
+                                                        if
+                                                            binary =
+                                                                id char
+                                                                str "j"
+                                                        then
+                                                            assign avar
+                                                                new A
+                                                        else
+                                                            if
+                                                                binary =
+                                                                    id char
+                                                                    str "q"
+                                                            then
+                                                                assign flag
+                                                                    bool false
+                                                            else
+                                                                assign avar
+                                                                    call method1
+                                                                        callee
+                                                                            new A
+                                                                        args
+                                                                            call value
+                                                                                callee
+                                                                                    id avar

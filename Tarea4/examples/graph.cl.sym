@@ -1,0 +1,177 @@
+class Graph : Object
+    fields
+        VList vertices
+        EList edges
+    methods
+        Object add_vertice
+            arguments
+                Vertice v
+            body
+        Object print_E
+            body
+        Object print_V
+            body
+class Vertice : IO
+    fields
+        Int num
+        EList out
+    methods
+        EList outgoing
+            body
+        Int number
+            body
+        SELF_TYPE init
+            arguments
+                Int n
+            body
+        SELF_TYPE add_out
+            arguments
+                Edge s
+            body
+        Object print
+            body
+class Edge : IO
+    fields
+        Int from
+        Int to
+        Int weight
+    methods
+        SELF_TYPE init
+            arguments
+                Int f
+                Int t
+                Int w
+            body
+        Object print
+            body
+class EList : IO
+    fields
+        Edge car
+    methods
+        Bool isNil
+            body
+        Edge head
+            body
+        EList tail
+            body
+        EList cons
+            arguments
+                Edge e
+            body
+        EList append
+            arguments
+                EList l
+            body
+        Object print
+            body
+class ECons : EList
+    fields
+        EList cdr
+    methods
+        Bool isNil
+            body
+        Edge head
+            body
+        EList tail
+            body
+        EList init
+            arguments
+                Edge e
+                EList rest
+            body
+        Object print
+            body
+class VList : IO
+    fields
+        Vertice car
+    methods
+        Bool isNil
+            body
+        Vertice head
+            body
+        VList tail
+            body
+        VList cons
+            arguments
+                Vertice v
+            body
+        Object print
+            body
+class VCons : VList
+    fields
+        VList cdr
+    methods
+        Bool isNil
+            body
+        Vertice head
+            body
+        VList tail
+            body
+        VList init
+            arguments
+                Vertice v
+                VList rest
+            body
+        Object print
+            body
+class Parse : IO
+    fields
+        BoolOp boolop
+        String rest
+    methods
+        Graph read_input
+            body
+                scope
+                    Graph g
+                    scope
+                        String line
+        Vertice parse_line
+            arguments
+                String s
+            body
+                scope
+                    Vertice v
+                    scope
+                        Int succ
+                        scope
+                            Int weight
+        Int c2i
+            arguments
+                String char
+            body
+        Int a2i
+            arguments
+                String s
+            body
+        Int a2i_aux
+            arguments
+                String s
+            body
+                scope
+                    Int int
+                    scope
+                        Int j
+                        scope
+                            Int i
+                            scope
+                                String c
+class Main : Parse
+    fields
+        Graph g
+    methods
+        Object main
+            body
+class BoolOp : Object
+    fields
+    methods
+        Bool and
+            arguments
+                Bool b1
+                Bool b2
+            body
+        Bool or
+            arguments
+                Bool b1
+                Bool b2
+            body
+

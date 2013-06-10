@@ -1,0 +1,5 @@
+1:4 Expected Main, received String
+program
+    class Main
+        method main : SELF_TYPE
+            str "Soy un string malicioso" [String]

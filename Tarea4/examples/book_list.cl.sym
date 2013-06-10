@@ -1,0 +1,81 @@
+class Book : IO
+    fields
+        String title
+        String author
+    methods
+        Book initBook
+            arguments
+                String title_p
+                String author_p
+            body
+        Book print
+            body
+class Article : Book
+    fields
+        String per_title
+    methods
+        Article initArticle
+            arguments
+                String title_p
+                String author_p
+                String per_title_p
+            body
+        Book print
+            body
+class BookList : IO
+    fields
+    methods
+        Bool isNil
+            body
+        Cons cons
+            arguments
+                Book hd
+            body
+                scope
+                    Cons new_cell
+        Book car
+            body
+        BookList cdr
+            body
+        Object print_list
+            body
+class Cons : BookList
+    fields
+        Book xcar
+        BookList xcdr
+    methods
+        Bool isNil
+            body
+        Cons init
+            arguments
+                Book hd
+                BookList tl
+            body
+        Book car
+            body
+        BookList cdr
+            body
+        Object print_list
+            body
+                scope
+                    Book dummy
+                scope
+                    Article dummy
+class Nil : BookList
+    fields
+    methods
+        Bool isNil
+            body
+        Object print_list
+            body
+class Main : Object
+    fields
+        BookList books
+    methods
+        Object main
+            body
+                scope
+                    Book a_book
+                    scope
+                        Article an_article
+

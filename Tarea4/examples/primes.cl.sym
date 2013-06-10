@@ -1,0 +1,11 @@
+class Main : IO
+    fields
+        Int out
+        Int testee
+        Int divisor
+        Int stop
+        Object m
+    methods
+        Int main
+            body
+

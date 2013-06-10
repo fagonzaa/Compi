@@ -1,0 +1,36 @@
+class A2I : Object
+    fields
+    methods
+        Int c2i
+            arguments
+                String char
+            body
+        String i2c
+            arguments
+                Int i
+            body
+        Int a2i
+            arguments
+                String s
+            body
+        Int a2i_aux
+            arguments
+                String s
+            body
+                scope
+                    Int int
+                    scope
+                        Int j
+                        scope
+                            Int i
+        String i2a
+            arguments
+                Int i
+            body
+        String i2a_aux
+            arguments
+                Int i
+            body
+                scope
+                    Int next
+

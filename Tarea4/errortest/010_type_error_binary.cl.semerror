@@ -1,0 +1,44 @@
+4:17 Expected Int, received String
+5:12 Expected Int, received Bool
+6:12 Expected Int, received Bool
+6:20 Expected Int, received String
+7:12 Expected Int, received IO
+10:12 Expected Int, received Main
+10:23 Expected Int, received String
+11:12 Expected Int, received String
+11:20 Expected Int, received Main
+15:16 Expected Int, received String
+16:18 Expected String, received Bool
+17:12 Expected Int, received Main
+program
+    class Main
+        method main : SELF_TYPE
+            block ERROR
+                binary + ERROR
+                    int 10 [Int]
+                    str "S" [String]
+                binary - ERROR
+                    bool false [Bool]
+                    int 5 [Int]
+                binary * ERROR
+                    bool false [Bool]
+                    str "Strongo" [String]
+                binary / ERROR
+                    new IO [IO]
+                    new Int [Int]
+                binary < ERROR
+                    new Main [Main]
+                    str "S" [String]
+                binary <= ERROR
+                    str "VP" [String]
+                    new Main [Main]
+                binary = ERROR
+                    int 0 [Int]
+                    str "Cero" [String]
+                binary = ERROR
+                    str "8" [String]
+                    bool false [Bool]
+                binary = ERROR
+                    new Main [Main]
+                    new Int [Int]
+                id self [Main]

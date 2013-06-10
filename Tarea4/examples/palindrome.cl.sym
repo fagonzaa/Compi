@@ -1,0 +1,11 @@
+class Main : IO
+    fields
+        Int i
+    methods
+        Bool pal
+            arguments
+                String s
+            body
+        SELF_TYPE main
+            body
+

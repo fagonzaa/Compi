@@ -1,0 +1,11 @@
+5:8 Expected Bool, received Object
+program
+    class Main
+        field Object o
+        method main : SELF_TYPE
+            if ERROR
+                id o [Object]
+            then
+                int 100 [Int]
+            else
+                str "Cien" [String]
