@@ -248,6 +248,11 @@ public class CodegenPrinter {
         		printIndent(1);
         		System.out.println("store i32 %" + getLocalVari() +", i32* @" + varname);
         	}
+        	else if(assign.getExprType().equals("String")){
+        		String varname = assign.getId();
+        		printIndent(1);
+        		System.out.println("store i8* %" + getLocalVars() +", i8** @" + varname);
+        	}
         	else if(assign.getExprType().equals("Bool")){
         		String varname = assign.getId();
         		printIndent(1);
@@ -283,9 +288,12 @@ public class CodegenPrinter {
             	
                 for(Expr arg: call.getArgs()) {
                     
-                
+                	
                     String returnvar = "";
                 
+                    if(!call.getName().equals("out_string") && !call.getName().equals("out_int") && !call.getName().equals("in_string") && !call.getName().equals("in_int")){
+                    	
+                    
                     if(arg.getExprType().equals("Int")){
                     	
                          returnvar = getNextLocalVari();
@@ -302,8 +310,12 @@ public class CodegenPrinter {
                         printout(1,"%" + returnvar + " = alloca i1");
                         argumentos += ", i1 %" + returnvar;
                 	}
+                    }
                     
                     print(arg, indent+2); // SSS
+                    
+                    if(!call.getName().equals("out_string") && !call.getName().equals("out_int") && !call.getName().equals("in_string") && !call.getName().equals("in_int")){
+                    	
                     
                     if(arg.getExprType().equals("Int")){
                     	printIndent(1);
@@ -317,7 +329,7 @@ public class CodegenPrinter {
                 		printIndent(1);
                     	System.out.println("store i1 %"+ getLocalVarb() +", i1* %" + returnvar);
                 	}
-                
+                    }
                 }
             }
             
@@ -326,6 +338,7 @@ public class CodegenPrinter {
             printIndent(1);
             //System.out.print("call ");
             
+           
             if(call.getName().equals("out_string")){
                 //call %IO* @IO_out_string(%IO* %_tmp_1, i8* bitcast ([13 x i8]* @msg to i8*))
             	
@@ -336,7 +349,7 @@ public class CodegenPrinter {
 
             }
             
-            if(call.getName().equals("out_int")){
+            else if(call.getName().equals("out_int")){
 
             	//String _var_name = "vari_" + c_vari++;
             	//String _var_value = constants.getValueVar(_var_name); 
