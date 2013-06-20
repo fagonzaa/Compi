@@ -262,21 +262,27 @@ public class CodegenPrinter {
         else if(e instanceof DispatchExpr) {
             DispatchExpr call = (DispatchExpr)e;
 
-            StringBuilder out = new StringBuilder();
-
-            out.append("call ").append(call.getName());
-            if(call.getType() != null) {
-                out.append(" as ").append(call.getType());
-            }
             
+            String name_var_callee = "";
             
             // printTag(out.toString(), e);
             
 
             if( call.getExpr() != null ) {
-                //printIndent(indent+1);
+                
+            	//printIndent(indent+1);
                 //System.out.println("callee");
                 print(call.getExpr(), indent+2);
+                
+                if(call.getExpr().getExprType().equals("Int")){
+                	name_var_callee = getLocalVari();
+                }
+            	else if(call.getExpr().getExprType().equals("String")){
+            		name_var_callee = getLocalVars();
+            	}
+            	else if(call.getExpr().getExprType().equals("Bool")){
+            		name_var_callee = getLocalVarb();
+            	}
             }
             
             String argumentos = "";
@@ -285,7 +291,7 @@ public class CodegenPrinter {
                 //System.out.println("args");
             	
             	 
-            	
+            	int iarg = 0;
                 for(Expr arg: call.getArgs()) {
                     
                 	
@@ -294,52 +300,39 @@ public class CodegenPrinter {
                     if(!call.getName().equals("out_string") && !call.getName().equals("out_int") && !call.getName().equals("in_string") && !call.getName().equals("in_int")){
                     	
                     
-                    if(arg.getExprType().equals("Int")){
-                    	
-                         returnvar = getNextLocalVari();
-                        printout(1,"%" + returnvar + " = alloca i32");
-                        argumentos += ", i32 %" + returnvar;
-                    }
-                	else if(arg.getExprType().equals("String")){
-                		 returnvar = getNextLocalVars();
-                        printout(1,"%" + returnvar + " = alloca i8*");
-                        argumentos += ", i8* %" + returnvar;
-                    }
-                	else if(arg.getExprType().equals("Bool")){
-                		 returnvar = getNextLocalVarb();
-                        printout(1,"%" + returnvar + " = alloca i1");
-                        argumentos += ", i1 %" + returnvar;
-                	}
                     }
                     
                     print(arg, indent+2); // SSS
                     
                     if(!call.getName().equals("out_string") && !call.getName().equals("out_int") && !call.getName().equals("in_string") && !call.getName().equals("in_int")){
                     	
+                    	if(iarg != 0){
+                    		argumentos += ", ";
+                    	}
                     
-                    if(arg.getExprType().equals("Int")){
-                    	printIndent(1);
-                    	System.out.println("store i32 %"+ getLocalVari() +", i32* %" + returnvar);
+	                    if(arg.getExprType().equals("Int")){
+	                        argumentos += "i32 %" + getLocalVari();
+	                    }
+	                	else if(arg.getExprType().equals("String")){
+	                        argumentos += "i8* %" + getLocalVars();
+	                    }
+	                	else if(arg.getExprType().equals("Bool")){
+	                        argumentos += "i1 %" + getLocalVarb();
+	                	}
                     }
-                	else if(arg.getExprType().equals("String")){
-                		printIndent(1);
-                    	System.out.println("store i8* %"+ getLocalVars() +", i8** %" + returnvar);
-                    }
-                	else if(arg.getExprType().equals("Bool")){
-                		printIndent(1);
-                    	System.out.println("store i1 %"+ getLocalVarb() +", i1* %" + returnvar);
-                	}
-                    }
+                    
+                    iarg++;
+                    
                 }
             }
             
-            
+            String callname = call.getName();
             
             printIndent(1);
             //System.out.print("call ");
             
-           
-            if(call.getName().equals("out_string")){
+            // IO
+            if(callname.equals("out_string")){
                 //call %IO* @IO_out_string(%IO* %_tmp_1, i8* bitcast ([13 x i8]* @msg to i8*))
             	
             	String vars_name = "";//constants.getValueVar(); 
@@ -349,7 +342,7 @@ public class CodegenPrinter {
 
             }
             
-            else if(call.getName().equals("out_int")){
+            else if(callname.equals("out_int")){
 
             	//String _var_name = "vari_" + c_vari++;
             	//String _var_value = constants.getValueVar(_var_name); 
@@ -357,14 +350,33 @@ public class CodegenPrinter {
             	
                 System.out.println("call %IO* @IO_out_int(%IO* %_tmp_1, i32 %" + getLocalVari() + ")");
             }
-            else if(call.getName().equals("in_string")){
+            else if(callname.equals("in_string")){
             	// i8* @in_string(%IO* %self)
             	System.out.println("%" + getNextLocalVars() + " = call i8* @IO_in_string(%IO* %_tmp_1)");
             }
-            else if(call.getName().equals("in_int")){
+            else if(callname.equals("in_int")){
             	// i32 @in_int(%IO* %self)
             	System.out.println("%" + getNextLocalVars() + " = call i32 @IO_in_int(%IO* %_tmp_1)");
             }
+            
+            // STRING
+            else if(callname.equals("length")){
+            	// i32 @String_length(i8* %self)
+            	
+            	System.out.println("%" + getNextLocalVari() + " = call i32 @String_length(i8* %" + name_var_callee + ")");
+            }
+            else if(callname.equals("concat")){
+            	// i8* @String_concat(i8* %self, i8* %other)
+            	System.out.println("%" + getNextLocalVars() + " = call i8* @String_concat(i8* %" + name_var_callee + ", " + argumentos + ")");
+            	//name_var_callee
+            	
+            	// "d__<".concat(">--b")
+            }
+			else if(callname.equals("substr")){
+				// i8* @String_substr(i8* %self, i32 %i, %32 %l)
+            	System.out.println("%" + getNextLocalVars() + " = call i8* @String_substr(i8* %" + name_var_callee + ", " + argumentos + ")");
+
+			}
             else{
             	
       //      	System.out.println(call.getName());

@@ -14,4 +14,4 @@ define %Main* @Main_main(%Main* %m) {
     %_tmp_1 = bitcast %Main* %m to %IO*
     call %IO @IO_out_string(%IO* %_tmp_1, i8* bitcast ([13 x i8]* @var_0 to i8*))
     ret %Main* %m
-}   
+}

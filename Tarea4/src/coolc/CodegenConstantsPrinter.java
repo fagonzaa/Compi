@@ -135,14 +135,14 @@ public class CodegenConstantsPrinter {
             	
             	if( var.getValue() != null ) {
  	                value = valueexpr.getValue().toString();
- 	               length = ((String)value).length() + 1;   
+ 	               length = ((String)value).length();   
  	            }
             	
                 _fields.put(var.getId(), value);
                 
                 value =  ((String)value).replace("\n", "\\0A")
 	                     .replace("\t", "\\09").replace("\f", "\\0C").replace("\b", "\\08");                 
-                value += "\00";
+                value += "";
                 
                 
            
@@ -319,13 +319,13 @@ public class CodegenConstantsPrinter {
             if(value instanceof String) {
             	
             	if(!_vars.containsKey(value.toString())){
-	            	int length = ((String)value).length() + 1;
+	            	int length = ((String)value).length();
 	                _vars.put(value.toString(), "vars_"+c_vars );
 	
 	                value =  ((String)value).replace("\n", "\\0A")
 	                    .replace("\t", "\\09").replace("\f", "\\0C").replace("\b", "\\08");
 	                
-	                value += "\00";
+	                value += "";
 	                
 	                
 	            	System.out.println("@vars_" + c_vars + "_c = constant [" + length + " x i8] c\"" + value + "\"");
