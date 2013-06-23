@@ -14,6 +14,10 @@ public class MethodScope extends Scope {
     public List<String> getParams() {
         return _params;
     }
+    
+    public boolean hasParamField(String name) {
+        return _params.contains(name);
+    }
 
     
     public MethodScope(ClassScope parent, String returnType, Node node) {

@@ -4,6 +4,9 @@ import java.io.FileNotFoundException;
 import java.io.PrintStream;
 
 import coolc.ast.*;
+import coolc.infrastructure.ClassScope;
+import coolc.infrastructure.MethodScope;
+import coolc.infrastructure.SymTable;
 
 public class CodegenPrinter {
 
@@ -11,6 +14,11 @@ public class CodegenPrinter {
 	
     private Program _root;
     private boolean _printTypes;
+    
+    private SymTable _symTable;
+    ClassScope classScope;
+    MethodScope methodScope;
+    
     
     ClassDef current_class = null;
     
@@ -41,6 +49,9 @@ public class CodegenPrinter {
     	}
     	_root = root;
         _printTypes = printTypes;
+        
+        _symTable = new SymTable(root);
+        // 
     }
 
     public void print() {
@@ -105,6 +116,9 @@ public class CodegenPrinter {
             //System.out.printf(" : %s", c.getSuper());
         }
         //System.out.println();
+        
+        
+        classScope = _symTable.findClass(c.getType());
     }
     
     
@@ -129,6 +143,7 @@ public class CodegenPrinter {
             //System.out.printf("method %s : ", m.getName());
             
             
+            methodScope = classScope.getMethod(m.getName());
             
             System.out.print("define " + GetTypeLL(m.getType()) + " @" + current_class.getType() + "_" + m.getName() + "(");
             
@@ -153,11 +168,27 @@ public class CodegenPrinter {
             
             //     ret %Main* %m
             printIndent(1);
-            System.out.println("ret " + GetTypeLL(m.getType()) + " %m");
+            
+            String type = m.getType();
+            
+            if(type.equals("String")){
+                System.out.println("ret " + GetTypeLL(m.getType()) + " %" + getLocalVars());
+        	}
+        	else if(type.equals("Int")){
+                System.out.println("ret " + GetTypeLL(m.getType()) + " %" + getLocalVari());
+        	}
+        	else if(type.equals("Bool")){
+                System.out.println("ret " + GetTypeLL(m.getType()) + " %" + getLocalVarb());
+        	}
+        	else if(type.equals("SELF_TYPE") || type.equals("Object")){
+                System.out.println("ret " + GetTypeLL(m.getType()) + " %m");
+        	}
+            
             
             
             
             System.out.println("}");
+            System.out.println();
         }
         else if (f instanceof Variable) {
             Variable var = (Variable)f;
@@ -383,18 +414,18 @@ public class CodegenPrinter {
                 
             	if(call.getExprType().equals("Int")){
             		System.out.print("%" + getNextLocalVari() + " = ");
-            		System.out.println("call " + GetTypeLL(call.getExprType()) + " @Main_" + call.getName() + "(%Main* null"+ argumentos +")");
+            		System.out.println("call " + GetTypeLL(call.getExprType()) + " @Main_" + call.getName() + "(%Main* null, "+ argumentos +")");
             	}
             	else if(call.getExprType().equals("String")){
             		System.out.print("%" + getNextLocalVars() + " = ");
-            		System.out.println("call " + GetTypeLL(call.getExprType()) + " @Main_" + call.getName() + "(%Main* null"+ argumentos +")");
+            		System.out.println("call " + GetTypeLL(call.getExprType()) + " @Main_" + call.getName() + "(%Main* null, "+ argumentos +")");
             	}
             	else if(call.getExprType().equals("Bool")){
             		System.out.print("%" + getNextLocalVarb() + " = ");
-            		System.out.println("call " + GetTypeLL(call.getExprType()) + " @Main_" + call.getName() + "(%Main* null"+ argumentos +")");
+            		System.out.println("call " + GetTypeLL(call.getExprType()) + " @Main_" + call.getName() + "(%Main* null, "+ argumentos +")");
             	}
             	else {
-            		System.out.println("call " + GetTypeLL(call.getExprType()) + " @Main_" + call.getName() + "(%Main* null"+ argumentos +")");
+            		System.out.println("call " + GetTypeLL(call.getExprType()) + " @Main_" + call.getName() + "(%Main* null, "+ argumentos +")");
             	}
             }
         }
@@ -567,7 +598,7 @@ public class CodegenPrinter {
         	}
         	
         	// Expresion 1
-            print(expr.getLeft(), indent + 1);             
+            print(expr.getLeft(), indent + 1);    
             
             if(expr.getLeft().getExprType().equals("String")){
                 System.out.println("store i8* %"+ getLocalVars() +", i8** %" + name1);
@@ -576,8 +607,8 @@ public class CodegenPrinter {
                 System.out.println("store i32 %"+ getLocalVari() +", i32* %" + name1);
         	}
 
-       
             print(expr.getRight(), indent + 1);
+            
             if(expr.getLeft().getExprType().equals("String")){
                 System.out.println("store i8* %"+ getLocalVars() +", i8** %" + name2);
         	}
@@ -687,16 +718,25 @@ public class CodegenPrinter {
                 String globalvar = id.getId();
                 String localvar = getNextLocalVari();
                 
-                printout(1,"%" + localvar + " = load i32* @" + globalvar);
+                if(methodScope.hasParamField(globalvar)){
+                	printout(1,"%" + localvar + " = add i32 %" + globalvar + ", 0");
+                }
+                else{
+                	printout(1,"%" + localvar + " = load i32* @" + globalvar);
+                }
+                
         	}
         	else if(id.getExprType().equals("String")){
                 String globalvar = id.getId();
                 String localvar = getNextLocalVars();
-                String globalvar_value = constants.getValueFields(globalvar).toString();
             	printIndent(1);
-            	// %lvars_1 = load i8** @message
-            	System.out.println("%" + localvar +" = load i8** @" + globalvar);
-        	
+            	
+            	if(methodScope.hasParamField(globalvar)){
+                	printout(1,"%" + localvar + " = load i8* %" + globalvar);
+                }
+                else{
+                	printout(1,"%" + localvar + " = load i8** @" + globalvar);
+                }
 
         	}
         	else if(id.getExprType().equals("Bool")){
@@ -704,7 +744,14 @@ public class CodegenPrinter {
         		String globalvar = id.getId();
                 String localvar = getNextLocalVarb();
                 
-                printout(1,"%" + localvar + " = load i1* @" + globalvar);
+                if(methodScope.hasParamField(globalvar)){
+                	
+                	printIndent(1);
+                	System.out.println("%" + getNextLocalVarb() + " = icmp eq i1 %" + globalvar + ", 1");
+                }
+                else{
+                	printout(1,"%" + localvar + " = load ii* @" + globalvar);
+                }
         	}
         	else{
         		
@@ -811,7 +858,7 @@ public class CodegenPrinter {
     public String GetTypeLL(String type){
     	
     	if(type.equals("String")){
-    		
+    		return "i8*";
     	}
     	else if(type.equals("Int")){
     		return "i32";
