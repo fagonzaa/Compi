@@ -1,0 +1,45 @@
+class CellularAutomaton : IO
+    fields
+        String population_map
+    methods
+        SELF_TYPE init
+            arguments
+                String map
+            body
+        SELF_TYPE print
+            body
+        Int num_cells
+            body
+        String cell
+            arguments
+                Int position
+            body
+        String cell_left_neighbor
+            arguments
+                Int position
+            body
+        String cell_right_neighbor
+            arguments
+                Int position
+            body
+        String cell_at_next_evolution
+            arguments
+                Int position
+            body
+        SELF_TYPE evolve
+            body
+                scope
+                    Int position
+                    scope
+                        Int num
+                        scope
+                            String temp
+class Main : Object
+    fields
+        CellularAutomaton cells
+    methods
+        SELF_TYPE main
+            body
+                scope
+                    Int countdown
+

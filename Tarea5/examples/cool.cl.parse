@@ -1,0 +1,29 @@
+program
+    class Main : IO
+        method main : SELF_TYPE
+            block
+                call out_string
+                    callee
+                        call out_string
+                            args
+                                call substr
+                                    callee
+                                        call type_name
+                                            callee
+                                                new Object
+                                    args
+                                        int 4
+                                        int 1
+                    args
+                        call substr
+                            callee
+                                call type_name
+                                    callee
+                                        unary isvoid
+                                            id self
+                            args
+                                int 1
+                                int 3
+                call out_string
+                    args
+                        str "\n"

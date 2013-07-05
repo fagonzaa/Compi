@@ -1,0 +1,18 @@
+class Main : IO
+    fields
+    methods
+        Object newline
+            body
+        String prompt
+            body
+        Object main
+            body
+                scope
+                    A2I z
+                    scope
+                        String s
+                        scope
+                            Int i
+                            scope
+                                String news
+

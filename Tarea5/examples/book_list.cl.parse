@@ -1,0 +1,164 @@
+program
+    class Book : IO
+        field String title
+        field String author
+        method initBook : String title_p -> String author_p -> Book
+            block
+                assign title
+                    id title_p
+                assign author
+                    id author_p
+                id self
+        method print : Book
+            block
+                call out_string
+                    callee
+                        call out_string
+                            callee
+                                call out_string
+                                    args
+                                        str "title:      "
+                            args
+                                id title
+                    args
+                        str "\n"
+                call out_string
+                    callee
+                        call out_string
+                            callee
+                                call out_string
+                                    args
+                                        str "author:     "
+                            args
+                                id author
+                    args
+                        str "\n"
+                id self
+    class Article : Book
+        field String per_title
+        method initArticle : String title_p -> String author_p -> String per_title_p -> Article
+            block
+                call initBook
+                    args
+                        id title_p
+                        id author_p
+                assign per_title
+                    id per_title_p
+                id self
+        method print : Book
+            block
+                call print as Book
+                    callee
+                        id self
+                call out_string
+                    callee
+                        call out_string
+                            callee
+                                call out_string
+                                    args
+                                        str "periodical:  "
+                            args
+                                id per_title
+                    args
+                        str "\n"
+                id self
+    class BookList : IO
+        method isNil : Bool
+            block
+                call abort
+                bool true
+        method cons : Book hd -> Cons
+            let
+                vars
+                    Cons new_cell
+                        new Cons
+                call init
+                    callee
+                        id new_cell
+                    args
+                        id hd
+                        id self
+        method car : Book
+            block
+                call abort
+                new Book
+        method cdr : BookList
+            block
+                call abort
+                new BookList
+        method print_list : Object
+            call abort
+    class Cons : BookList
+        field Book xcar
+        field BookList xcdr
+        method isNil : Bool
+            bool false
+        method init : Book hd -> BookList tl -> Cons
+            block
+                assign xcar
+                    id hd
+                assign xcdr
+                    id tl
+                id self
+        method car : Book
+            id xcar
+        method cdr : BookList
+            id xcdr
+        method print_list : Object
+            block
+                instanceof
+                    call print
+                        callee
+                            id xcar
+                    case Book dummy
+                        call out_string
+                            args
+                                str "- dynamic type was Book -\n"
+                    case Article dummy
+                        call out_string
+                            args
+                                str "- dynamic type was Article -\n"
+                call print_list
+                    callee
+                        id xcdr
+    class Nil : BookList
+        method isNil : Bool
+            bool true
+        method print_list : Object
+            bool true
+    class Main
+        field BookList books
+        method main : Object
+            let
+                vars
+                    Book a_book
+                        call initBook
+                            callee
+                                new Book
+                            args
+                                str "Compilers, Principles, Techniques, and Tools"
+                                str "Aho, Sethi, and Ullman"
+                let
+                    vars
+                        Article an_article
+                            call initArticle
+                                callee
+                                    new Article
+                                args
+                                    str "The Top 100 CD_ROMs"
+                                    str "Ulanoff"
+                                    str "PC Magazine"
+                    block
+                        assign books
+                            call cons
+                                callee
+                                    call cons
+                                        callee
+                                            new Nil
+                                        args
+                                            id a_book
+                                args
+                                    id an_article
+                        call print_list
+                            callee
+                                id books

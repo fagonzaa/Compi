@@ -1,0 +1,854 @@
+program
+    class VarList : IO
+        method isNil : Bool
+            bool true
+        method head : Variable
+            block
+                call abort
+                new Variable
+        method tail : VarList
+            block
+                call abort
+                new VarList
+        method add : Variable x -> VarList
+            call init
+                callee
+                    new VarListNE
+                args
+                    id x
+                    id self
+        method print : SELF_TYPE
+            call out_string
+                args
+                    str "\n"
+    class VarListNE : VarList
+        field Variable x
+        field VarList rest
+        method isNil : Bool
+            bool false
+        method head : Variable
+            id x
+        method tail : VarList
+            id rest
+        method init : Variable y -> VarList r -> VarListNE
+            block
+                assign x
+                    id y
+                assign rest
+                    id r
+                id self
+        method print : SELF_TYPE
+            block
+                call print_self
+                    callee
+                        id x
+                call out_string
+                    args
+                        str " "
+                call print
+                    callee
+                        id rest
+                id self
+    class LambdaList
+        method isNil : Bool
+            bool true
+        method headE : VarList
+            block
+                call abort
+                new VarList
+        method headC : Lambda
+            block
+                call abort
+                new Lambda
+        method headN : Int
+            block
+                call abort
+                int 0
+        method tail : LambdaList
+            block
+                call abort
+                new LambdaList
+        method add : VarList e -> Lambda x -> Int n -> LambdaList
+            call init
+                callee
+                    new LambdaListNE
+                args
+                    id e
+                    id x
+                    id n
+                    id self
+    class LambdaListNE : LambdaList
+        field Lambda lam
+        field Int num
+        field VarList env
+        field LambdaList rest
+        method isNil : Bool
+            bool false
+        method headE : VarList
+            id env
+        method headC : Lambda
+            id lam
+        method headN : Int
+            id num
+        method tail : LambdaList
+            id rest
+        method init : VarList e -> Lambda l -> Int n -> LambdaList r -> LambdaListNE
+            block
+                assign env
+                    id e
+                assign lam
+                    id l
+                assign num
+                    id n
+                assign rest
+                    id r
+                id self
+    class LambdaListRef
+        field Int nextNum
+            int 0
+        field LambdaList l
+        method isNil : Bool
+            call isNil
+                callee
+                    id l
+        method headE : VarList
+            call headE
+                callee
+                    id l
+        method headC : Lambda
+            call headC
+                callee
+                    id l
+        method headN : Int
+            call headN
+                callee
+                    id l
+        method reset : SELF_TYPE
+            block
+                assign nextNum
+                    int 0
+                assign l
+                    new LambdaList
+                id self
+        method add : VarList env -> Lambda c -> Int
+            block
+                assign l
+                    call add
+                        callee
+                            id l
+                        args
+                            id env
+                            id c
+                            id nextNum
+                assign nextNum
+                    binary +
+                        id nextNum
+                        int 1
+                binary -
+                    id nextNum
+                    int 1
+        method removeHead : SELF_TYPE
+            block
+                assign l
+                    call tail
+                        callee
+                            id l
+                id self
+    class Expr : IO
+        method print_self : SELF_TYPE
+            block
+                call out_string
+                    args
+                        str "\nError: Expr is pure virtual; can't print self\n"
+                call abort
+                id self
+        method beta : Expr
+            block
+                call out_string
+                    args
+                        str "\nError: Expr is pure virtual; can't beta-reduce\n"
+                call abort
+                id self
+        method substitute : Variable x -> Expr e -> Expr
+            block
+                call out_string
+                    args
+                        str "\nError: Expr is pure virtual; can't substitute\n"
+                call abort
+                id self
+        method gen_code : VarList env -> LambdaListRef closures -> SELF_TYPE
+            block
+                call out_string
+                    args
+                        str "\nError: Expr is pure virtual; can't gen_code\n"
+                call abort
+                id self
+    class Variable : Expr
+        field String name
+        method init : String n -> Variable
+            block
+                assign name
+                    id n
+                id self
+        method print_self : SELF_TYPE
+            call out_string
+                args
+                    id name
+        method beta : Expr
+            id self
+        method substitute : Variable x -> Expr e -> Expr
+            if
+                binary =
+                    id x
+                    id self
+            then
+                id e
+            else
+                id self
+        method gen_code : VarList env -> LambdaListRef closures -> SELF_TYPE
+            let
+                vars
+                    VarList cur_env
+                        id env
+                block
+                    while
+                        if
+                            call isNil
+                                callee
+                                    id cur_env
+                        then
+                            bool false
+                        else
+                            unary not
+                                binary =
+                                    call head
+                                        callee
+                                            id cur_env
+                                    id self
+                    loop
+                        block
+                            call out_string
+                                args
+                                    str "get_parent()."
+                            assign cur_env
+                                call tail
+                                    callee
+                                        id cur_env
+                    if
+                        call isNil
+                            callee
+                                id cur_env
+                    then
+                        block
+                            call out_string
+                                args
+                                    str "Error:  free occurrence of "
+                            call print_self
+                            call out_string
+                                args
+                                    str "\n"
+                            call abort
+                            id self
+                    else
+                        call out_string
+                            args
+                                str "get_x()"
+    class Lambda : Expr
+        field Variable arg
+        field Expr body
+        method init : Variable a -> Expr b -> Lambda
+            block
+                assign arg
+                    id a
+                assign body
+                    id b
+                id self
+        method print_self : SELF_TYPE
+            block
+                call out_string
+                    args
+                        str "\"
+                call print_self
+                    callee
+                        id arg
+                call out_string
+                    args
+                        str "."
+                call print_self
+                    callee
+                        id body
+                id self
+        method beta : Expr
+            id self
+        method apply : Expr actual -> Expr
+            call substitute
+                callee
+                    id body
+                args
+                    id arg
+                    id actual
+        method substitute : Variable x -> Expr e -> Expr
+            if
+                binary =
+                    id x
+                    id arg
+            then
+                id self
+            else
+                let
+                    vars
+                        Expr new_body
+                            call substitute
+                                callee
+                                    id body
+                                args
+                                    id x
+                                    id e
+                        Lambda new_lam
+                            new Lambda
+                    call init
+                        callee
+                            id new_lam
+                        args
+                            id arg
+                            id new_body
+        method gen_code : VarList env -> LambdaListRef closures -> SELF_TYPE
+            block
+                call out_string
+                    args
+                        str "((new Closure"
+                call out_int
+                    args
+                        call add
+                            callee
+                                id closures
+                            args
+                                id env
+                                id self
+                call out_string
+                    args
+                        str ").init("
+                if
+                    call isNil
+                        callee
+                            id env
+                then
+                    call out_string
+                        args
+                            str "new Closure))"
+                else
+                    call out_string
+                        args
+                            str "self))"
+                id self
+        method gen_closure_code : Int n -> VarList env -> LambdaListRef closures -> SELF_TYPE
+            block
+                call out_string
+                    args
+                        str "class Closure"
+                call out_int
+                    args
+                        id n
+                call out_string
+                    args
+                        str " inherits Closure {\n"
+                call out_string
+                    args
+                        str "  apply(y : EvalObject) : EvalObject {\n"
+                call out_string
+                    args
+                        str "    { out_string("Applying closure "
+                call out_int
+                    args
+                        id n
+                call out_string
+                    args
+                        str "\n");\n"
+                call out_string
+                    args
+                        str "      x <- y;\n"
+                call gen_code
+                    callee
+                        id body
+                    args
+                        call add
+                            callee
+                                id env
+                            args
+                                id arg
+                        id closures
+                call out_string
+                    args
+                        str ";}};\n"
+                call out_string
+                    args
+                        str "};\n"
+    class App : Expr
+        field Expr fun
+        field Expr arg
+        method init : Expr f -> Expr a -> App
+            block
+                assign fun
+                    id f
+                assign arg
+                    id a
+                id self
+        method print_self : SELF_TYPE
+            block
+                call out_string
+                    args
+                        str "(("
+                call print_self
+                    callee
+                        id fun
+                call out_string
+                    args
+                        str ")@("
+                call print_self
+                    callee
+                        id arg
+                call out_string
+                    args
+                        str "))"
+                id self
+        method beta : Expr
+            instanceof
+                id fun
+                case Lambda l
+                    call apply
+                        callee
+                            id l
+                        args
+                            id arg
+                case Expr e
+                    let
+                        vars
+                            Expr new_fun
+                                call beta
+                                    callee
+                                        id fun
+                            App new_app
+                                new App
+                        call init
+                            callee
+                                id new_app
+                            args
+                                id new_fun
+                                id arg
+        method substitute : Variable x -> Expr e -> Expr
+            let
+                vars
+                    Expr new_fun
+                        call substitute
+                            callee
+                                id fun
+                            args
+                                id x
+                                id e
+                    Expr new_arg
+                        call substitute
+                            callee
+                                id arg
+                            args
+                                id x
+                                id e
+                    App new_app
+                        new App
+                call init
+                    callee
+                        id new_app
+                    args
+                        id new_fun
+                        id new_arg
+        method gen_code : VarList env -> LambdaListRef closures -> SELF_TYPE
+            block
+                call out_string
+                    args
+                        str "(let x : EvalObject <- "
+                call gen_code
+                    callee
+                        id fun
+                    args
+                        id env
+                        id closures
+                call out_string
+                    args
+                        str ",\n"
+                call out_string
+                    args
+                        str "     y : EvalObject <- "
+                call gen_code
+                    callee
+                        id arg
+                    args
+                        id env
+                        id closures
+                call out_string
+                    args
+                        str " in\n"
+                call out_string
+                    args
+                        str "  case x of\n"
+                call out_string
+                    args
+                        str "    c : Closure => c.apply(y);\n"
+                call out_string
+                    args
+                        str "    o : Object => { abort(); new EvalObject; };\n"
+                call out_string
+                    args
+                        str "  esac)"
+    class Term : IO
+        method var : String x -> Variable
+            let
+                vars
+                    Variable v
+                        new Variable
+                call init
+                    callee
+                        id v
+                    args
+                        id x
+        method lam : Variable x -> Expr e -> Lambda
+            let
+                vars
+                    Lambda l
+                        new Lambda
+                call init
+                    callee
+                        id l
+                    args
+                        id x
+                        id e
+        method app : Expr e1 -> Expr e2 -> App
+            let
+                vars
+                    App a
+                        new App
+                call init
+                    callee
+                        id a
+                    args
+                        id e1
+                        id e2
+        method i : Expr
+            let
+                vars
+                    Variable x
+                        call var
+                            args
+                                str "x"
+                call lam
+                    args
+                        id x
+                        id x
+        method k : Expr
+            let
+                vars
+                    Variable x
+                        call var
+                            args
+                                str "x"
+                    Variable y
+                        call var
+                            args
+                                str "y"
+                call lam
+                    args
+                        id x
+                        call lam
+                            args
+                                id y
+                                id x
+        method s : Expr
+            let
+                vars
+                    Variable x
+                        call var
+                            args
+                                str "x"
+                    Variable y
+                        call var
+                            args
+                                str "y"
+                    Variable z
+                        call var
+                            args
+                                str "z"
+                call lam
+                    args
+                        id x
+                        call lam
+                            args
+                                id y
+                                call lam
+                                    args
+                                        id z
+                                        call app
+                                            args
+                                                call app
+                                                    args
+                                                        id x
+                                                        id z
+                                                call app
+                                                    args
+                                                        id y
+                                                        id z
+    class Main : Term
+        method beta_reduce : Expr e -> Expr
+            block
+                call out_string
+                    args
+                        str "beta-reduce: "
+                call print_self
+                    callee
+                        id e
+                let
+                    vars
+                        Bool done
+                            bool false
+                        Expr new_expr
+                    block
+                        while
+                            unary not
+                                id done
+                        loop
+                            block
+                                assign new_expr
+                                    call beta
+                                        callee
+                                            id e
+                                if
+                                    binary =
+                                        id new_expr
+                                        id e
+                                then
+                                    assign done
+                                        bool true
+                                else
+                                    block
+                                        assign e
+                                            id new_expr
+                                        call out_string
+                                            args
+                                                str " =>\n"
+                                        call print_self
+                                            callee
+                                                id e
+                        call out_string
+                            args
+                                str "\n"
+                        id e
+        method eval_class : SELF_TYPE
+            block
+                call out_string
+                    args
+                        str "class EvalObject inherits IO {\n"
+                call out_string
+                    args
+                        str "  eval() : EvalObject { { abort(); self; } };\n"
+                call out_string
+                    args
+                        str "};\n"
+        method closure_class : SELF_TYPE
+            block
+                call out_string
+                    args
+                        str "class Closure inherits EvalObject {\n"
+                call out_string
+                    args
+                        str "  parent : Closure;\n"
+                call out_string
+                    args
+                        str "  x : EvalObject;\n"
+                call out_string
+                    args
+                        str "  get_parent() : Closure { parent };\n"
+                call out_string
+                    args
+                        str "  get_x() : EvalObject { x };\n"
+                call out_string
+                    args
+                        str "  init(p : Closure) : Closure {{ parent <- p; self; }};\n"
+                call out_string
+                    args
+                        str "  apply(y : EvalObject) : EvalObject { { abort(); self; } };\n"
+                call out_string
+                    args
+                        str "};\n"
+        method gen_code : Expr e -> SELF_TYPE
+            let
+                vars
+                    LambdaListRef cl
+                        call reset
+                            callee
+                                new LambdaListRef
+                block
+                    call out_string
+                        args
+                            str "Generating code for "
+                    call print_self
+                        callee
+                            id e
+                    call out_string
+                        args
+                            str "\n------------------cut here------------------\n"
+                    call out_string
+                        args
+                            str "(*Generated by lam.cl (Jeff Foster, March 2000)*)\n"
+                    call eval_class
+                    call closure_class
+                    call out_string
+                        args
+                            str "class Main {\n"
+                    call out_string
+                        args
+                            str "  main() : EvalObject {\n"
+                    call gen_code
+                        callee
+                            id e
+                        args
+                            new VarList
+                            id cl
+                    call out_string
+                        args
+                            str "\n};\n};\n"
+                    while
+                        unary not
+                            call isNil
+                                callee
+                                    id cl
+                    loop
+                        let
+                            vars
+                                VarList e
+                                    call headE
+                                        callee
+                                            id cl
+                                Lambda c
+                                    call headC
+                                        callee
+                                            id cl
+                                Int n
+                                    call headN
+                                        callee
+                                            id cl
+                            block
+                                call removeHead
+                                    callee
+                                        id cl
+                                call gen_closure_code
+                                    callee
+                                        id c
+                                    args
+                                        id n
+                                        id e
+                                        id cl
+                    call out_string
+                        args
+                            str "\n------------------cut here------------------\n"
+        method main : Int
+            block
+                call print_self
+                    callee
+                        call i
+                call out_string
+                    args
+                        str "\n"
+                call print_self
+                    callee
+                        call k
+                call out_string
+                    args
+                        str "\n"
+                call print_self
+                    callee
+                        call s
+                call out_string
+                    args
+                        str "\n"
+                call beta_reduce
+                    args
+                        call app
+                            args
+                                call app
+                                    args
+                                        call app
+                                            args
+                                                call s
+                                                call k
+                                        call i
+                                call i
+                call beta_reduce
+                    args
+                        call app
+                            args
+                                call app
+                                    args
+                                        call k
+                                        call i
+                                call i
+                call gen_code
+                    args
+                        call app
+                            args
+                                call i
+                                call i
+                call gen_code
+                    args
+                        call app
+                            args
+                                call app
+                                    args
+                                        call app
+                                            args
+                                                call s
+                                                call k
+                                        call i
+                                call i
+                call gen_code
+                    args
+                        call app
+                            args
+                                call app
+                                    args
+                                        call app
+                                            args
+                                                call app
+                                                    args
+                                                        call app
+                                                            args
+                                                                call app
+                                                                    args
+                                                                        call app
+                                                                            args
+                                                                                call app
+                                                                                    args
+                                                                                        call i
+                                                                                        call k
+                                                                                call s
+                                                                        call s
+                                                                call k
+                                                        call s
+                                                call i
+                                        call k
+                                call i
+                call gen_code
+                    args
+                        call app
+                            args
+                                call app
+                                    args
+                                        call i
+                                        call app
+                                            args
+                                                call k
+                                                call s
+                                call app
+                                    args
+                                        call k
+                                        call app
+                                            args
+                                                call s
+                                                call s
+                int 0

@@ -1,0 +1,83 @@
+program
+    class Main : IO
+        method main : Int
+            int 0
+        field Int out
+            block
+                call out_string
+                    args
+                        str "2 is trivially prime.\n"
+                int 2
+        field Int testee
+            id out
+        field Int divisor
+        field Int stop
+            int 500
+        field Object m
+            while
+                bool true
+            loop
+                block
+                    assign testee
+                        binary +
+                            id testee
+                            int 1
+                    assign divisor
+                        int 2
+                    while
+                        if
+                            binary <
+                                id testee
+                                binary *
+                                    id divisor
+                                    id divisor
+                        then
+                            bool false
+                        else
+                            if
+                                binary =
+                                    binary -
+                                        id testee
+                                        binary *
+                                            id divisor
+                                            binary /
+                                                id testee
+                                                id divisor
+                                    int 0
+                            then
+                                bool false
+                            else
+                                bool true
+                    loop
+                        assign divisor
+                            binary +
+                                id divisor
+                                int 1
+                    if
+                        binary <
+                            id testee
+                            binary *
+                                id divisor
+                                id divisor
+                    then
+                        block
+                            assign out
+                                id testee
+                            call out_int
+                                args
+                                    id out
+                            call out_string
+                                args
+                                    str " is prime.\n"
+                    else
+                        int 0
+                    if
+                        binary <=
+                            id stop
+                            id testee
+                    then
+                        call abort
+                            callee
+                                str "halt"
+                    else
+                        str "continue"

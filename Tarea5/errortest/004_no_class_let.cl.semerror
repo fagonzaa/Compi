@@ -1,0 +1,8 @@
+2:12 Undefined class Process
+program
+    class Main
+        method main : SELF_TYPE
+            let ERROR
+                vars
+                    Process p
+                id self ERROR

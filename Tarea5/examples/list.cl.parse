@@ -1,0 +1,99 @@
+program
+    class List
+        method isNil : Bool
+            bool true
+        method head : Int
+            block
+                call abort
+                int 0
+        method tail : List
+            block
+                call abort
+                id self
+        method cons : Int i -> List
+            call init
+                callee
+                    new Cons
+                args
+                    id i
+                    id self
+    class Cons : List
+        field Int car
+        field List cdr
+        method isNil : Bool
+            bool false
+        method head : Int
+            id car
+        method tail : List
+            id cdr
+        method init : Int i -> List rest -> List
+            block
+                assign car
+                    id i
+                assign cdr
+                    id rest
+                id self
+    class Main : IO
+        field List mylist
+        method print_list : List l -> Object
+            if
+                call isNil
+                    callee
+                        id l
+            then
+                call out_string
+                    args
+                        str "\n"
+            else
+                block
+                    call out_int
+                        args
+                            call head
+                                callee
+                                    id l
+                    call out_string
+                        args
+                            str " "
+                    call print_list
+                        args
+                            call tail
+                                callee
+                                    id l
+        method main : Object
+            block
+                assign mylist
+                    call cons
+                        callee
+                            call cons
+                                callee
+                                    call cons
+                                        callee
+                                            call cons
+                                                callee
+                                                    call cons
+                                                        callee
+                                                            new List
+                                                        args
+                                                            int 1
+                                                args
+                                                    int 2
+                                        args
+                                            int 3
+                                args
+                                    int 4
+                        args
+                            int 5
+                while
+                    unary not
+                        call isNil
+                            callee
+                                id mylist
+                loop
+                    block
+                        call print_list
+                            args
+                                id mylist
+                        assign mylist
+                            call tail
+                                callee
+                                    id mylist

@@ -1,0 +1,34 @@
+class Main : IO
+    fields
+    methods
+        SELF_TYPE main
+            body
+                scope
+                    Complex c
+class Complex : IO
+    fields
+        Int x
+        Int y
+    methods
+        Complex init
+            arguments
+                Int a
+                Int b
+            body
+        Object print
+            body
+        Complex reflect_0
+            body
+        Complex reflect_X
+            body
+        Complex reflect_Y
+            body
+        Bool equal
+            arguments
+                Complex d
+            body
+        Int x_value
+            body
+        Int y_value
+            body
+

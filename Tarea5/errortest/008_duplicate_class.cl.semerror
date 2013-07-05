@@ -1,0 +1,10 @@
+4:0 Duplicate class Unica
+program
+    class Unica
+        field Object o
+    class Unica
+        field Int i
+        method main : SELF_TYPE
+            block [Unica]
+                id i [Int]
+                id self [Unica]

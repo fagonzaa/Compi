@@ -1,0 +1,17 @@
+6:8 Undefined method exit
+program
+    class Main
+        field SubMain app
+            new SubMain [SubMain]
+        method main : SELF_TYPE
+            block ERROR
+                call exit [Object]
+                    callee
+                        id app [SubMain]
+                call exit as Main ERROR
+                    callee
+                        id app [SubMain]
+                id self [Main]
+    class SubMain : Main
+        method exit : Object
+            call abort [Object]

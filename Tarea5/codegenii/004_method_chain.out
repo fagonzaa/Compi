@@ -1,0 +1,3 @@
+Sabias que puedes encadenar mas de 1500 llamadas a las funciones
+out_string y out_int de la clase IO
+ya que las 2 devuelven el objeto sobre el cual se llamaron?

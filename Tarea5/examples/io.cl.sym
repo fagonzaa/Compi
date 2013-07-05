@@ -1,0 +1,27 @@
+class A : Object
+    fields
+        IO io
+    methods
+        Object out_a
+            body
+class B : A
+    fields
+    methods
+        Object out_b
+            body
+class C : IO
+    fields
+    methods
+        Object out_c
+            body
+class D : C
+    fields
+    methods
+        Object out_d
+            body
+class Main : IO
+    fields
+    methods
+        Object main
+            body
+

@@ -1,0 +1,135 @@
+program
+    class Main : IO
+        method main : SELF_TYPE
+            let
+                vars
+                    Complex c
+                        call init
+                            callee
+                                new Complex
+                            args
+                                int 1
+                                int 1
+                block
+                    if
+                        binary =
+                            call reflect_X
+                                callee
+                                    id c
+                            call reflect_0
+                                callee
+                                    id c
+                    then
+                        call out_string
+                            args
+                                str "=)\n"
+                    else
+                        call out_string
+                            args
+                                str "=(\n"
+                    if
+                        call equal
+                            callee
+                                call reflect_Y
+                                    callee
+                                        call reflect_X
+                                            callee
+                                                id c
+                            args
+                                call reflect_0
+                                    callee
+                                        id c
+                    then
+                        call out_string
+                            args
+                                str "=)\n"
+                    else
+                        call out_string
+                            args
+                                str "=(\n"
+    class Complex : IO
+        field Int x
+        field Int y
+        method init : Int a -> Int b -> Complex
+            block
+                binary =
+                    id x
+                    id a
+                binary =
+                    id y
+                    id b
+                id self
+        method print : Object
+            if
+                binary =
+                    id y
+                    int 0
+            then
+                call out_int
+                    args
+                        id x
+            else
+                call out_string
+                    callee
+                        call out_int
+                            callee
+                                call out_string
+                                    callee
+                                        call out_int
+                                            args
+                                                id x
+                                    args
+                                        str "+"
+                            args
+                                id y
+                    args
+                        str "I"
+        method reflect_0 : Complex
+            block
+                binary =
+                    id x
+                    unary ~
+                        id x
+                binary =
+                    id y
+                    unary ~
+                        id y
+                id self
+        method reflect_X : Complex
+            block
+                binary =
+                    id y
+                    unary ~
+                        id y
+                id self
+        method reflect_Y : Complex
+            block
+                binary =
+                    id x
+                    unary ~
+                        id x
+                id self
+        method equal : Complex d -> Bool
+            if
+                binary =
+                    id x
+                    call x_value
+                        callee
+                            id d
+            then
+                if
+                    binary =
+                        id y
+                        call y_value
+                            callee
+                                id d
+                then
+                    bool true
+                else
+                    bool false
+            else
+                bool false
+        method x_value : Int
+            id x
+        method y_value : Int
+            id y

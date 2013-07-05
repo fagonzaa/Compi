@@ -1,0 +1,11 @@
+3:12 Expected Int, received String
+4:12 Expected Bool, received Object
+program
+    class Main
+        method main : SELF_TYPE
+            block ERROR
+                unary ~ ERROR
+                    str "No tengo sentido" [String]
+                unary not ERROR
+                    new Object [Object]
+                id self [Main]

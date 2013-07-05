@@ -1,0 +1,13 @@
+7:12 Undefined class TV
+program
+    class Main
+        field Object thing
+        method main : Object
+            instanceof [Object]
+                id thing [Object]
+                case Int i
+                    int 0 [Int]
+                case TV v
+                    int 0 [Int]
+                case Object o
+                    id self [Main]

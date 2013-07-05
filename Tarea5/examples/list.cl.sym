@@ -1,0 +1,40 @@
+class List : Object
+    fields
+    methods
+        Bool isNil
+            body
+        Int head
+            body
+        List tail
+            body
+        List cons
+            arguments
+                Int i
+            body
+class Cons : List
+    fields
+        Int car
+        List cdr
+    methods
+        Bool isNil
+            body
+        Int head
+            body
+        List tail
+            body
+        List init
+            arguments
+                Int i
+                List rest
+            body
+class Main : IO
+    fields
+        List mylist
+    methods
+        Object print_list
+            arguments
+                List l
+            body
+        Object main
+            body
+

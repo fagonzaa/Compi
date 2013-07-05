@@ -1,0 +1,5 @@
+2:8 Undefined method exit
+program
+    class Main
+        method main : SELF_TYPE
+            call exit ERROR

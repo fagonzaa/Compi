@@ -1,0 +1,14 @@
+9:12 Expected Main, received SubMain
+program
+    class SubMain
+        method shoot : Int angle -> SELF_TYPE
+            id self [SubMain]
+    class Main
+        method main : SELF_TYPE
+            let ERROR
+                vars
+                    SubMain submarine
+                        new SubMain [SubMain]
+                call main as Main ERROR
+                    callee
+                        id submarine [SubMain]

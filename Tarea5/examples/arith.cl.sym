@@ -1,0 +1,181 @@
+class A : Object
+    fields
+        Int var
+    methods
+        Int value
+            body
+        SELF_TYPE set_var
+            arguments
+                Int num
+            body
+        SELF_TYPE method1
+            arguments
+                Int num
+            body
+        B method2
+            arguments
+                Int num1
+                Int num2
+            body
+                scope
+                    Int x
+        C method3
+            arguments
+                Int num
+            body
+                scope
+                    Int x
+        D method4
+            arguments
+                Int num1
+                Int num2
+            body
+                scope
+                    Int x
+                scope
+                    Int x
+        E method5
+            arguments
+                Int num
+            body
+                scope
+                    Int x
+                    scope
+                        Int y
+class B : A
+    fields
+    methods
+        E method5
+            arguments
+                Int num
+            body
+                scope
+                    Int x
+class C : B
+    fields
+    methods
+        A method6
+            arguments
+                Int num
+            body
+                scope
+                    Int x
+        E method5
+            arguments
+                Int num
+            body
+                scope
+                    Int x
+class D : B
+    fields
+    methods
+        Bool method7
+            arguments
+                Int num
+            body
+                scope
+                    Int x
+class E : D
+    fields
+    methods
+        A method6
+            arguments
+                Int num
+            body
+                scope
+                    Int x
+class A2I : Object
+    fields
+    methods
+        Int c2i
+            arguments
+                String char
+            body
+        String i2c
+            arguments
+                Int i
+            body
+        Int a2i
+            arguments
+                String s
+            body
+        Int a2i_aux
+            arguments
+                String s
+            body
+                scope
+                    Int int
+                    scope
+                        Int j
+                        scope
+                            Int i
+        String i2a
+            arguments
+                Int i
+            body
+        String i2a_aux
+            arguments
+                Int i
+            body
+                scope
+                    Int next
+class Main : IO
+    fields
+        String char
+        A avar
+        A a_var
+        Bool flag
+    methods
+        String menu
+            body
+        String prompt
+            body
+        Int get_int
+            body
+                scope
+                    A2I z
+                    scope
+                        String s
+        Bool is_even
+            arguments
+                Int num
+            body
+                scope
+                    Int x
+        SELF_TYPE class_type
+            arguments
+                A var
+            body
+                scope
+                    A a
+                scope
+                    B b
+                scope
+                    C c
+                scope
+                    D d
+                scope
+                    E e
+                scope
+                    Object o
+        SELF_TYPE print
+            arguments
+                A var
+            body
+                scope
+                    A2I z
+        Object main
+            body
+                scope
+                    C c
+                scope
+                    A a
+                scope
+                    Object o
+                scope
+                    A x
+                    scope
+                        Int r
+                        scope
+                            A2I a
+

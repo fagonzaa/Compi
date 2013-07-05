@@ -1,0 +1,5 @@
+1:9 Undefined class Process
+program
+    class Main
+        method kill : Process p -> Int signal -> SELF_TYPE
+            id self [Main]
