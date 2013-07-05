@@ -11,7 +11,7 @@ import coolc.infrastructure.*;
 
 public class CodegenPrinter {
 
-	boolean file_output = true;
+	boolean file_output = false;
 	
     private Program _root;
     private boolean _printTypes;
@@ -106,7 +106,7 @@ public class CodegenPrinter {
         	print(c);
         }
         
-        if(file_output){
+        
 	        System.out.println();
 	        System.out.println("declare %Object* @Object_abort(%Object*)");
 	        System.out.println("declare i8* @Object_type_name(%Object*)");
@@ -120,7 +120,7 @@ public class CodegenPrinter {
 	        System.out.println("declare i32 @strcmp(i8*, i8*)");
 	        System.out.println("declare i8* @malloc(i64)");
 	          
-        }
+        
     }
 
     private void printClass(ClassDef c) {
